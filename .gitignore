@@ -141,3 +141,4 @@ config.py
 .vscode
 *.db
 tmp
+run.sh
