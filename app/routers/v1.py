@@ -4,8 +4,8 @@ from fastapi import APIRouter, HTTPException, Depends, Path, Query
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from ..database import SessionLocal
-from ..config import FUNDS, HOLDINGS_FUND_EXAMPLE, TRADES_FUND_EXAMPLE
-from ..models import Holding, Trades
+from ..config import FUNDS, FUNDS_EXAMPLE, HOLDINGS_FUND_EXAMPLE, TRADES_FUND_EXAMPLE
+from ..models import Fund, Holding, Trades
 from .. import schemas
 
 v1 = APIRouter()
@@ -17,6 +17,19 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+@v1.get(
+    "/funds",
+    responses={200: {"content": {"application/json": {"example": FUNDS_EXAMPLE}}}},
+    response_model=schemas.Fund,
+    summary="ARK funds",
+    tags=["Funds"]
+)
+async def funds(db: Session = Depends(get_db)):
+    query = db.query(Fund).all()
+
+    return { 'funds': query }
 
 
 @v1.get(
