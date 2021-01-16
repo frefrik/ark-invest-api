@@ -1,0 +1,1 @@
+uvicorn --reload --host 0.0.0.0 --port 8001 --access-log --log-level info app.main:APP
