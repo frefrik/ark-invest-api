@@ -6,9 +6,48 @@ ReDoc: https://arkfunds.io/api/docs
 
 
 ## Endpoints
+- **[<code>GET</code> ARK fund metadata](#Funds)**
 - **[<code>GET</code> ARK fund holdings](#Holdings)**
 - **[<code>GET</code> ARK fund intraday trades](#Trades)**
 
+
+## Funds
+
+    GET /api/v1/funds
+
+Returns ARK funds metadata
+
+### Example
+#### Request
+
+    GET https://arkfunds.io/api/v1/funds
+
+#### Response
+``` json
+{
+    "funds": [{
+        "symbol": "ARKK",
+        "name": "ARK Innovation ETF",
+        "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation."
+    }, {
+        "symbol": "ARKQ",
+        "name": "Autonomous Technology & Robotics ETF",
+        "description": "ARKQ is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of of autonomous technology and robotics companies that are relevant to the Fund’s investment theme of disruptive innovation."
+    }, {
+        "symbol": "ARKW",
+        "name": "Next Generation Internet ETF",
+        "description": "ARKW is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and U.S. exchange traded foreign equity securities of companies that are relevant to the Fund’s investment theme of next generation internet."
+    }, {
+        "symbol": "ARKG",
+        "name": "Genomic Revolution ETF",
+        "description": "ARKG is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of companies across multiple sectors, including health care, information technology, materials, energy and consumer discretionary, that are relevant to the Fund’s investment theme of the genomics revolution."
+    }, {
+        "symbol": "ARKF",
+        "name": "Fintech Innovation ETF",
+        "description": "ARKF is an actively managed Exchange Traded Fund (ETF) that seeks long-term growth of capital. It seeks to achieve this investment objective by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of companies that are engaged in the Fund’s investment theme of financial technology (“Fintech”) innovation."
+    }]
+}
+```
 
 ## Holdings
 
