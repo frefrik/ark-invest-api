@@ -3,6 +3,22 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
+class FundList(BaseModel):
+    symbol: str
+    name: str
+    description: str
+
+    class Config:
+        orm_mode = True
+
+
+class Fund(BaseModel):
+    funds: List[FundList] = []
+
+    class Config:
+        orm_mode = True
+
+
 class HoldingList(BaseModel):
     company: str
     ticker: Optional[str]
