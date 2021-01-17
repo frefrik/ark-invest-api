@@ -6,64 +6,58 @@ ReDoc: https://arkfunds.io/api/docs
 
 
 ## Endpoints
-- **[<code>GET</code> ARK fund metadata](#Funds)**
-- **[<code>GET</code> ARK fund holdings](#Holdings)**
-- **[<code>GET</code> ARK fund intraday trades](#Trades)**
+- **[<code>GET</code> ARK ETF metadata](#Funds)**
+- **[<code>GET</code> ARK ETF holdings](#Holdings)**
+- **[<code>GET</code> ARK ETF intraday trades](#Trades)**
 
 
 ## Funds
 
-    GET /api/v1/funds
+    GET /etf/profile
 
-Returns ARK funds metadata
+Returns ARK ETF profile information
+
+### Query Parameters
+Parameter | Valid values | Default value
+--- | --- | ---
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
 
 ### Example
 #### Request
 
-    GET https://arkfunds.io/api/v1/funds
+    GET https://arkfunds.io/api/v1/etf/profile?symbol=ARKK
 
 #### Response
 ``` json
 {
-    "funds": [{
+    "profile": [{
         "symbol": "ARKK",
         "name": "ARK Innovation ETF",
         "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation."
-    }, {
-        "symbol": "ARKQ",
-        "name": "Autonomous Technology & Robotics ETF",
-        "description": "ARKQ is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of of autonomous technology and robotics companies that are relevant to the Fund’s investment theme of disruptive innovation."
-    }, {
-        "symbol": "ARKW",
-        "name": "Next Generation Internet ETF",
-        "description": "ARKW is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and U.S. exchange traded foreign equity securities of companies that are relevant to the Fund’s investment theme of next generation internet."
-    }, {
-        "symbol": "ARKG",
-        "name": "Genomic Revolution ETF",
-        "description": "ARKG is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of companies across multiple sectors, including health care, information technology, materials, energy and consumer discretionary, that are relevant to the Fund’s investment theme of the genomics revolution."
-    }, {
-        "symbol": "ARKF",
-        "name": "Fintech Innovation ETF",
-        "description": "ARKF is an actively managed Exchange Traded Fund (ETF) that seeks long-term growth of capital. It seeks to achieve this investment objective by investing under normal circumstances primarily (at least 80% of its assets) in domestic and foreign equity securities of companies that are engaged in the Fund’s investment theme of financial technology (“Fintech”) innovation."
     }]
 }
 ```
 
 ## Holdings
 
-    GET /api/v1/holdings/{fund}
+    GET /etf/holdings
 
-Returns ARK fund holdings
+Returns ARK ETF holdings
+
+### Query Parameters
+Parameter | Valid values | Default value
+--- | --- | ---
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
 
 ### Example
 #### Request
 
-    GET https://arkfunds.io/api/v1/holdings/arkk
+    GET https://arkfunds.io/api/v1/etf/holdings?symbol=ARKK
 
 #### Response
 ``` json
 {
-    "fund": "ARKK",
+    "symbol": "ARKK",
     "date": "2021-01-15",
     "holdings": [{
         "company": "TESLA INC",
@@ -111,25 +105,26 @@ Returns ARK fund holdings
 
 ## Trades
 
-    GET /api/v1/trades/{fund}
+    GET /etf/trades
 
-Returns ARK fund intraday trades
+Returns ARK ETF intraday trades
 
 ### Query Parameters
 Parameter | Valid values | Default value
 --- | --- | ---
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
 period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
 
 
 ### Example
 #### Request
 
-    GET https://arkfunds.io/api/v1/trades/arkk
+    GET https://arkfunds.io/api/v1/etf/trades?symbol=ARKK
 
 #### Response
 ``` json
 {
-    "fund": "ARKK",
+    "symbol": "ARKK",
     "date_from": "2021-01-15",
     "date_to": "2021-01-15",
     "trades": [{
