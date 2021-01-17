@@ -6,10 +6,10 @@ ReDoc: https://arkfunds.io/api/docs
 
 
 ## Endpoints
-- **[<code>GET</code> ARK ETF Profile](#Funds)**
-- **[<code>GET</code> ARK ETF Holdings](#Holdings)**
-- **[<code>GET</code> ARK ETF Trades](#Trades)**
-- **[<code>GET</code> Stock Profile](#Trades)**
+- **[<code>GET</code> ARK ETF Profile](#etf-profile)**
+- **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
+- **[<code>GET</code> ARK ETF Trades](#etf-trades)**
+- **[<code>GET</code> Stock Profile](#stock-profile)**
 
 
 ## ETF Profile
