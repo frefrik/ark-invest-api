@@ -28,7 +28,7 @@ def get_db():
     responses={200: {"content": {"application/json": {"example": FUNDS_EXAMPLE}}}},
     response_model=schemas.FundProfile,
     summary="ARK funds",
-    tags=["Funds"]
+    tags=["ARK ETFs"]
 )
 async def etf_profile(symbol: str, db: Session = Depends(get_db)):
     symbol = symbol.upper()
@@ -52,7 +52,7 @@ async def etf_profile(symbol: str, db: Session = Depends(get_db)):
     responses={200: {"content": {"application/json": {"example": HOLDINGS_FUND_EXAMPLE}}}},
     response_model=schemas.FundHolding,
     summary="ARK fund holdings",
-    tags=["Holdings"]
+    tags=["ARK ETFs"]
 )
 async def etf_holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     symbol = symbol.upper()
@@ -100,7 +100,7 @@ async def etf_holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session
     "/etf/trades",
     responses={200: {"content": {"application/json": {"example": TRADES_FUND_EXAMPLE}}}},
     response_model=schemas.FundTrades,
-    tags=["Trades"],
+    tags=["ARK ETFs"],
     summary="ARK fund intraday trades")
 async def etf_trades(
     symbol: str,
