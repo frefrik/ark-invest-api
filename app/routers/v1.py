@@ -20,32 +20,43 @@ def get_db():
 
 
 @v1.get(
-    "/funds",
+    "/etf/profile",
     responses={200: {"content": {"application/json": {"example": FUNDS_EXAMPLE}}}},
-    response_model=schemas.Fund,
+    response_model=schemas.FundProfile,
     summary="ARK funds",
     tags=["Funds"]
 )
-async def funds(db: Session = Depends(get_db)):
-    query = db.query(Fund).all()
+async def funds(symbol: str, db: Session = Depends(get_db)):
+    symbol = symbol.upper()
+    if symbol not in FUNDS:
+        raise HTTPException(
+            status_code=404,
+            detail="Fund must be one of: {}".format(", ".join(FUNDS))
+        )
 
-    return { 'funds': query }
+    query = db.query(
+        Fund
+    ).filter(
+        Fund.symbol == symbol
+    ).all()
+
+    return {'profile': query}
 
 
 @v1.get(
-    "/holdings/{fund}",
+    "/etf/holdings",
     responses={200: {"content": {"application/json": {"example": HOLDINGS_FUND_EXAMPLE}}}},
     response_model=schemas.FundHolding,
     summary="ARK fund holdings",
     tags=["Holdings"]
 )
-async def holdings(fund: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    fund = fund.upper()
+async def holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    symbol = symbol.upper()
 
-    if fund not in FUNDS:
+    if symbol not in FUNDS:
         raise HTTPException(
             status_code=404,
-            detail="Fund must be one of: {}".format(", ".join(FUNDS)))
+            detail="Symbol must be one of: {}".format(", ".join(FUNDS)))
 
     subq = db.query(
         Holding.fund,
@@ -63,17 +74,17 @@ async def holdings(fund: str, skip: int = 0, limit: int = 100, db: Session = Dep
             Holding.date == subq.c.maxdate
         )
     ).filter(
-        Holding.fund == fund
+        Holding.fund == symbol
     ).all()
 
     query_date = db.query(
         func.max(Holding.date).label('maxdate')
         ).filter(
-            Holding.fund == fund
+            Holding.fund == symbol
         ).one()
 
     data = {
-        'fund': fund,
+        'symbol': symbol,
         'date': query_date[0],
         'holdings': query
     }
@@ -82,13 +93,13 @@ async def holdings(fund: str, skip: int = 0, limit: int = 100, db: Session = Dep
 
 
 @v1.get(
-    "/trades/{fund}",
+    "/etf/trades",
     responses={200: {"content": {"application/json": {"example": TRADES_FUND_EXAMPLE}}}},
     response_model=schemas.FundTrades,
     tags=["Trades"],
     summary="ARK fund intraday trades")
 async def trades(
-    fund: str = Path(..., title="The ID of the item to get"),
+    symbol: str,
     period: str = Query(
         '1d',
         regex='(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)',
@@ -96,9 +107,9 @@ async def trades(
         description="Valid periods: 1d, 7d, 1m, 3m, 1y, ytd"),
     db: Session = Depends(get_db)
 ):
-    fund = fund.upper()
+    symbol = symbol.upper()
 
-    if fund not in FUNDS:
+    if symbol not in FUNDS:
         raise HTTPException(
             status_code=404,
             detail="Fund must be one of: {}".format(", ".join(FUNDS))
@@ -108,7 +119,7 @@ async def trades(
         func.min(Trades.date).label('mindate'),
         func.max(Trades.date).label('maxdate')
         ).filter(
-            Trades.fund == fund
+            Trades.fund == symbol
         ).one()
 
     start_date = query_dates[0]
@@ -130,13 +141,13 @@ async def trades(
     query = db.query(
         Trades
     ).filter(
-        Trades.fund == fund,
+        Trades.fund == symbol,
         Trades.date >= start_date,
         Trades.date <= end_date
     ).all()
 
     data = {
-        'fund': fund,
+        'symbol': symbol,
         'date_from': start_date,
         'date_to': end_date,
         'trades': query

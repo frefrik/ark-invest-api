@@ -12,8 +12,8 @@ class FundList(BaseModel):
         orm_mode = True
 
 
-class Fund(BaseModel):
-    funds: List[FundList] = []
+class FundProfile(BaseModel):
+    profile: List[FundList] = []
 
     class Config:
         orm_mode = True
@@ -33,7 +33,7 @@ class HoldingList(BaseModel):
 
 
 class FundHolding(BaseModel):
-    fund: str
+    symbol: str
     date: datetime.date
     holdings: List[HoldingList] = []
 
@@ -56,7 +56,7 @@ class TradeList(BaseModel):
 
 
 class FundTrades(BaseModel):
-    fund: str
+    symbol: str
     date_from: datetime.date
     date_to: datetime.date
     trades: List[TradeList] = []
