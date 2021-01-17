@@ -1,12 +1,16 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from fastapi import APIRouter, HTTPException, Depends, Path, Query
+from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
+from yahooquery import Ticker
 from ..database import SessionLocal
-from ..config import FUNDS, FUNDS_EXAMPLE, HOLDINGS_FUND_EXAMPLE, TRADES_FUND_EXAMPLE
 from ..models import Fund, Holding, Trades
 from .. import schemas
+from ..config import (
+    FUNDS, FUNDS_EXAMPLE, HOLDINGS_FUND_EXAMPLE,
+    TRADES_FUND_EXAMPLE, STOCK_PROFILE_EXAMPLE
+)
 
 v1 = APIRouter()
 
@@ -151,6 +155,48 @@ async def etf_trades(
         'date_from': start_date,
         'date_to': end_date,
         'trades': query
+    }
+
+    return data
+
+
+@v1.get(
+    "/stock/profile",
+    responses={200: {"content": {"application/json": {"example": STOCK_PROFILE_EXAMPLE}}}},
+    response_model=schemas.StockProfile,
+    summary="Stock profile",
+    tags=["Stock"]
+)
+async def stock_profile(symbol: str):
+    symbol = symbol.upper()
+
+    yf = Ticker(symbol)
+    quotes = yf.quotes
+    asset_profile = yf.asset_profile
+
+    if 'No data found' in quotes:
+        raise HTTPException(
+                    status_code=404,
+                    detail=f"Ticker {symbol} not found."
+                )
+
+    quotes = quotes[symbol]
+    asset_profile = asset_profile[symbol]
+
+    data = {
+        'ticker': symbol,
+        'name': quotes.get('longName'),
+        'country': asset_profile.get('country'),
+        'industry': asset_profile.get('industry'),
+        'sector': asset_profile.get('sector'),
+        'fullTimeEmployees': asset_profile.get('fullTimeEmployees'),
+        'summary': asset_profile.get('longBusinessSummary'),
+        'website': asset_profile.get('website'),
+        'market': quotes.get('market'),
+        'exchange': quotes.get('fullExchangeName'),
+        'currency': quotes.get('currency'),
+        'marketCap': quotes.get('marketCap'),
+        'sharesOutstanding': quotes.get('sharesOutstanding')
     }
 
     return data

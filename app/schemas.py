@@ -63,3 +63,22 @@ class FundTrades(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class StockProfile(BaseModel):
+    ticker: str
+    name: Optional[str]
+    country: Optional[str]
+    industry: Optional[str]
+    sector: Optional[str]
+    fullTimeEmployees: Optional[int]
+    summary: Optional[str]
+    website: Optional[str]
+    market: Optional[str]
+    exchange: Optional[str]
+    currency: Optional[str]
+    marketCap: Optional[float]
+    sharesOutstanding: Optional[int]
+
+    class Config:
+        orm_mode = True
