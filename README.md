@@ -6,12 +6,13 @@ ReDoc: https://arkfunds.io/api/docs
 
 
 ## Endpoints
-- **[<code>GET</code> ARK ETF metadata](#Funds)**
-- **[<code>GET</code> ARK ETF holdings](#Holdings)**
-- **[<code>GET</code> ARK ETF intraday trades](#Trades)**
+- **[<code>GET</code> ARK ETF Profile](#Funds)**
+- **[<code>GET</code> ARK ETF Holdings](#Holdings)**
+- **[<code>GET</code> ARK ETF Trades](#Trades)**
+- **[<code>GET</code> Stock Profile](#Trades)**
 
 
-## Funds
+## ETF Profile
 
     GET /etf/profile
 
@@ -38,7 +39,7 @@ symbol | ARKK, ARKQ, ARKW, ARKG, ARKF |
 }
 ```
 
-## Holdings
+## ETF Holdings
 
     GET /etf/holdings
 
@@ -103,7 +104,7 @@ symbol | ARKK, ARKQ, ARKW, ARKG, ARKF |
 }
 ```
 
-## Trades
+## ETF Trades
 
     GET /etf/trades
 
@@ -164,5 +165,35 @@ period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
         "shares": 26425,
         "etf_percent": 0.0309
     }]
+}
+```
+
+## Stock Profile
+
+    GET /stock/profile
+
+Returns Stock profile information
+
+### Example
+#### Request
+
+    GET https://arkfunds.io/api/v1/stock/profile?symbol=TSLA
+
+#### Response
+``` json
+{
+  "ticker": "TSLA",
+  "name": "Tesla, Inc.",
+  "country": "United States",
+  "industry": "Auto Manufacturers",
+  "sector": "Consumer Cyclical",
+  "fullTimeEmployees": 48016,
+  "summary": "Tesla, Inc. designs, develops, manufactures, leases, and sells electric vehicles, and energy generation and storage systems in the United States, China, Netherlands, Norway, and internationally. The company operates in two segments, Automotive; and Energy Generation and Storage. The Automotive segment offers sedans and sport utility vehicles. It also provides electric powertrain components and systems; and services for electric vehicles through its company-owned service locations, and Tesla mobile service technicians, as well as sells used vehicles. This segment markets and sells its products through a network of company-owned stores and galleries, as well as through its own Website. The Energy Generation and Storage segment offers energy storage products, such as rechargeable lithium-ion battery systems for use in homes, industrial, commercial facilities, and utility grids; and designs, manufactures, installs, maintains, leases, and sells solar energy generation and energy storage products to residential and commercial customers. It also provides vehicle insurance services, as well as renewable energy. The company was formerly known as Tesla Motors, Inc. and changed its name to Tesla, Inc. in February 2017. Tesla, Inc. was founded in 2003 and is headquartered in Palo Alto, California.",
+  "website": "http://www.tesla.com",
+  "market": "us_market",
+  "exchange": "NasdaqGS",
+  "currency": "USD",
+  "marketCap": 783117844480,
+  "sharesOutstanding": 947900992
 }
 ```
