@@ -26,7 +26,7 @@ def get_db():
     summary="ARK funds",
     tags=["Funds"]
 )
-async def funds(symbol: str, db: Session = Depends(get_db)):
+async def etf_profile(symbol: str, db: Session = Depends(get_db)):
     symbol = symbol.upper()
     if symbol not in FUNDS:
         raise HTTPException(
@@ -50,7 +50,7 @@ async def funds(symbol: str, db: Session = Depends(get_db)):
     summary="ARK fund holdings",
     tags=["Holdings"]
 )
-async def holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def etf_holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     symbol = symbol.upper()
 
     if symbol not in FUNDS:
@@ -98,7 +98,7 @@ async def holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = D
     response_model=schemas.FundTrades,
     tags=["Trades"],
     summary="ARK fund intraday trades")
-async def trades(
+async def etf_trades(
     symbol: str,
     period: str = Query(
         '1d',
