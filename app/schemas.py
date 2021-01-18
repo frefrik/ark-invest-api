@@ -42,12 +42,11 @@ class FundHolding(BaseModel):
 
 
 class TradeList(BaseModel):
-    fund: str
     date: datetime.date
     direction: str
     ticker: Optional[str]
-    cusip: str
     company: str
+    cusip: str
     shares: int
     etf_percent: float
 
