@@ -107,3 +107,28 @@ class FundOwnership(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+class StockTradesList(BaseModel):
+    date: datetime.date
+    fund: str
+    direction: str
+    ticker: str
+    company: str
+    cusip: str
+    shares: int
+    etf_percent: float
+
+    class Config:
+        orm_mode = True
+
+
+class StockTrades(BaseModel):
+    symbol: str
+    date_from: datetime.date
+    date_to: datetime.date
+    trades: List[StockTradesList]
+
+    class Config:
+        orm_mode = True

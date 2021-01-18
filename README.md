@@ -10,6 +10,7 @@ ReDoc: https://arkfunds.io/api/docs
 - **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
 - **[<code>GET</code> ARK ETF Trades](#etf-trades)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
+- **[<code>GET</code> Stock Trades](#stock-trades)**
 - **[<code>GET</code> ARK Fund Ownership](#ark-fund-ownership)**
 
 
@@ -196,6 +197,64 @@ Returns Stock profile information
   "currency": "USD",
   "marketCap": 783117844480,
   "sharesOutstanding": 947900992
+}
+```
+
+
+## Stock Trades
+
+    GET /stock/trades
+
+Returns Stock Trades
+
+### Example
+#### Request
+
+    GET https://arkfunds.io/api/v1/stock/trades?symbol=TSLA
+
+#### Response
+``` json
+{
+    "symbol": "TSLA",
+    "date_from": "2020-09-18",
+    "date_to": "2021-01-12",
+    "trades": [{
+        "date": "2021-01-12",
+        "fund": "ARKK",
+        "direction": "Sell",
+        "ticker": "TSLA",
+        "company": "TESLA INC",
+        "cusip": "88160R101",
+        "shares": 126276,
+        "etf_percent": 0.5055
+    }, {
+        "date": "2021-01-12",
+        "fund": "ARKQ",
+        "direction": "Sell",
+        "ticker": "TSLA",
+        "company": "TESLA INC",
+        "cusip": "88160R101",
+        "shares": 13179,
+        "etf_percent": 0.4991
+    }, {
+        "date": "2021-01-12",
+        "fund": "ARKW",
+        "direction": "Sell",
+        "ticker": "TSLA",
+        "company": "TESLA INC",
+        "cusip": "88160R101",
+        "shares": 16898,
+        "etf_percent": 0.6161
+    }, {
+        "date": "2021-01-08",
+        "fund": "ARKK",
+        "direction": "Sell",
+        "ticker": "TSLA",
+        "company": "TESLA INC",
+        "cusip": "88160R101",
+        "shares": 59500,
+        "etf_percent": 0.2506
+    }]
 }
 ```
 

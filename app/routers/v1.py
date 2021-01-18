@@ -1,5 +1,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
@@ -10,7 +11,7 @@ from .. import schemas
 from ..config import (
     FUNDS, FUNDS_EXAMPLE, HOLDINGS_FUND_EXAMPLE,
     TRADES_FUND_EXAMPLE, STOCK_PROFILE_EXAMPLE,
-    FUND_OWNERSHIP_EXAMPLE
+    FUND_OWNERSHIP_EXAMPLE, STOCK_TRADES_EXAMPLE
 )
 
 v1 = APIRouter()
@@ -248,6 +249,62 @@ async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
         'date': query_date[0],
         'ownership': query,
         'totals': totals
+    }
+
+    return data
+
+
+@v1.get(
+    "/stock/trades",
+    responses={200: {"content": {"application/json": {"example": STOCK_TRADES_EXAMPLE}}}},
+    response_model=schemas.StockTrades,
+    summary="ARK Stock Trades",
+    tags=["Stock"]
+)
+async def stock_trades(symbol: str, direction: Optional[str] = Query(None, regex="^buy|sell$"), db: Session = Depends(get_db)):
+    symbol = symbol.upper()
+
+    if direction:
+        tradelist = db.query(
+            Trades
+        ).filter(
+            Trades.ticker == symbol,
+            Trades.direction == direction.capitalize()
+        ).order_by(
+            Trades.date.desc(),
+            Trades.fund
+        ).all()
+    else:
+        tradelist = db.query(
+            Trades
+        ).filter(
+            Trades.ticker == symbol
+        ).order_by(
+            Trades.date.desc(),
+            Trades.fund
+        ).all()
+
+    if not tradelist:
+        raise HTTPException(
+                    status_code=404,
+                    detail=f"No ARK trades found for {symbol}"
+                )
+
+    query_dates = db.query(
+        func.min(Trades.date).label('mindate'),
+        func.max(Trades.date).label('maxdate')
+        ).filter(
+            Trades.ticker == symbol
+        ).one()
+
+    start_date = query_dates[0]
+    end_date = query_dates[1]
+
+    data = {
+        'symbol': symbol,
+        'date_from': start_date,
+        'date_to': end_date,
+        'trades': tradelist
     }
 
     return data
