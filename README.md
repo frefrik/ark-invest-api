@@ -10,6 +10,7 @@ ReDoc: https://arkfunds.io/api/docs
 - **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
 - **[<code>GET</code> ARK ETF Trades](#etf-trades)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
+- **[<code>GET</code> ARK Fund Ownership](#ark-fund-ownership)**
 
 
 ## ETF Profile
@@ -195,5 +196,48 @@ Returns Stock profile information
   "currency": "USD",
   "marketCap": 783117844480,
   "sharesOutstanding": 947900992
+}
+```
+
+## ARK Fund Ownership
+
+    GET /stock/fund-ownership
+
+Returns ARK Fund Ownership
+
+### Example
+#### Request
+
+    GET https://arkfunds.io/api/v1/stock/fund-ownership?symbol=TSLA
+
+#### Response
+``` json
+{
+    "symbol": "TSLA",
+    "date": "2021-01-15",
+    "ownership": [{
+        "fund": "ARKK",
+        "weight": 9.65,
+        "weight_rank": 1,
+        "shares": 2626774,
+        "market_value": 2170135607.84
+    }, {
+        "fund": "ARKQ",
+        "weight": 11.37,
+        "weight_rank": 1,
+        "shares": 335957,
+        "market_value": 277554235.12
+    }, {
+        "fund": "ARKW",
+        "weight": 9.87,
+        "weight_rank": 1,
+        "shares": 734796,
+        "market_value": 607059063.36
+    }],
+    "totals": {
+        "funds": 3,
+        "shares": 3697527,
+        "market_value": 3054748906.32
+    }
 }
 ```

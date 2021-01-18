@@ -9,7 +9,8 @@ from ..models import Fund, Holding, Trades
 from .. import schemas
 from ..config import (
     FUNDS, FUNDS_EXAMPLE, HOLDINGS_FUND_EXAMPLE,
-    TRADES_FUND_EXAMPLE, STOCK_PROFILE_EXAMPLE
+    TRADES_FUND_EXAMPLE, STOCK_PROFILE_EXAMPLE,
+    FUND_OWNERSHIP_EXAMPLE
 )
 
 v1 = APIRouter()
@@ -197,6 +198,56 @@ async def stock_profile(symbol: str):
         'currency': quotes.get('currency'),
         'marketCap': quotes.get('marketCap'),
         'sharesOutstanding': quotes.get('sharesOutstanding')
+    }
+
+    return data
+
+
+@v1.get(
+    "/stock/fund-ownership",
+    responses={200: {"content": {"application/json": {"example": FUND_OWNERSHIP_EXAMPLE}}}},
+    response_model=schemas.FundOwnership,
+    summary="ARK Fund Ownership",
+    tags=["Stock"]
+)
+async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
+    symbol = symbol.upper()
+
+    subq = db.query(
+        Holding.fund,
+        func.max(Holding.date).label('maxdate')
+    ).group_by(
+        Holding.fund
+    ).subquery('t2')
+
+    query = db.query(
+        Holding
+    ).join(
+        subq,
+        and_(
+            Holding.date == subq.c.maxdate
+        )
+    ).filter(
+        Holding.ticker == symbol
+    ).all()
+
+    query_date = db.query(
+        func.max(Holding.date).label('maxdate')
+        ).filter(
+            Holding.ticker == symbol
+        ).first()
+
+    totals = {
+        'funds': len([r.fund for r in query]),
+        'shares': sum([r.shares for r in query]),
+        'market_value': sum([r.market_value for r in query])
+    }
+
+    data = {
+        'symbol': symbol,
+        'date': query_date[0],
+        'ownership': query,
+        'totals': totals
     }
 
     return data

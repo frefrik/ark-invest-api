@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
 
 
 class FundList(BaseModel):
@@ -78,6 +78,32 @@ class StockProfile(BaseModel):
     currency: Optional[str]
     marketCap: Optional[float]
     sharesOutstanding: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class FundOwnershipList(BaseModel):
+    fund: str
+    weight: float
+    weight_rank: int
+    shares: int
+    market_value: float
+
+    class Config:
+        orm_mode = True
+
+
+class FundOwnership(BaseModel):
+    symbol: str
+    date: Optional[datetime.date]
+    ownership: List[FundOwnershipList] = []
+    totals: create_model(
+        'totals',
+        funds=(int, ...),
+        shares=(int, ...),
+        market_value=(float, ...)
+    )
 
     class Config:
         orm_mode = True
