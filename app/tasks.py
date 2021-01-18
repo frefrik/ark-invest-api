@@ -44,68 +44,74 @@ def update_trades():
         '% of ETF': 'etf_percent'
     }
 
-    res = requests.get(TRADE_STATUS_URL)
-    html = res.text
+    try:
+        res = requests.get(TRADE_STATUS_URL, timeout=10)
+        html = res.text
+        do_update = True
+    except requests.exceptions.ReadTimeout as e:
+        do_update = False
+        print(e)
 
-    if res.status_code == 200 and 'no trades listed' not in html:
-        soup = BeautifulSoup(html, "lxml")
+    if do_update:
+        if res.status_code == 200 and 'no trades listed' not in html:
+            soup = BeautifulSoup(html, "lxml")
 
-        links = soup.find_all('a', href=True)
+            links = soup.find_all('a', href=True)
 
-        for link in links:
-            filename = link['href'].split('/')[-1]
+            for link in links:
+                filename = link['href'].split('/')[-1]
 
-            try:
-                r = requests.get(link['href'], allow_redirects=True)
-                open(f'tmp/{filename}', 'wb').write(r.content)
+                try:
+                    r = requests.get(link['href'], allow_redirects=True)
+                    open(f'tmp/{filename}', 'wb').write(r.content)
 
-                data = xlrd.open_workbook(
-                    f'tmp/{filename}',
-                    ignore_workbook_corruption=True
-                )
-
-                df = pd.read_excel(
-                    data,
-                    skiprows=3,
-                    parse_dates=['Date'],
-                    dtype=dtypes
-                )
-
-                df = df.rename(columns=mapping)
-                df['cusip'] = df['cusip'].astype('str')
-
-                datestr = datetime.strftime(df.iloc[0]['date'], '%Y-%m-%d')
-                fund = df.iloc[0]['fund']
-
-                exists = db.query(
-                    Trades.fund,
-                    Trades.date
-                ).filter(
-                    Trades.fund == fund
-                ).filter(
-                    Trades.date == datestr
-                ).first()
-
-                if not exists:
-                    print('Trades - Found new data, inserting to database')
-                    df.to_sql(
-                        'trades',
-                        engine,
-                        if_exists='append',
-                        index=False,
-                        dtype={
-                            "date": Date,
-                            "fund": String,
-                            "direction": String,
-                            "ticker":  String,
-                            "cusip": String,
-                            "company": String,
-                            "shares": Integer,
-                            "etf_percent": Float
-                        }
+                    data = xlrd.open_workbook(
+                        f'tmp/{filename}',
+                        ignore_workbook_corruption=True
                     )
-            except Exception:
-                pass
+
+                    df = pd.read_excel(
+                        data,
+                        skiprows=3,
+                        parse_dates=['Date'],
+                        dtype=dtypes
+                    )
+
+                    df = df.rename(columns=mapping)
+                    df['cusip'] = df['cusip'].astype('str')
+
+                    datestr = datetime.strftime(df.iloc[0]['date'], '%Y-%m-%d')
+                    fund = df.iloc[0]['fund']
+
+                    exists = db.query(
+                        Trades.fund,
+                        Trades.date
+                    ).filter(
+                        Trades.fund == fund
+                    ).filter(
+                        Trades.date == datestr
+                    ).first()
+
+                    if not exists:
+                        print('Trades - Found new data, inserting to database')
+                        df.to_sql(
+                            'trades',
+                            engine,
+                            if_exists='append',
+                            index=False,
+                            dtype={
+                                "date": Date,
+                                "fund": String,
+                                "direction": String,
+                                "ticker":  String,
+                                "cusip": String,
+                                "company": String,
+                                "shares": Integer,
+                                "etf_percent": Float
+                            }
+                        )
+                except Exception:
+                    pass
 
     db.close()
 
