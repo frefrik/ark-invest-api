@@ -5,7 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .database import engine
 from .models import Base
 from .routers import v1
-from .tasks import check_for_updates, update_trades, update_holdings
+from .tasks import update_trades, update_holdings
 from .config import (
     OPENAPI_API_VERSION, OPENAPI_CONTACT, OPENAPI_DESCRIPTION,
     OPENAPI_EXTERNALDOCS_DESC, OPENAPI_EXTERNALDOCS_URL, OPENAPI_HOST,
@@ -21,7 +21,7 @@ scheduler.start()
 APP = FastAPI(
     docs_url="/api",
     redoc_url="/api/docs",
-    on_startup=[check_for_updates],
+    on_shutdown=[scheduler.shutdown],
     openapi_url="/api/openapi.json"
 )
 
@@ -71,15 +71,18 @@ APP.add_middleware(
 
 scheduler.add_job(
     update_trades,
-    'interval',
-    seconds=UPDATE_INTERVAL_TRADES
+    'cron',
+    day_of_week='1-5',
+    hour='0-2',
+    minute=f'*/{UPDATE_INTERVAL_TRADES}'
 )
 
 scheduler.add_job(
     update_holdings,
-    'interval',
-    seconds=UPDATE_INTERVAL_HOLDINGS
+    'cron',
+    day_of_week='1-5',
+    hour='0-2',
+    minute=f'*/{UPDATE_INTERVAL_HOLDINGS}'
 )
-
 
 APP.include_router(v1, prefix="/api/v1")

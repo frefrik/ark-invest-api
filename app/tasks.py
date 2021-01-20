@@ -170,10 +170,3 @@ def update_holdings():
             )
 
     db.close()
-
-
-def check_for_updates():
-    print('Checking for updates...')
-
-    update_trades()
-    update_holdings()
