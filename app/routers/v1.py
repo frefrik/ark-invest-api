@@ -32,7 +32,7 @@ def get_db():
     summary="ARK Fund Profile",
     tags=["ARK ETFs"]
 )
-async def etf_profile(symbol: str, db: Session = Depends(get_db)):
+async def etf_profile(symbol: str = Query(..., regex='^\S+$'), db: Session = Depends(get_db)):
     symbol = symbol.upper()
     if symbol not in FUNDS:
         raise HTTPException(
@@ -109,7 +109,6 @@ async def etf_trades(
     period: str = Query(
         '1d',
         regex='(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)',
-        title='woo',
         description="Valid periods: 1d, 7d, 1m, 3m, 1y, ytd"),
     db: Session = Depends(get_db)
 ):
@@ -169,14 +168,14 @@ async def etf_trades(
     summary="Stock Profile",
     tags=["Stock"]
 )
-async def stock_profile(symbol: str):
+async def stock_profile(symbol: str = Query(..., regex='^\S+$')):
     symbol = symbol.upper()
 
     yf = Ticker(symbol)
     quotes = yf.quotes
     asset_profile = yf.asset_profile
 
-    if 'No data found' in quotes:
+    if 'No fundamentals data found' in asset_profile[symbol]:
         raise HTTPException(
                     status_code=404,
                     detail=f"Ticker {symbol} not found."
