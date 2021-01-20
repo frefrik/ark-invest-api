@@ -2,6 +2,7 @@ import io
 import xlrd
 import requests
 import pandas as pd
+from pathlib import Path
 from datetime import datetime
 from bs4 import BeautifulSoup
 from sqlalchemy.types import Integer, String, Date, Float
@@ -53,6 +54,8 @@ def update_trades():
         print(e)
 
     if do_update:
+        Path('tmp/').mkdir(exist_ok=True)
+
         if res.status_code == 200 and 'no trades listed' not in html:
             soup = BeautifulSoup(html, "lxml")
 
@@ -93,7 +96,7 @@ def update_trades():
                     ).first()
 
                     if not exists:
-                        print('Trades - Found new data, inserting to database')
+                        print(f'Trades - Found new data ({fund}), inserting to database')
                         df.to_sql(
                             'trades',
                             engine,
