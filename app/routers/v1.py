@@ -56,7 +56,15 @@ async def etf_profile(symbol: str = Query(..., regex='^\S+$'), db: Session = Dep
     summary="ARK Fund Holdings",
     tags=["ARK ETFs"]
 )
-async def etf_holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def etf_holdings(
+    symbol: str = Query(..., description='ARK Fund symbol'),
+    holding_date:  Optional[str] = Query(
+        None,
+        regex='^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$',
+        description="Fund holding date in ISO 8601 format",
+        alias='date'),
+    db: Session = Depends(get_db)
+):
     symbol = symbol.upper()
 
     if symbol not in FUNDS:
@@ -64,34 +72,25 @@ async def etf_holdings(symbol: str, skip: int = 0, limit: int = 100, db: Session
             status_code=404,
             detail="Symbol must be one of: {}".format(", ".join(FUNDS)))
 
-    subq = db.query(
-        Holding.fund,
-        func.max(Holding.date).label('maxdate')
-    ).group_by(
-        Holding.fund
-    ).subquery('t2')
-
-    query = db.query(
-        Holding
-    ).join(
-        subq,
-        and_(
-            Holding.fund == subq.c.fund,
-            Holding.date == subq.c.maxdate
-        )
-    ).filter(
-        Holding.fund == symbol
-    ).all()
-
-    query_date = db.query(
-        func.max(Holding.date).label('maxdate')
+    maxdate = db.query(
+        func.max(Holding.date).label('date')
         ).filter(
             Holding.fund == symbol
         ).one()
 
+    if not holding_date:
+        holding_date = maxdate.date
+
+    query = db.query(
+        Holding
+    ).filter(
+        Holding.fund == symbol,
+        Holding.date == holding_date
+    ).all()
+
     data = {
         'symbol': symbol,
-        'date': query_date[0],
+        'date': holding_date,
         'holdings': query
     }
 
