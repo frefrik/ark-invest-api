@@ -51,6 +51,7 @@ Returns ARK ETF holdings
 Parameter | Valid values | Default value
 --- | --- | ---
 symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
+date | ISO 8601 Calendar date | 
 
 ### Example
 #### Request
