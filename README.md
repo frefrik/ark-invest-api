@@ -23,7 +23,7 @@ Returns ARK ETF profile information
 ### Query Parameters
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL | 
 
 ### Example
 #### Request
@@ -50,7 +50,7 @@ Returns ARK ETF holdings
 ### Query Parameters
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL | 
 date | ISO 8601 Calendar date | 
 
 ### Example
