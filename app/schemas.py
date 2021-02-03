@@ -99,15 +99,11 @@ class FundOwnership(BaseModel):
     date: Optional[datetime.date]
     ownership: List[FundOwnershipList] = []
     totals: create_model(
-        'totals',
-        funds=(int, ...),
-        shares=(int, ...),
-        market_value=(float, ...)
+        "totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...)
     )
 
     class Config:
         orm_mode = True
-
 
 
 class StockTradesList(BaseModel):

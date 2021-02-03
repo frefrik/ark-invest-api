@@ -7,10 +7,17 @@ from .models import Base
 from .routers import v1
 from .tasks import update_trades, update_holdings
 from .config import (
-    OPENAPI_API_VERSION, OPENAPI_CONTACT, OPENAPI_DESCRIPTION,
-    OPENAPI_EXTERNALDOCS_DESC, OPENAPI_EXTERNALDOCS_URL, OPENAPI_HOST,
-    OPENAPI_SERVER_BASEPATH, OPENAPI_SERVER_URL, OPENAPI_TITLE,
-    UPDATE_INTERVAL_HOLDINGS, UPDATE_INTERVAL_TRADES
+    OPENAPI_API_VERSION,
+    OPENAPI_CONTACT,
+    OPENAPI_DESCRIPTION,
+    OPENAPI_EXTERNALDOCS_DESC,
+    OPENAPI_EXTERNALDOCS_URL,
+    OPENAPI_HOST,
+    OPENAPI_SERVER_BASEPATH,
+    OPENAPI_SERVER_URL,
+    OPENAPI_TITLE,
+    UPDATE_INTERVAL_HOLDINGS,
+    UPDATE_INTERVAL_TRADES,
 )
 
 Base.metadata.create_all(bind=engine)
@@ -22,7 +29,7 @@ APP = FastAPI(
     docs_url="/api",
     redoc_url="/api/docs",
     on_shutdown=[scheduler.shutdown],
-    openapi_url="/api/openapi.json"
+    openapi_url="/api/openapi.json",
 )
 
 
@@ -37,21 +44,16 @@ def custom_openapi():
         routes=APP.routes,
     )
 
-    openapi_schema["info"]["contact"] = {
-        "email": OPENAPI_CONTACT
-    }
+    openapi_schema["info"]["contact"] = {"email": OPENAPI_CONTACT}
 
     openapi_schema["host"] = OPENAPI_HOST
     openapi_schema["servers"] = [
-        {
-            "url": OPENAPI_SERVER_URL,
-            "basePath": OPENAPI_SERVER_BASEPATH
-        }
+        {"url": OPENAPI_SERVER_URL, "basePath": OPENAPI_SERVER_BASEPATH}
     ]
 
     openapi_schema["externalDocs"] = {
         "description": OPENAPI_EXTERNALDOCS_DESC,
-        "url": OPENAPI_EXTERNALDOCS_URL
+        "url": OPENAPI_EXTERNALDOCS_URL,
     }
 
     APP.openapi_schema = openapi_schema
@@ -71,18 +73,18 @@ APP.add_middleware(
 
 scheduler.add_job(
     update_trades,
-    'cron',
-    day_of_week='1-5',
-    hour='0-2',
-    minute=f'*/{UPDATE_INTERVAL_TRADES}'
+    "cron",
+    day_of_week="1-5",
+    hour="0-2",
+    minute=f"*/{UPDATE_INTERVAL_TRADES}",
 )
 
 scheduler.add_job(
     update_holdings,
-    'cron',
-    day_of_week='1-5',
-    hour='0-2',
-    minute=f'*/{UPDATE_INTERVAL_HOLDINGS}'
+    "cron",
+    day_of_week="1-5",
+    hour="0-2",
+    minute=f"*/{UPDATE_INTERVAL_HOLDINGS}",
 )
 
 APP.include_router(v1, prefix="/api/v1")
