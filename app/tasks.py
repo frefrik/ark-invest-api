@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy.types import Integer, String, Date, Float
 from .database import SessionLocal, engine
 from .models import Holding, Trades
-from .config import TRADE_STATUS_URL, BASE_URL_HOLDINGS, FUND_HOLDINGS_FILES
+from .config import TRADE_STATUS_URL, BASE_URL_HOLDINGS, FUND_HOLDINGS_FILES, HEADERS
 
 
 def weight_rank(df):
@@ -43,7 +43,7 @@ def update_trades():
     }
 
     try:
-        res = requests.get(TRADE_STATUS_URL, timeout=10)
+        res = requests.get(TRADE_STATUS_URL, headers=HEADERS, timeout=10)
         html = res.text
         do_update = True
     except requests.exceptions.ReadTimeout as e:
@@ -62,7 +62,9 @@ def update_trades():
                 filename = link["href"].split("/")[-1]
 
                 try:
-                    r = requests.get(link["href"], allow_redirects=True)
+                    r = requests.get(
+                        link["href"], headers=HEADERS, allow_redirects=True
+                    )
                     open(f"tmp/{filename}", "wb").write(r.content)
 
                     data = xlrd.open_workbook(
@@ -118,7 +120,9 @@ def update_holdings():
     mapping = {"market value($)": "market_value", "weight(%)": "weight"}
 
     for fund in FUND_HOLDINGS_FILES:
-        res = requests.get(BASE_URL_HOLDINGS + FUND_HOLDINGS_FILES[fund]).content
+        res = requests.get(
+            BASE_URL_HOLDINGS + FUND_HOLDINGS_FILES[fund], headers=HEADERS
+        ).content
 
         df_new = pd.read_csv(io.StringIO(res.decode("utf-8")))
         df_new = df_new[df_new["fund"].notna()]
