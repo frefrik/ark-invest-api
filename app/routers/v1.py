@@ -37,15 +37,19 @@ def get_db():
     tags=["ARK ETFs"],
 )
 async def etf_profile(
-    symbol: str = Query(..., regex="^\S+$"), db: Session = Depends(get_db)
+    symbol: Optional[str] = Query(None, regex="^\S+$"), db: Session = Depends(get_db)
 ):
-    symbol = symbol.upper()
-    if symbol not in FUNDS:
-        raise HTTPException(
-            status_code=404, detail="Fund must be one of: {}".format(", ".join(FUNDS))
-        )
+    if symbol:
+        symbol = symbol.upper()
+        if symbol not in FUNDS:
+            raise HTTPException(
+                status_code=404,
+                detail="Fund must be one of: {}".format(", ".join(FUNDS)),
+            )
 
-    query = db.query(Fund).filter(Fund.symbol == symbol).all()
+        query = db.query(Fund).filter(Fund.symbol == symbol).all()
+    else:
+        query = db.query(Fund).all()
 
     return {"profile": query}
 
