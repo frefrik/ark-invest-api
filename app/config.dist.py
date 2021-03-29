@@ -1,10 +1,10 @@
 # Data update interval (minutes)
-UPDATE_INTERVAL_HOLDINGS = 10
+# UPDATE_INTERVAL_HOLDINGS = 10
 UPDATE_INTERVAL_TRADES = 10
 
 # Custom OpenAPI
 OPENAPI_TITLE = "ARK Invest API"
-OPENAPI_API_VERSION = "1.0.1"
+OPENAPI_API_VERSION = "1.0.2"
 OPENAPI_DESCRIPTION = "API for tracking ARK Invest fund holdings and trades. This site is not affiliated with Ark Invest."
 OPENAPI_CONTACT = ""
 OPENAPI_HOST = ""
