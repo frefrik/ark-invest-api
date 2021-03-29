@@ -120,11 +120,15 @@ def update_holdings():
     mapping = {"market value($)": "market_value", "weight(%)": "weight"}
 
     for fund in FUND_HOLDINGS_FILES:
-        res = requests.get(
-            BASE_URL_HOLDINGS + FUND_HOLDINGS_FILES[fund], headers=HEADERS
-        ).content
+        try:
+            res = requests.get(
+                BASE_URL_HOLDINGS + FUND_HOLDINGS_FILES[fund], headers=HEADERS
+            ).content
 
-        df_new = pd.read_csv(io.StringIO(res.decode("utf-8")))
+            df_new = pd.read_csv(io.StringIO(res.decode("utf-8")))
+        except Exception:
+            continue
+
         df_new = df_new[df_new["fund"].notna()]
         df_new["date"] = pd.to_datetime(df_new["date"])
         df_new = df_new.rename(columns=mapping)
