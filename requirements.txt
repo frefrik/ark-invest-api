@@ -8,4 +8,4 @@ requests==2.25.1
 SQLAlchemy==1.4.3
 uvicorn==0.13.4
 xlrd==2.0.1
-yahooquery==2.2.12
+yahooquery==2.2.15
