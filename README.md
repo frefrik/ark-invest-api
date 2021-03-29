@@ -24,7 +24,7 @@ Returns ARK ETF profile information
 
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL |
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
 
 ### Example
 
@@ -54,7 +54,7 @@ Returns ARK ETF holdings
 
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL |
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
 date | ISO 8601 Calendar date |
 
 ### Example
@@ -123,7 +123,7 @@ Returns ARK ETF intraday trades
 
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF |
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |
 period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
 
 ### Example
