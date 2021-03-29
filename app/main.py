@@ -82,9 +82,9 @@ scheduler.add_job(
 scheduler.add_job(
     update_holdings,
     "cron",
-    day_of_week="1-5",
-    hour="0-2",
-    minute=f"*/{UPDATE_INTERVAL_HOLDINGS}",
+    day_of_week="*",
+    hour="*",
+    minute="0",
 )
 
 APP.include_router(v1, prefix="/api/v1")
