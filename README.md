@@ -1,18 +1,18 @@
 # ARK Invest API
 
 ## Documentation
-Swagger UI: https://arkfunds.io/api  
-ReDoc: https://arkfunds.io/api/docs
 
+Swagger UI: <https://arkfunds.io/api>  
+ReDoc: <https://arkfunds.io/api/docs>
 
 ## Endpoints
+
 - **[<code>GET</code> ARK ETF Profile](#etf-profile)**
 - **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
 - **[<code>GET</code> ARK ETF Trades](#etf-trades)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
 - **[<code>GET</code> Stock Trades](#stock-trades)**
 - **[<code>GET</code> ARK Fund Ownership](#ark-fund-ownership)**
-
 
 ## ETF Profile
 
@@ -21,16 +21,19 @@ ReDoc: https://arkfunds.io/api/docs
 Returns ARK ETF profile information
 
 ### Query Parameters
+
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL | 
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
 
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/etf/profile?symbol=ARKK
 
 #### Response
+
 ``` json
 {
     "profile": [{
@@ -48,17 +51,20 @@ symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL |
 Returns ARK ETF holdings
 
 ### Query Parameters
+
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, PRNT, IZRL | 
-date | ISO 8601 Calendar date | 
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
+date | ISO 8601 Calendar date |
 
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/etf/holdings?symbol=ARKK
 
 #### Response
+
 ``` json
 {
     "symbol": "ARKK",
@@ -114,18 +120,20 @@ date | ISO 8601 Calendar date |
 Returns ARK ETF intraday trades
 
 ### Query Parameters
+
 Parameter | Valid values | Default value
 --- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF | 
+symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |
 period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
 
-
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/etf/trades?symbol=ARKK
 
 #### Response
+
 ``` json
 {
     "symbol": "ARKK",
@@ -178,11 +186,13 @@ period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
 Returns Stock profile information
 
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/stock/profile?symbol=TSLA
 
 #### Response
+
 ``` json
 {
   "ticker": "TSLA",
@@ -201,7 +211,6 @@ Returns Stock profile information
 }
 ```
 
-
 ## Stock Trades
 
     GET /stock/trades
@@ -209,11 +218,13 @@ Returns Stock profile information
 Returns Stock Trades
 
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/stock/trades?symbol=TSLA
 
 #### Response
+
 ``` json
 {
     "symbol": "TSLA",
@@ -266,11 +277,13 @@ Returns Stock Trades
 Returns ARK Fund Ownership
 
 ### Example
+
 #### Request
 
     GET https://arkfunds.io/api/v1/stock/fund-ownership?symbol=TSLA
 
 #### Response
+
 ``` json
 {
     "symbol": "TSLA",
