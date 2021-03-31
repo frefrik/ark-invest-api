@@ -137,6 +137,13 @@ async def etf_trades(
     start_date = query_dates[0]
     end_date = query_dates[1]
 
+    if not end_date:
+        end_date = (
+            db.query(
+                func.max(Trades.date).label("maxdate"),
+            ).one()
+        )[0]
+
     if period == "ytd":
         start_date = datetime.strptime("2021-01-01", "%Y-%m-%d").date()
     elif "y" in period:
