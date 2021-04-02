@@ -1,24 +1,23 @@
 # Data update interval (minutes)
-# UPDATE_INTERVAL_HOLDINGS = 10
 UPDATE_INTERVAL_TRADES = 10
 
 # Custom OpenAPI
 OPENAPI_TITLE = "ARK Invest API"
 OPENAPI_API_VERSION = "1.0.2"
 OPENAPI_DESCRIPTION = "API for tracking ARK Invest fund holdings and trades. This site is not affiliated with Ark Invest."
-OPENAPI_CONTACT = ""
-OPENAPI_HOST = ""
-OPENAPI_SERVER_URL = ""
-OPENAPI_SERVER_BASEPATH = ""
-OPENAPI_EXTERNALDOCS_DESC = ""
-OPENAPI_EXTERNALDOCS_URL = ""
+OPENAPI_CONTACT = "api (at) arkfunds.io"
+OPENAPI_HOST = "arkfunds.io"
+OPENAPI_SERVER_URL = "https://arkfunds.io"
+OPENAPI_SERVER_BASEPATH = "api"
+OPENAPI_EXTERNALDOCS_DESC = "Find out more about this project"
+OPENAPI_EXTERNALDOCS_URL = "https://github.com/frefrik/ark-invest-api"
 
 # ARK settings
 FUNDS = ["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "IZRL"]
 
-BASE_URL_HOLDINGS = ""
-BASE_URL_TRADES = ""
-TRADE_STATUS_URL = ""
+BASE_URL_HOLDINGS = "https://ark-funds.com/wp-content/fundsiteliterature/csv/"
+BASE_URL_TRADES = "https://ark-funds.com/auto/trades/"
+TRADE_STATUS_URL = "https://ark-funds.com/auto/getidt.php"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0",
