@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -24,23 +26,34 @@ Base.metadata.create_all(bind=engine)
 scheduler = AsyncIOScheduler()
 scheduler.start()
 
-APP = FastAPI(
-    docs_url="/api",
-    redoc_url="/api/docs",
+APP = FastAPI()
+
+
+@APP.get("/", response_class=HTMLResponse)
+async def read_items():
+    with open("app/static/index.html") as f:
+        html_content = f.read()
+
+    return HTMLResponse(content=html_content, status_code=200)
+
+
+api = FastAPI(
+    docs_url="/",
+    redoc_url="/docs",
     on_shutdown=[scheduler.shutdown],
-    openapi_url="/api/openapi.json",
+    openapi_url="/openapi.json",
 )
 
 
 def custom_openapi():
-    if APP.openapi_schema:
-        return APP.openapi_schema
+    if api.openapi_schema:
+        return api.openapi_schema
 
     openapi_schema = get_openapi(
         title=OPENAPI_TITLE,
         version=OPENAPI_API_VERSION,
         description=OPENAPI_DESCRIPTION,
-        routes=APP.routes,
+        routes=api.routes,
     )
 
     openapi_schema["info"]["contact"] = {"email": OPENAPI_CONTACT}
@@ -55,14 +68,14 @@ def custom_openapi():
         "url": OPENAPI_EXTERNALDOCS_URL,
     }
 
-    APP.openapi_schema = openapi_schema
+    api.openapi_schema = openapi_schema
 
-    return APP.openapi_schema
+    return api.openapi_schema
 
 
-APP.openapi = custom_openapi
+api.openapi = custom_openapi
 
-APP.add_middleware(
+api.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=["*"],
@@ -86,4 +99,6 @@ scheduler.add_job(
     minute="0",
 )
 
-APP.include_router(v1, prefix="/api/v1")
+api.include_router(v1, prefix="/v1")
+APP.mount("/api", api)
+APP.mount("/static", StaticFiles(directory="app/static", html=True), name="static")

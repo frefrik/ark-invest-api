@@ -3,11 +3,11 @@ UPDATE_INTERVAL_TRADES = 10
 
 # Custom OpenAPI
 OPENAPI_TITLE = "ARK Invest API"
-OPENAPI_API_VERSION = "1.1.0"
+OPENAPI_API_VERSION = "1.1.1"
 OPENAPI_DESCRIPTION = "API for tracking ARK Invest fund holdings and trades. This site is not affiliated with Ark Invest."
 OPENAPI_CONTACT = "api (at) arkfunds.io"
 OPENAPI_HOST = "arkfunds.io"
-OPENAPI_SERVER_URL = "https://arkfunds.io"
+OPENAPI_SERVER_URL = "https://arkfunds.io/api"
 OPENAPI_SERVER_BASEPATH = "api"
 OPENAPI_EXTERNALDOCS_DESC = "Find out more about this project"
 OPENAPI_EXTERNALDOCS_URL = "https://github.com/frefrik/ark-invest-api"
