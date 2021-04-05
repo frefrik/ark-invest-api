@@ -7,6 +7,11 @@ class FundList(BaseModel):
     symbol: str
     name: str
     description: str
+    fund_type: str
+    inception_date: datetime.date
+    cusip: str
+    isin: str
+    website: str
 
     class Config:
         orm_mode = True

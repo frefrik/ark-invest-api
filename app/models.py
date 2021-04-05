@@ -9,6 +9,11 @@ class Fund(Base):
     symbol = Column(String)
     name = Column(String)
     description = Column(String)
+    cusip = Column(String)
+    isin = Column(String)
+    inception_date = Column(Date)
+    website = Column(String)
+    fund_type = Column(String)
 
 
 class Holding(Base):
