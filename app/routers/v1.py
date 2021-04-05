@@ -191,7 +191,10 @@ async def stock_profile(symbol: str = Query(..., regex="^\S+$")):
     quotes = yf.quotes
     asset_profile = yf.asset_profile
 
-    if "No fundamentals data found" in asset_profile[symbol]:
+    if (
+        "No fundamentals data found" in asset_profile[symbol]
+        or "Quote not found" in asset_profile[symbol]
+    ):
         raise HTTPException(status_code=404, detail=f"Ticker {symbol} not found.")
 
     quotes = quotes[symbol]
