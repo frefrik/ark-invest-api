@@ -2,12 +2,10 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, Query
-from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
 from ..database import SessionLocal
-from ..models import Fund, Holding, Trades
-from .. import schemas
+from .. import schemas, crud
 from ..config import (
     FUNDS,
     FUNDS_EXAMPLE,
@@ -47,11 +45,9 @@ async def etf_profile(
                 detail="Fund must be one of: {}".format(", ".join(FUNDS)),
             )
 
-        query = db.query(Fund).filter(Fund.symbol == symbol).all()
-    else:
-        query = db.query(Fund).all()
+    profile = crud.get_etf_profile(db, symbol=symbol)
 
-    return {"profile": query}
+    return {"profile": profile}
 
 
 @v1.get(
@@ -80,22 +76,14 @@ async def etf_holdings(
             status_code=404, detail="Symbol must be one of: {}".format(", ".join(FUNDS))
         )
 
-    maxdate = (
-        db.query(func.max(Holding.date).label("date"))
-        .filter(Holding.fund == symbol)
-        .one()
-    )
+    maxdate = crud.get_etf_holdings_maxdate(db, symbol=symbol)
 
     if not holding_date:
         holding_date = maxdate.date
 
-    query = (
-        db.query(Holding)
-        .filter(Holding.fund == symbol, Holding.date == holding_date)
-        .all()
-    )
+    holdings = crud.get_etf_holdings(db, symbol=symbol, holding_date=holding_date)
 
-    data = {"symbol": symbol, "date": holding_date, "holdings": query}
+    data = {"symbol": symbol, "date": holding_date, "holdings": holdings}
 
     return data
 
@@ -125,24 +113,13 @@ async def etf_trades(
             status_code=404, detail="Fund must be one of: {}".format(", ".join(FUNDS))
         )
 
-    query_dates = (
-        db.query(
-            func.min(Trades.date).label("mindate"),
-            func.max(Trades.date).label("maxdate"),
-        )
-        .filter(Trades.fund == symbol)
-        .one()
-    )
+    dates = crud.get_etf_trades_dates(db, symbol=symbol)
 
-    start_date = query_dates[0]
-    end_date = query_dates[1]
+    start_date = dates[0]
+    end_date = dates[1]
 
     if not end_date:
-        end_date = (
-            db.query(
-                func.max(Trades.date).label("maxdate"),
-            ).one()
-        )[0]
+        end_date = crud.get_etf_trades_maxdate(db)
 
     if period == "ytd":
         start_date = datetime.strptime("2021-01-01", "%Y-%m-%d").date()
@@ -157,19 +134,15 @@ async def etf_trades(
         days = int(period.split("d")[0])
         start_date = end_date - relativedelta(days=(days - 1))
 
-    query = (
-        db.query(Trades)
-        .filter(
-            Trades.fund == symbol, Trades.date >= start_date, Trades.date <= end_date
-        )
-        .all()
+    trades = crud.get_etf_trades(
+        db, symbol=symbol, start_date=start_date, end_date=end_date
     )
 
     data = {
         "symbol": symbol,
         "date_from": start_date,
         "date_to": end_date,
-        "trades": query,
+        "trades": trades,
     }
 
     return data
@@ -231,35 +204,19 @@ async def stock_profile(symbol: str = Query(..., regex="^\S+$")):
 async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
     symbol = symbol.upper()
 
-    subq = (
-        db.query(Holding.fund, func.max(Holding.date).label("maxdate"))
-        .group_by(Holding.fund)
-        .subquery("t2")
-    )
-
-    query = (
-        db.query(Holding)
-        .join(subq, and_(Holding.date == subq.c.maxdate))
-        .filter(Holding.ticker == symbol)
-        .all()
-    )
-
-    query_date = (
-        db.query(func.max(Holding.date).label("maxdate"))
-        .filter(Holding.ticker == symbol)
-        .first()
-    )
+    ownership = crud.get_stock_fundownership(db, symbol=symbol)
+    maxdate = crud.get_stock_fundownership_maxdate(db, symbol=symbol)
 
     totals = {
-        "funds": len([r.fund for r in query]),
-        "shares": sum([r.shares for r in query]),
-        "market_value": sum([r.market_value for r in query]),
+        "funds": len([r.fund for r in ownership]),
+        "shares": sum([r.shares for r in ownership]),
+        "market_value": sum([r.market_value for r in ownership]),
     }
 
     data = {
         "symbol": symbol,
-        "date": query_date[0],
-        "ownership": query,
+        "date": maxdate,
+        "ownership": ownership,
         "totals": totals,
     }
 
@@ -282,41 +239,21 @@ async def stock_trades(
 ):
     symbol = symbol.upper()
 
-    if direction:
-        tradelist = (
-            db.query(Trades)
-            .filter(Trades.ticker == symbol, Trades.direction == direction.capitalize())
-            .order_by(Trades.date.desc(), Trades.fund)
-            .all()
-        )
-    else:
-        tradelist = (
-            db.query(Trades)
-            .filter(Trades.ticker == symbol)
-            .order_by(Trades.date.desc(), Trades.fund)
-            .all()
-        )
+    trades = crud.get_stock_trades(db, symbol=symbol, direction=direction)
 
-    if not tradelist:
+    if not trades:
         raise HTTPException(status_code=404, detail=f"No ARK trades found for {symbol}")
 
-    query_dates = (
-        db.query(
-            func.min(Trades.date).label("mindate"),
-            func.max(Trades.date).label("maxdate"),
-        )
-        .filter(Trades.ticker == symbol)
-        .one()
-    )
+    dates = crud.get_stock_trades_dates(db, symbol=symbol)
 
-    start_date = query_dates[0]
-    end_date = query_dates[1]
+    start_date = dates[0]
+    end_date = dates[1]
 
     data = {
         "symbol": symbol,
         "date_from": start_date,
         "date_to": end_date,
-        "trades": tradelist,
+        "trades": trades,
     }
 
     return data
