@@ -121,6 +121,11 @@ FUNDS_EXAMPLE = {
             "symbol": "ARKK",
             "name": "ARK Innovation ETF",
             "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation.",
+            "fund_type": "Active Equity ETF",
+            "inception_date": "2014-10-31",
+            "cusip": "00214Q104",
+            "isin": "US00214Q1040",
+            "website": "https://ark-funds.com/arkk",
         }
     ]
 }

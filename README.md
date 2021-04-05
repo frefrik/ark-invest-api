@@ -22,9 +22,9 @@ Returns ARK ETF profile information
 
 ### Query Parameters
 
-Parameter | Valid values | Default value
---- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
+| Parameter | Valid values                                   | Default value |
+| --------- | ---------------------------------------------- | ------------- |
+| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
 
 ### Example
 
@@ -39,7 +39,12 @@ symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
     "profile": [{
         "symbol": "ARKK",
         "name": "ARK Innovation ETF",
-        "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation."
+        "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation.",
+        "fund_type": "Active Equity ETF",
+        "inception_date": "2014-10-31",
+        "cusip": "00214Q104",
+        "isin": "US00214Q1040",
+        "website": "https://ark-funds.com/arkk"
     }]
 }
 ```
@@ -52,10 +57,10 @@ Returns ARK ETF holdings
 
 ### Query Parameters
 
-Parameter | Valid values | Default value
---- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
-date | ISO 8601 Calendar date |
+| Parameter | Valid values                                   | Default value |
+| --------- | ---------------------------------------------- | ------------- |
+| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
+| date      | ISO 8601 Calendar date                         |
 
 ### Example
 
@@ -121,10 +126,10 @@ Returns ARK ETF intraday trades
 
 ### Query Parameters
 
-Parameter | Valid values | Default value
---- | --- | ---
-symbol | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |
-period | 1d, 7d, 1m, 3m, 1y, ytd | 1d
+| Parameter | Valid values                       | Default value |
+| --------- | ---------------------------------- | ------------- |
+| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |
+| period    | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
 
 ### Example
 
