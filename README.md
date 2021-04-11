@@ -22,9 +22,9 @@ Returns ARK ETF profile information
 
 ### Query Parameters
 
-| Parameter | Valid values                                   | Default value |
-| --------- | ---------------------------------------------- | ------------- |
-| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
+| Parameter | Required | Valid values                                   | Default value |
+|-----------|:--------:|------------------------------------------------|---------------|
+| symbol    | NO       | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
 
 ### Example
 
@@ -57,10 +57,10 @@ Returns ARK ETF holdings
 
 ### Query Parameters
 
-| Parameter | Valid values                                   | Default value |
-| --------- | ---------------------------------------------- | ------------- |
-| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |
-| date      | ISO 8601 Calendar date                         |
+| Parameter | Required | Valid values                                   | Default value |
+|-----------|:--------:|------------------------------------------------|---------------|
+| symbol    | YES      | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
+| date      | NO       | ISO 8601 Calendar date                         |               |
 
 ### Example
 
@@ -126,10 +126,10 @@ Returns ARK ETF intraday trades
 
 ### Query Parameters
 
-| Parameter | Valid values                       | Default value |
-| --------- | ---------------------------------- | ------------- |
-| symbol    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |
-| period    | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
+| Parameter | Required | Valid values                       | Default value |
+|-----------|:--------:|------------------------------------|---------------|
+| symbol    | YES      | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |               |
+| period    | NO       | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
 
 ### Example
 
@@ -189,6 +189,12 @@ Returns ARK ETF intraday trades
     GET /stock/profile
 
 Returns Stock profile information
+
+### Query Parameters
+
+| Parameter | Required | Valid values | Default value |
+|-----------|:--------:|--------------|---------------|
+| symbol    | YES      |              |               |
 
 ### Example
 
@@ -289,6 +295,12 @@ Returns Stock Trades
     GET /stock/fund-ownership
 
 Returns ARK Fund Ownership
+
+### Query Parameters
+
+| Parameter | Required | Valid values | Default value |
+|-----------|:--------:|--------------|---------------|
+| symbol    | YES      |              |               |
 
 ### Example
 
