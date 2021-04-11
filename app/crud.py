@@ -78,18 +78,29 @@ def get_stock_fundownership_maxdate(db: Session, symbol: str):
     )[0]
 
 
-def get_stock_trades(db: Session, symbol: str, direction: str):
+def get_stock_trades(
+    db: Session, symbol: str, direction: str, date_from: str, date_to: str
+):
     if direction:
         return (
             db.query(Trades)
-            .filter(Trades.ticker == symbol, Trades.direction == direction.capitalize())
+            .filter(
+                Trades.ticker == symbol,
+                Trades.direction == direction.capitalize(),
+                Trades.date >= date_from,
+                Trades.date <= date_to,
+            )
             .order_by(Trades.date.desc(), Trades.fund)
             .all()
         )
     else:
         return (
             db.query(Trades)
-            .filter(Trades.ticker == symbol)
+            .filter(
+                Trades.ticker == symbol,
+                Trades.date >= date_from,
+                Trades.date <= date_to,
+            )
             .order_by(Trades.date.desc(), Trades.fund)
             .all()
         )

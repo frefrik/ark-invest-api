@@ -222,6 +222,15 @@ Returns Stock profile information
 
 Returns Stock Trades
 
+### Query Parameters
+
+| Parameter | Required | Valid values           | Default value |
+|-----------|:--------:|------------------------|---------------|
+| symbol    | YES      |                        |               |
+| direction | NO       | buy, sell              |               |
+| date_from | NO       | ISO 8601 Calendar date |               |
+| date_to   | NO       | ISO 8601 Calendar date |               |
+
 ### Example
 
 #### Request

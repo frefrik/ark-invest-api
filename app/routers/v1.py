@@ -235,24 +235,34 @@ async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
 async def stock_trades(
     symbol: str,
     direction: Optional[str] = Query(None, regex="^buy|sell$"),
+    date_from: Optional[str] = Query(
+        None, regex="^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
+    ),
+    date_to: Optional[str] = Query(
+        None, regex="^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
+    ),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
 
-    trades = crud.get_stock_trades(db, symbol=symbol, direction=direction)
-
-    if not trades:
-        raise HTTPException(status_code=404, detail=f"No ARK trades found for {symbol}")
-
     dates = crud.get_stock_trades_dates(db, symbol=symbol)
 
-    start_date = dates[0]
-    end_date = dates[1]
+    if None in dates:
+        raise HTTPException(status_code=404, detail=f"No ARK trades found for {symbol}")
+
+    if not date_from:
+        date_from = dates[0]
+    if not date_to:
+        date_to = dates[1]
+
+    trades = crud.get_stock_trades(
+        db, symbol=symbol, direction=direction, date_from=date_from, date_to=date_to
+    )
 
     data = {
         "symbol": symbol,
-        "date_from": start_date,
-        "date_to": end_date,
+        "date_from": date_from,
+        "date_to": date_to,
         "trades": trades,
     }
 
