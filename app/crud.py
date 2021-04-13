@@ -1,6 +1,6 @@
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, desc
 from sqlalchemy.orm import Session
-from .models import Fund, Holding, Trades
+from .models import Fund, Holding, News, Trades
 
 
 def get_etf_profile(db: Session, symbol: str):
@@ -115,3 +115,50 @@ def get_stock_trades_dates(db: Session, symbol: str):
         .filter(Trades.ticker == symbol)
         .one()
     )
+
+
+def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
+    if symbol:
+        return (
+            db.query(News)
+            .filter(
+                News.category == "etf",
+                News.datetime >= date_from,
+                News.datetime <= date_to,
+                News.related == symbol,
+            )
+            .order_by(desc("datetime"))
+            .limit(500)
+            .all()
+        )
+    else:
+        return (
+            db.query(News)
+            .filter(
+                News.category == "etf",
+                News.datetime >= date_from,
+                News.datetime <= date_to,
+            )
+            .order_by(desc("datetime"))
+            .limit(500)
+            .all()
+        )
+
+
+def get_etf_news_min_date(db: Session, symbol: str):
+    if symbol:
+        return (
+            db.query(
+                func.min(News.datetime).label("mindate"),
+            )
+            .filter(News.related == symbol, News.category == "etf")
+            .one()
+        )[0]
+    else:
+        return (
+            db.query(
+                func.min(News.datetime).label("mindate"),
+            )
+            .filter(News.category == "etf")
+            .one()
+        )[0]
