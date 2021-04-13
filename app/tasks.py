@@ -19,7 +19,7 @@ def weight_rank(df):
 
 
 def update_trades():
-    print("Checking for trades update...")
+    print("Checking for trades update...", end="", flush=True)
     db = SessionLocal()
     dtypes = {
         "fund": "str",
@@ -112,10 +112,11 @@ def update_trades():
                     pass
 
     db.close()
+    print("[DONE]")
 
 
 def update_holdings():
-    print("Checking for holdings update...")
+    print("Checking for holdings update...", end="", flush=True)
     db = SessionLocal()
     mapping = {"market value($)": "market_value", "weight(%)": "weight"}
 
@@ -145,7 +146,6 @@ def update_holdings():
         )
 
         if not exists:
-            print("Holdings - Found new data, inserting to database")
             df_new.to_sql(
                 "holdings",
                 engine,
@@ -164,3 +164,4 @@ def update_holdings():
             )
 
     db.close()
+    print("[DONE]")
