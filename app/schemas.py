@@ -133,3 +133,27 @@ class StockTrades(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class FundNewsList(BaseModel):
+    id: int
+    datetime: datetime.datetime
+    related: str
+    source: str
+    headline: str
+    summary: str
+    url: str
+    image: str
+
+    class Config:
+        orm_mode = True
+
+
+class FundNews(BaseModel):
+    symbol: Optional[str]
+    date_from: datetime.date
+    date_to: datetime.date
+    news: List[FundNewsList] = []
+
+    class Config:
+        orm_mode = True
