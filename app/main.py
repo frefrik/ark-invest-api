@@ -7,7 +7,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .database import engine
 from .models import Base
 from .routers import v1
-from .tasks import update_trades, update_holdings
+from .tasks import update_etf_news, update_trades, update_holdings
 from .config import (
     OPENAPI_API_VERSION,
     OPENAPI_CONTACT,
@@ -97,6 +97,13 @@ scheduler.add_job(
     day_of_week="*",
     hour="*",
     minute="0",
+)
+
+scheduler.add_job(
+    update_etf_news,
+    "cron",
+    hour="*",
+    minute="*/10",
 )
 
 api.include_router(v1, prefix="/v1")

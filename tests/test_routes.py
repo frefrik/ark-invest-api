@@ -52,6 +52,19 @@ def test_etf_trades_inexistent_item(client):
     }
 
 
+def test_etf_news(client):
+    response = client.get("/api/v1/etf/news")
+    assert response.status_code == 200
+
+
+def test_etf_news_inexistent_item(client):
+    response = client.get("/api/v1/etf/news?symbol=TSLA")
+    assert response.status_code == 404
+    assert response.json() == {
+        "detail": "Fund must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
+    }
+
+
 def test_stock_profile(client):
     response = client.get("/api/v1/stock/profile?symbol=TSLA")
     assert response.status_code == 200

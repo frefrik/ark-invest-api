@@ -228,3 +228,52 @@ STOCK_TRADES_EXAMPLE = {
         },
     ],
 }
+
+
+ETF_NEWS_EXAMPLE = {
+    "symbol": "ARKX",
+    "date_from": "2021-04-07",
+    "date_to": "2021-04-08",
+    "news": [
+        {
+            "id": 2,
+            "datetime": "2021-04-08T18:40:16+00:00",
+            "related": "ARKX",
+            "source": "seekingalpha.com",
+            "headline": "Nicholas Ward's Dividend Growth Portfolio March 2021 Review",
+            "summary": "March 2021 was my best dividend income month yet. My passive income was up 13.6% y/y during March. My portfolio's total return during March was 3.47%.",
+            "url": "https://seekingalpha.com/article/4418244-nicholas-ward-dividend-growth-portfolio-march-2021-review",
+            "image": "https://static.seekingalpha.com/uploads/2021/4/4/50407678-16175234983922832_origin.png",
+        },
+        {
+            "id": 3,
+            "datetime": "2021-04-08T11:17:00+00:00",
+            "related": "ARKX",
+            "source": "DowJones",
+            "headline": "Global COVID-19 cases top 133 million as Brazil and India become flashpoints",
+            "summary": "The number of global confirmed cases of the coronavirus-borne illness COVID-19 climbed above 133 million on Thursday and the death toll edged closer to 3...",
+            "url": "https://www.marketwatch.com/story/global-covid-19-cases-top-133-million-as-brazil-and-india-become-flashpoints-11617895045",
+            "image": "https://images.mktw.net/im-322270/social",
+        },
+        {
+            "id": 4,
+            "datetime": "2021-04-08T08:52:00+00:00",
+            "related": "ARKX",
+            "source": "DowJones",
+            "headline": "G-20 nearer to a deal on minimum corporate tax rate",
+            "summary": "Finance ministers from the world’s most developed economies said on Wednesday they hoped to agree on an overhaul of the way multinationals are taxed as well...",
+            "url": "https://www.marketwatch.com/story/g-20-nearer-to-a-deal-on-minimum-corporate-tax-rate-11617886359",
+            "image": "https://images.mktw.net/im-322159/social",
+        },
+        {
+            "id": 5,
+            "datetime": "2021-04-07T23:39:00+00:00",
+            "related": "ARKX",
+            "source": "Benzinga",
+            "headline": "Cathie Wood Adds These Stocks To The Newly-Created Space Exploration ETF And Others",
+            "summary": "Cathie Wood’s Ark Investment Management sends out an email every night listing the stocks that were bought or sold by the firm's ETFs that day. In recent months, the...",
+            "url": "https://www.benzinga.com/news/21/04/20532249/cathie-wood-adds-these-stocks-to-the-newly-created-space-exploration-etf-and-others",
+            "image": "https://cdn.benzinga.com/files/imagecache/og_image_social_share_1200x630/images/story/2012/micheile-henderson-lz_4npfkcv8-unsplash_1_5.jpg",
+        },
+    ],
+}
