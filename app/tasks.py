@@ -1,14 +1,25 @@
 import io
+import os
 import xlrd
 import requests
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from datetime import datetime, date, timedelta
 from sqlalchemy.types import Integer, String, Date, Float
+from requests.exceptions import ReadTimeout, ChunkedEncodingError
 from .database import SessionLocal, engine
-from .models import Holding, Trades
-from .config import TRADE_STATUS_URL, BASE_URL_HOLDINGS, FUND_HOLDINGS_FILES, HEADERS
+from .models import Holding, Trades, News
+from .config import (
+    TRADE_STATUS_URL,
+    BASE_URL_HOLDINGS,
+    FUND_HOLDINGS_FILES,
+    FUNDS,
+    HEADERS,
+)
+
+load_dotenv()
 
 
 def weight_rank(df):
@@ -165,3 +176,49 @@ def update_holdings():
 
     db.close()
     print("[DONE]")
+
+
+def update_etf_news():
+    db = SessionLocal()
+
+    for symbol in FUNDS:
+        print(f"Updating {symbol} news...", end="", flush=True)
+        params = {
+            "symbol": symbol,
+            "from": str(date.today() - timedelta(days=1)),
+            "to": str(date.today()),
+            "token": os.getenv("FH_TOKEN"),
+        }
+
+        r = requests.get("https://finnhub.io/api/v1/company-news", params=params).json()
+
+        for i in r:
+            exists = (
+                db.query(News.external_id).filter(News.external_id == i["id"]).first()
+            )
+            if not exists:
+                try:
+                    data = News(
+                        external_id=i["id"],
+                        datetime=i["datetime"],
+                        category="etf",
+                        related=i["related"],
+                        source=i["source"],
+                        headline=i["headline"],
+                        summary=i["summary"],
+                        url=requests.get(i["url"], headers=HEADERS, timeout=10).url,
+                        image=i["image"],
+                    )
+
+                    db.add(data)
+                except ReadTimeout:
+                    continue
+                except ChunkedEncodingError:
+                    continue
+                except Exception:
+                    continue
+
+        db.commit()
+        print("[DONE]")
+
+    db.close()
