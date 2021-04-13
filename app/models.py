@@ -43,3 +43,18 @@ class Trades(Base):
     company = Column(String)
     shares = Column(Integer, nullable=True)
     etf_percent = Column(Float, nullable=True)
+
+
+class News(Base):
+    __tablename__ = "news"
+
+    id = Column(Integer, primary_key=True, index=True)
+    external_id = Column(Integer, index=True, unique=True)
+    datetime = Column(Integer)
+    category = Column(String)
+    related = Column(String)
+    source = Column(String)
+    headline = Column(String)
+    summary = Column(String)
+    url = Column(String)
+    image = Column(String)
