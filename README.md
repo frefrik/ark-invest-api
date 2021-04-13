@@ -10,6 +10,7 @@ ReDoc: <https://arkfunds.io/api/docs>
 - **[<code>GET</code> ARK ETF Profile](#etf-profile)**
 - **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
 - **[<code>GET</code> ARK ETF Trades](#etf-trades)**
+- **[<code>GET</code> ARK ETF News](#etf-news)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
 - **[<code>GET</code> Stock Trades](#stock-trades)**
 - **[<code>GET</code> ARK Fund Ownership](#ark-fund-ownership)**
@@ -23,8 +24,8 @@ Returns ARK ETF profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values                                   | Default value |
-|-----------|:--------:|------------------------------------------------|---------------|
-| symbol    | NO       | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
+| --------- | :------: | ---------------------------------------------- | ------------- |
+| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
 
 ### Example
 
@@ -58,9 +59,9 @@ Returns ARK ETF holdings
 ### Query Parameters
 
 | Parameter | Required | Valid values                                   | Default value |
-|-----------|:--------:|------------------------------------------------|---------------|
-| symbol    | YES      | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
-| date      | NO       | ISO 8601 Calendar date                         |               |
+| --------- | :------: | ---------------------------------------------- | ------------- |
+| symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
+| date      |    NO    | ISO 8601 Calendar date                         |               |
 
 ### Example
 
@@ -127,9 +128,9 @@ Returns ARK ETF intraday trades
 ### Query Parameters
 
 | Parameter | Required | Valid values                       | Default value |
-|-----------|:--------:|------------------------------------|---------------|
-| symbol    | YES      | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |               |
-| period    | NO       | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
+| --------- | :------: | ---------------------------------- | ------------- |
+| symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |               |
+| period    |    NO    | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
 
 ### Example
 
@@ -184,6 +185,78 @@ Returns ARK ETF intraday trades
 }
 ```
 
+## ETF News
+
+    GET /etf/news
+
+Returns ARK ETF news
+
+### Query Parameters
+
+| Parameter | Required | Valid values                                   | Default value |
+| --------- | :------: | ---------------------------------------------- | ------------- |
+| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
+| date      |    NO    | ISO 8601 Calendar date                         |               |
+| date_to   |    NO    | ISO 8601 Calendar date                         |               |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v1/etf/news?symbol=ARKG&date_from=2021-03-31&date_to=2021-04-02
+
+#### Response
+
+``` json
+{
+  "symbol": "ARKG",
+  "date_from": "2021-03-31",
+  "date_to": "2021-04-02",
+  "news": [
+    {
+      "id": 42,
+      "datetime": "2021-04-02T07:27:32+00:00",
+      "related": "ARKG",
+      "source": "seekingalpha.com",
+      "headline": "ARK Genomic Revolution Multi-Sector ETF: Poised For Continued Underperformance",
+      "summary": "I am neutral on the ETF. For short-term gains, investors may wish to look elsewhere.",
+      "url": "https://seekingalpha.com/article/4417325-ark-genomic-revolution-multi-sector-etf-underperformance",
+      "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/842211270/medium_image_842211270.jpg"
+    },
+    {
+      "id": 568,
+      "datetime": "2021-03-31T22:53:00+00:00",
+      "related": "ARKG",
+      "source": "Benzinga",
+      "headline": "Pinduoduo, Shopify PayPal, LendingTree, JD.com — What Cathy Wood's Ark Bought And Sold On Wednesday",
+      "summary": "Cathie Wood’s Ark Investment Management sends out an email every night listing the stocks that were bought or sold by the firm's ETFs that day. In recent months, the...",
+      "url": "https://www.benzinga.com/news/21/03/20438462/pinduoduo-shopify-paypal-lendingtree-jd-com-what-cathy-woods-ark-bought-and-sold-on-wednesday",
+      "image": "https://cdn.benzinga.com/files/imagecache/og_image_social_share_1200x630/images/story/2012/micheile-henderson-lz_4npfkcv8-unsplash_7.jpg"
+    },
+    {
+      "id": 569,
+      "datetime": "2021-03-31T12:05:09+00:00",
+      "related": "ARKG",
+      "source": "DowJones",
+      "headline": "UPDATE: Fauci says vaccines are offering protection against new, more infectious COVID variants",
+      "summary": "Dr. Anthony Fauci, head of the National Institute of Allergy and Infectious Diseases and President Joe Biden's chief medical officer, said Wednesday the...",
+      "url": "https://www.marketwatch.com/story/white-house-coronavirus-team-says-90-of-american-adults-will-be-eligible-for-vaccine-by-april-19-2021-03-31",
+      "image": "https://s.wsj.net/public/resources/MWimages/MW-GP644_MicroS_ZG_20180906154215.jpg"
+    },
+    {
+      "id": 570,
+      "datetime": "2021-03-31T11:01:00+00:00",
+      "related": "ARKG",
+      "source": "DowJones",
+      "headline": "Russia registers ‘world’s first’ COVID-19 vaccine for dogs, cats and other animals",
+      "summary": "Russia has registered the world’s first COVID-19 vaccine for animals, the country’s agricultural regulator said on Wednesday.",
+      "url": "https://www.marketwatch.com/story/russia-registers-worlds-first-covid-19-vaccine-for-animals-11617202893",
+      "image": "https://images.mktw.net/im-318622/social"
+    }
+  ]
+}
+```
+
 ## Stock Profile
 
     GET /stock/profile
@@ -193,8 +266,8 @@ Returns Stock profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-|-----------|:--------:|--------------|---------------|
-| symbol    | YES      |              |               |
+| --------- | :------: | ------------ | ------------- |
+| symbol    |   YES    |              |               |
 
 ### Example
 
@@ -231,11 +304,11 @@ Returns Stock Trades
 ### Query Parameters
 
 | Parameter | Required | Valid values           | Default value |
-|-----------|:--------:|------------------------|---------------|
-| symbol    | YES      |                        |               |
-| direction | NO       | buy, sell              |               |
-| date_from | NO       | ISO 8601 Calendar date |               |
-| date_to   | NO       | ISO 8601 Calendar date |               |
+| --------- | :------: | ---------------------- | ------------- |
+| symbol    |   YES    |                        |               |
+| direction |    NO    | buy, sell              |               |
+| date_from |    NO    | ISO 8601 Calendar date |               |
+| date_to   |    NO    | ISO 8601 Calendar date |               |
 
 ### Example
 
@@ -299,8 +372,8 @@ Returns ARK Fund Ownership
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-|-----------|:--------:|--------------|---------------|
-| symbol    | YES      |              |               |
+| --------- | :------: | ------------ | ------------- |
+| symbol    |   YES    |              |               |
 
 ### Example
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timezone
 from dateutil.relativedelta import relativedelta
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, Query
@@ -14,6 +14,7 @@ from ..config import (
     STOCK_PROFILE_EXAMPLE,
     FUND_OWNERSHIP_EXAMPLE,
     STOCK_TRADES_EXAMPLE,
+    ETF_NEWS_EXAMPLE,
 )
 
 v1 = APIRouter()
@@ -63,7 +64,7 @@ async def etf_holdings(
     symbol: str = Query(..., description="ARK Fund symbol"),
     holding_date: Optional[str] = Query(
         None,
-        regex="^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$",
+        regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$",
         description="Fund holding date in ISO 8601 format",
         alias="date",
     ),
@@ -101,7 +102,7 @@ async def etf_trades(
     symbol: str,
     period: str = Query(
         "1d",
-        regex="(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)",
+        regex=r"(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)",
         description="Valid periods: 1d, 7d, 1m, 3m, 1y, ytd",
     ),
     db: Session = Depends(get_db),
@@ -149,6 +150,69 @@ async def etf_trades(
 
 
 @v1.get(
+    "/etf/news",
+    responses={200: {"content": {"application/json": {"example": ETF_NEWS_EXAMPLE}}}},
+    response_model=schemas.FundNews,
+    summary="ETF News",
+    tags=["ARK ETFs"],
+)
+async def etf_news(
+    symbol: Optional[str] = Query(None, regex=r"^\S+$"),
+    date_from: Optional[date] = Query(None),
+    date_to: Optional[date] = Query(None),
+    db: Session = Depends(get_db),
+):
+    if symbol:
+        symbol = symbol.upper()
+        if symbol not in FUNDS:
+            raise HTTPException(
+                status_code=404,
+                detail="Fund must be one of: {}".format(", ".join(FUNDS)),
+            )
+
+    min_date = crud.get_etf_news_min_date(db, symbol)
+
+    if not date_from:
+        date_from = min_date
+    else:
+        dt_from = datetime(
+            year=date_from.year,
+            month=date_from.month,
+            day=date_from.day,
+            hour=0,
+            second=0,
+        )
+        date_from = int(dt_from.replace(tzinfo=timezone.utc).timestamp())
+
+    if not date_to:
+        date_to = int(datetime.now().replace(tzinfo=timezone.utc).timestamp())
+    else:
+        dt_to = datetime(
+            year=date_to.year, month=date_to.month, day=date_to.day, hour=23, second=59
+        )
+        date_to = int(dt_to.replace(tzinfo=timezone.utc).timestamp())
+
+    news = crud.get_etf_news(db, symbol=symbol, date_from=date_from, date_to=date_to)
+
+    if len(news) == 500:
+        res_dates = []
+
+        for n in news:
+            res_dates.append(n.datetime)
+
+        date_from = min(res_dates)
+
+    data = {
+        "symbol": symbol,
+        "date_from": date_from,
+        "date_to": date_to,
+        "news": news,
+    }
+
+    return data
+
+
+@v1.get(
     "/stock/profile",
     responses={
         200: {"content": {"application/json": {"example": STOCK_PROFILE_EXAMPLE}}}
@@ -157,7 +221,7 @@ async def etf_trades(
     summary="Stock Profile",
     tags=["Stock"],
 )
-async def stock_profile(symbol: str = Query(..., regex="^\S+$")):
+async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     symbol = symbol.upper()
 
     yf = Ticker(symbol)
@@ -236,10 +300,10 @@ async def stock_trades(
     symbol: str,
     direction: Optional[str] = Query(None, regex="^buy|sell$"),
     date_from: Optional[str] = Query(
-        None, regex="^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
+        None, regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
     ),
     date_to: Optional[str] = Query(
-        None, regex="^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
+        None, regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
     ),
     db: Session = Depends(get_db),
 ):
