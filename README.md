@@ -7,17 +7,17 @@ ReDoc: <https://arkfunds.io/api/docs>
 
 ## Endpoints
 
-- **[<code>GET</code> ARK ETF Profile](#etf-profile)**
-- **[<code>GET</code> ARK ETF Holdings](#etf-holdings)**
-- **[<code>GET</code> ARK ETF Trades](#etf-trades)**
-- **[<code>GET</code> ARK ETF News](#etf-news)**
+- **[<code>GET</code> ETF Profile](#etf-profile)**
+- **[<code>GET</code> ETF Holdings](#etf-holdings)**
+- **[<code>GET</code> ETF Trades](#etf-trades)**
+- **[<code>GET</code> ETF News](#etf-news)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
 - **[<code>GET</code> Stock Trades](#stock-trades)**
-- **[<code>GET</code> ARK Fund Ownership](#ark-fund-ownership)**
+- **[<code>GET</code> Stock Fund Ownership](#ark-fund-ownership)**
 
 ## ETF Profile
 
-    GET /etf/profile
+    GET /v1/etf/profile
 
 Returns ARK ETF profile information
 
@@ -52,7 +52,7 @@ Returns ARK ETF profile information
 
 ## ETF Holdings
 
-    GET /etf/holdings
+    GET /v1/etf/holdings
 
 Returns ARK ETF holdings
 
@@ -121,7 +121,7 @@ Returns ARK ETF holdings
 
 ## ETF Trades
 
-    GET /etf/trades
+    GET /v1/etf/trades
 
 Returns ARK ETF intraday trades
 
@@ -187,7 +187,7 @@ Returns ARK ETF intraday trades
 
 ## ETF News
 
-    GET /etf/news
+    GET /v1/etf/news
 
 Returns ARK ETF news
 
@@ -259,7 +259,7 @@ Returns ARK ETF news
 
 ## Stock Profile
 
-    GET /stock/profile
+    GET /v1/stock/profile
 
 Returns Stock profile information
 
@@ -297,7 +297,7 @@ Returns Stock profile information
 
 ## Stock Trades
 
-    GET /stock/trades
+    GET /v1/stock/trades
 
 Returns Stock Trades
 
@@ -363,11 +363,11 @@ Returns Stock Trades
 }
 ```
 
-## ARK Fund Ownership
+## Stock Fund Ownership
 
-    GET /stock/fund-ownership
+    GET /v1/stock/fund-ownership
 
-Returns ARK Fund Ownership
+Returns Stock Fund Ownership
 
 ### Query Parameters
 
