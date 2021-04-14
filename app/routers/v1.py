@@ -8,13 +8,13 @@ from ..database import SessionLocal
 from .. import schemas, crud
 from ..config import (
     FUNDS,
-    FUNDS_EXAMPLE,
-    HOLDINGS_FUND_EXAMPLE,
-    TRADES_FUND_EXAMPLE,
-    STOCK_PROFILE_EXAMPLE,
-    FUND_OWNERSHIP_EXAMPLE,
-    STOCK_TRADES_EXAMPLE,
+    ETF_PROFILE_EXAMPLE,
+    ETF_HOLDINGS_EXAMPLE,
+    ETF_TRADES_EXAMPLE,
     ETF_NEWS_EXAMPLE,
+    STOCK_PROFILE_EXAMPLE,
+    STOCK_FUND_OWNERSHIP_EXAMPLE,
+    STOCK_TRADES_EXAMPLE,
 )
 
 v1 = APIRouter()
@@ -30,9 +30,11 @@ def get_db():
 
 @v1.get(
     "/etf/profile",
-    responses={200: {"content": {"application/json": {"example": FUNDS_EXAMPLE}}}},
+    responses={
+        200: {"content": {"application/json": {"example": ETF_PROFILE_EXAMPLE}}}
+    },
     response_model=schemas.FundProfile,
-    summary="ARK Fund Profile",
+    summary="ETF Profile",
     tags=["ARK ETFs"],
 )
 async def etf_profile(
@@ -54,14 +56,14 @@ async def etf_profile(
 @v1.get(
     "/etf/holdings",
     responses={
-        200: {"content": {"application/json": {"example": HOLDINGS_FUND_EXAMPLE}}}
+        200: {"content": {"application/json": {"example": ETF_HOLDINGS_EXAMPLE}}}
     },
     response_model=schemas.FundHolding,
-    summary="ARK Fund Holdings",
+    summary="ETF Holdings",
     tags=["ARK ETFs"],
 )
 async def etf_holdings(
-    symbol: str = Query(..., description="ARK Fund symbol"),
+    symbol: str,
     holding_date: Optional[str] = Query(
         None,
         regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$",
@@ -91,12 +93,10 @@ async def etf_holdings(
 
 @v1.get(
     "/etf/trades",
-    responses={
-        200: {"content": {"application/json": {"example": TRADES_FUND_EXAMPLE}}}
-    },
+    responses={200: {"content": {"application/json": {"example": ETF_TRADES_EXAMPLE}}}},
     response_model=schemas.FundTrades,
     tags=["ARK ETFs"],
-    summary="ARK Fund Trades",
+    summary="ETF Trades",
 )
 async def etf_trades(
     symbol: str,
@@ -259,10 +259,12 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
 @v1.get(
     "/stock/fund-ownership",
     responses={
-        200: {"content": {"application/json": {"example": FUND_OWNERSHIP_EXAMPLE}}}
+        200: {
+            "content": {"application/json": {"example": STOCK_FUND_OWNERSHIP_EXAMPLE}}
+        }
     },
     response_model=schemas.FundOwnership,
-    summary="ARK Fund Ownership",
+    summary="Stock Fund Ownership",
     tags=["Stock"],
 )
 async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
@@ -293,7 +295,7 @@ async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
         200: {"content": {"application/json": {"example": STOCK_TRADES_EXAMPLE}}}
     },
     response_model=schemas.StockTrades,
-    summary="ARK Stock Trades",
+    summary="Stock Trades",
     tags=["Stock"],
 )
 async def stock_trades(

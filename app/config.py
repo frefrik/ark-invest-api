@@ -35,7 +35,7 @@ FUND_HOLDINGS_FILES = {
 }
 
 # Example json output
-HOLDINGS_FUND_EXAMPLE = {
+ETF_HOLDINGS_EXAMPLE = {
     "symbol": "ARKK",
     "date": "2021-01-06",
     "holdings": [
@@ -87,7 +87,7 @@ HOLDINGS_FUND_EXAMPLE = {
     ],
 }
 
-TRADES_FUND_EXAMPLE = {
+ETF_TRADES_EXAMPLE = {
     "symbol": "ARKK",
     "date_from": "2021-01-14",
     "date_to": "2021-01-14",
@@ -115,7 +115,7 @@ TRADES_FUND_EXAMPLE = {
     ],
 }
 
-FUNDS_EXAMPLE = {
+ETF_PROFILE_EXAMPLE = {
     "profile": [
         {
             "symbol": "ARKK",
@@ -146,7 +146,7 @@ STOCK_PROFILE_EXAMPLE = {
     "sharesOutstanding": 947900992,
 }
 
-FUND_OWNERSHIP_EXAMPLE = {
+STOCK_FUND_OWNERSHIP_EXAMPLE = {
     "symbol": "TDOC",
     "date": "2021-01-15",
     "ownership": [
