@@ -13,7 +13,7 @@ ReDoc: <https://arkfunds.io/api/docs>
 - **[<code>GET</code> ETF News](#etf-news)**
 - **[<code>GET</code> Stock Profile](#stock-profile)**
 - **[<code>GET</code> Stock Trades](#stock-trades)**
-- **[<code>GET</code> Stock Fund Ownership](#ark-fund-ownership)**
+- **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership)**
 
 ## ETF Profile
 
