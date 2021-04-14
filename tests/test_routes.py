@@ -22,7 +22,7 @@ def test_etf_profile_inexistent_item(client):
     response = client.get("/api/v1/etf/profile?symbol=ARK")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "Fund must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
+        "detail": "symbol must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
     }
 
 
@@ -35,7 +35,7 @@ def test_etf_holdings_inexistent_item(client):
     response = client.get("/api/v1/etf/holdings?symbol=ARK")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "Symbol must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
+        "detail": "symbol must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
     }
 
 
@@ -48,7 +48,7 @@ def test_etf_trades_inexistent_item(client):
     response = client.get("/api/v1/etf/trades?symbol=ARK")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "Fund must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
+        "detail": "symbol must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
     }
 
 
@@ -61,7 +61,7 @@ def test_etf_news_inexistent_item(client):
     response = client.get("/api/v1/etf/news?symbol=TSLA")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "Fund must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
+        "detail": "symbol must be one of: ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL"
     }
 
 
@@ -73,7 +73,7 @@ def test_stock_profile(client):
 def test_stock_profile_inexistent_item(client):
     response = client.get("/api/v1/stock/profile?symbol=TSLAS")
     assert response.status_code == 404
-    assert response.json() == {"detail": "Ticker TSLAS not found."}
+    assert response.json() == {"detail": "symbol TSLAS not found."}
 
 
 def test_stock_fund_ownership(client):

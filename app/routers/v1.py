@@ -38,14 +38,15 @@ def get_db():
     tags=["ARK ETFs"],
 )
 async def etf_profile(
-    symbol: Optional[str] = Query(None, regex="^\S+$"), db: Session = Depends(get_db)
+    symbol: Optional[str] = Query(None, regex=r"^\S+$"),
+    db: Session = Depends(get_db),
 ):
     if symbol:
         symbol = symbol.upper()
         if symbol not in FUNDS:
             raise HTTPException(
                 status_code=404,
-                detail="Fund must be one of: {}".format(", ".join(FUNDS)),
+                detail="symbol must be one of: {}".format(", ".join(FUNDS)),
             )
 
     profile = crud.get_etf_profile(db, symbol=symbol)
@@ -63,10 +64,9 @@ async def etf_profile(
     tags=["ARK ETFs"],
 )
 async def etf_holdings(
-    symbol: str,
-    holding_date: Optional[str] = Query(
+    symbol: str = Query(..., regex=r"^\S+$"),
+    holding_date: Optional[date] = Query(
         None,
-        regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$",
         description="Fund holding date in ISO 8601 format",
         alias="date",
     ),
@@ -76,7 +76,7 @@ async def etf_holdings(
 
     if symbol not in FUNDS:
         raise HTTPException(
-            status_code=404, detail="Symbol must be one of: {}".format(", ".join(FUNDS))
+            status_code=404, detail="symbol must be one of: {}".format(", ".join(FUNDS))
         )
 
     maxdate = crud.get_etf_holdings_maxdate(db, symbol=symbol)
@@ -99,7 +99,7 @@ async def etf_holdings(
     summary="ETF Trades",
 )
 async def etf_trades(
-    symbol: str,
+    symbol: str = Query(..., regex=r"^\S+$"),
     period: str = Query(
         "1d",
         regex=r"(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)",
@@ -111,7 +111,7 @@ async def etf_trades(
 
     if symbol not in FUNDS:
         raise HTTPException(
-            status_code=404, detail="Fund must be one of: {}".format(", ".join(FUNDS))
+            status_code=404, detail="symbol must be one of: {}".format(", ".join(FUNDS))
         )
 
     dates = crud.get_etf_trades_dates(db, symbol=symbol)
@@ -167,7 +167,7 @@ async def etf_news(
         if symbol not in FUNDS:
             raise HTTPException(
                 status_code=404,
-                detail="Fund must be one of: {}".format(", ".join(FUNDS)),
+                detail="symbol must be one of: {}".format(", ".join(FUNDS)),
             )
 
     min_date = crud.get_etf_news_min_date(db, symbol)
@@ -232,7 +232,7 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
         "No fundamentals data found" in asset_profile[symbol]
         or "Quote not found" in asset_profile[symbol]
     ):
-        raise HTTPException(status_code=404, detail=f"Ticker {symbol} not found.")
+        raise HTTPException(status_code=404, detail=f"symbol {symbol} not found.")
 
     quotes = quotes[symbol]
     asset_profile = asset_profile[symbol]
@@ -267,7 +267,9 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     summary="Stock Fund Ownership",
     tags=["Stock"],
 )
-async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
+async def stock_fundownership(
+    symbol: str = Query(..., regex=r"^\S+$"), db: Session = Depends(get_db)
+):
     symbol = symbol.upper()
 
     ownership = crud.get_stock_fundownership(db, symbol=symbol)
@@ -299,14 +301,10 @@ async def stock_fundownership(symbol: str, db: Session = Depends(get_db)):
     tags=["Stock"],
 )
 async def stock_trades(
-    symbol: str,
-    direction: Optional[str] = Query(None, regex="^buy|sell$"),
-    date_from: Optional[str] = Query(
-        None, regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
-    ),
-    date_to: Optional[str] = Query(
-        None, regex=r"^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$"
-    ),
+    symbol: str = Query(..., regex=r"^\S+$"),
+    direction: Optional[str] = Query(None, regex=r"^buy|sell$"),
+    date_from: Optional[date] = Query(None),
+    date_to: Optional[date] = Query(None),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
