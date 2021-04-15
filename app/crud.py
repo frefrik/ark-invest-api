@@ -7,7 +7,7 @@ def get_etf_profile(db: Session, symbol: str):
     if symbol:
         return db.query(Fund).filter(Fund.symbol == symbol).all()
     else:
-        return db.query(Fund).all()
+        return db.query(Fund).order_by(Fund.symbol).all()
 
 
 def get_etf_holdings(db: Session, symbol: str, holding_date: str):
