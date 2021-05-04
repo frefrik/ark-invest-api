@@ -87,7 +87,7 @@ scheduler.add_job(
     update_trades,
     "cron",
     day_of_week="1-5",
-    hour="0-2",
+    hour="0-3",
     minute=f"*/{UPDATE_INTERVAL_TRADES}",
 )
 
