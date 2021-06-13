@@ -1,5 +1,9 @@
 # ARK Invest API
 
+API for tracking holdings and trades of [ARK Invest funds](https://ark-funds.com/).
+
+Endpoint Status: https://status.arkfunds.io
+
 ## Documentation
 
 Swagger UI: <https://arkfunds.io/api>  
