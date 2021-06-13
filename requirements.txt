@@ -1,4 +1,4 @@
-aiofiles==0.6.0
+aiofiles==0.7.0
 APScheduler==3.7.0
 beautifulsoup4==4.9.3
 fastapi==0.65.2
