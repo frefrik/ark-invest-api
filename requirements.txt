@@ -4,7 +4,7 @@ beautifulsoup4==4.9.3
 fastapi==0.65.2
 lxml==4.6.3
 pandas==1.2.4
-psycopg2==2.8.6
+psycopg2==2.9
 python-dotenv==0.17.1
 requests==2.25.1
 SQLAlchemy==1.4.18
