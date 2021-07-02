@@ -1,6 +1,3 @@
-# Data update interval (minutes)
-UPDATE_INTERVAL_TRADES = 10
-
 # Custom OpenAPI
 OPENAPI_TITLE = "ARK Invest API"
 OPENAPI_API_VERSION = "1.2.1"
@@ -14,25 +11,6 @@ OPENAPI_EXTERNALDOCS_URL = "https://github.com/frefrik/ark-invest-api"
 
 # ARK settings
 FUNDS = ["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "IZRL"]
-
-BASE_URL_HOLDINGS = "https://ark-funds.com/wp-content/fundsiteliterature/csv/"
-BASE_URL_TRADES = "https://ark-funds.com/auto/trades/"
-TRADE_STATUS_URL = "https://ark-funds.com/auto/getidt.php"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0",
-}
-
-FUND_HOLDINGS_FILES = {
-    "ARKK": "ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv",
-    "ARKQ": "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS.csv",
-    "ARKW": "ARK_NEXT_GENERATION_INTERNET_ETF_ARKW_HOLDINGS.csv",
-    "ARKG": "ARK_GENOMIC_REVOLUTION_MULTISECTOR_ETF_ARKG_HOLDINGS.csv",
-    "ARKF": "ARK_FINTECH_INNOVATION_ETF_ARKF_HOLDINGS.csv",
-    "ARKX": "ARK_SPACE_EXPLORATION_&_INNOVATION_ETF_ARKX_HOLDINGS.csv",
-    "PRNT": "THE_3D_PRINTING_ETF_PRNT_HOLDINGS.csv",
-    "IZRL": "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv",
-}
 
 # Example json output
 ETF_HOLDINGS_EXAMPLE = {

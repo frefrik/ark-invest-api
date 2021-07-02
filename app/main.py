@@ -3,11 +3,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .database import engine
 from .models import Base
 from .routers import v1
-from .tasks import update_etf_news, update_trades, update_holdings
 from .config import (
     OPENAPI_API_VERSION,
     OPENAPI_CONTACT,
@@ -18,13 +16,9 @@ from .config import (
     OPENAPI_SERVER_BASEPATH,
     OPENAPI_SERVER_URL,
     OPENAPI_TITLE,
-    UPDATE_INTERVAL_TRADES,
 )
 
 Base.metadata.create_all(bind=engine)
-
-scheduler = AsyncIOScheduler()
-scheduler.start()
 
 app = FastAPI()
 
@@ -40,7 +34,6 @@ async def read_items():
 api = FastAPI(
     docs_url="/",
     redoc_url="/docs",
-    on_shutdown=[scheduler.shutdown],
     openapi_url="/openapi.json",
 )
 
@@ -81,29 +74,6 @@ api.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
-)
-
-scheduler.add_job(
-    update_trades,
-    "cron",
-    day_of_week="*",
-    hour="*",
-    minute=f"*/{UPDATE_INTERVAL_TRADES}",
-)
-
-scheduler.add_job(
-    update_holdings,
-    "cron",
-    day_of_week="*",
-    hour="*",
-    minute="0",
-)
-
-scheduler.add_job(
-    update_etf_news,
-    "cron",
-    hour="*",
-    minute="*/10",
 )
 
 api.include_router(v1, prefix="/v1")
