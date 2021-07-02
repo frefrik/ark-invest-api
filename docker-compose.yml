@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  fastapi:
+    build: .
+    container_name: ark-invest-api
+    restart: always
+    expose:
+      - 80
+    environment:
+      - WORKERS_PER_CORE=3
+      - MAX_WORKERS=6
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fastapi.rule=Host(`arkfunds.io`)"
+      - "traefik.http.routers.fastapi.tls=true"
+      - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
+  traefik:
+    image: traefik:2.5
+    container_name: traefik
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik.toml:/etc/traefik/traefik.toml"
+      - "./traefik-public-certificates:/certificates"
+
+volumes:
+  traefik-public-certificates:
