@@ -26,10 +26,10 @@ Base.metadata.create_all(bind=engine)
 scheduler = AsyncIOScheduler()
 scheduler.start()
 
-APP = FastAPI()
+app = FastAPI()
 
 
-@APP.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def read_items():
     with open("app/static/index.html") as f:
         html_content = f.read()
@@ -107,5 +107,5 @@ scheduler.add_job(
 )
 
 api.include_router(v1, prefix="/v1")
-APP.mount("/api", api)
-APP.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
+app.mount("/api", api)
+app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
