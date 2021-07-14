@@ -7,7 +7,7 @@ pandas==1.2.5
 psycopg2==2.9.1
 python-dotenv==0.18.0
 requests==2.25.1
-SQLAlchemy==1.4.20
+SQLAlchemy==1.4.21
 uvicorn==0.14.0
 xlrd==2.0.1
 yahooquery==2.2.15
