@@ -1,7 +1,7 @@
 aiofiles==0.7.0
 APScheduler==3.7.0
 beautifulsoup4==4.9.3
-fastapi==0.65.2
+fastapi==0.67.0
 lxml==4.6.3
 pandas==1.2.5
 psycopg2==2.9.1
