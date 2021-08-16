@@ -11,6 +11,19 @@
     address = ":443"
 
 [accessLog]
+  filePath = "/root/ark-invest-api/access.log"
+  format = "json"
+
+    [accessLog.fields.names]
+      "ClientUsername" = "drop"
+
+    [accessLog.fields.headers]
+      defaultMode = "keep"
+
+      [accessLog.fields.headers.names]
+        "User-Agent" = "keep"
+        "Authorization" = "drop"
+        "Content-Type" = "keep"
 
 [providers]
   [providers.docker]
