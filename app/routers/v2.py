@@ -17,7 +17,7 @@ from ..config import (
     STOCK_TRADES_EXAMPLE,
 )
 
-router = APIRouter(prefix="/v1")
+router = APIRouter(prefix="/v2")
 
 
 def get_db():
@@ -35,7 +35,7 @@ def get_db():
     },
     response_model=schemas.FundProfile,
     summary="ETF Profile",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def etf_profile(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -61,7 +61,7 @@ async def etf_profile(
     },
     response_model=schemas.FundHolding,
     summary="ETF Holdings",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def etf_holdings(
     symbol: str = Query(..., regex=r"^\S+$"),
@@ -95,7 +95,7 @@ async def etf_holdings(
     "/etf/trades",
     responses={200: {"content": {"application/json": {"example": ETF_TRADES_EXAMPLE}}}},
     response_model=schemas.FundTrades,
-    tags=["v1"],
+    tags=["v2"],
     summary="ETF Trades",
 )
 async def etf_trades(
@@ -154,7 +154,7 @@ async def etf_trades(
     responses={200: {"content": {"application/json": {"example": ETF_NEWS_EXAMPLE}}}},
     response_model=schemas.FundNews,
     summary="ETF News",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def etf_news(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -219,7 +219,7 @@ async def etf_news(
     },
     response_model=schemas.StockProfile,
     summary="Stock Profile",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     symbol = symbol.upper()
@@ -265,7 +265,7 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     },
     response_model=schemas.FundOwnership,
     summary="Stock Fund Ownership",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def stock_fundownership(
     symbol: str = Query(..., regex=r"^\S+$"), db: Session = Depends(get_db)
@@ -298,7 +298,7 @@ async def stock_fundownership(
     },
     response_model=schemas.StockTrades,
     summary="Stock Trades",
-    tags=["v1"],
+    tags=["v2"],
 )
 async def stock_trades(
     symbol: str = Query(..., regex=r"^\S+$"),

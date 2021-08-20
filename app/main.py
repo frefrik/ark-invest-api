@@ -5,7 +5,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
 from .models import Base
-from .routers import v1
+from .routers import v1, v2
 from .config import (
     OPENAPI_API_VERSION,
     OPENAPI_CONTACT,
@@ -76,6 +76,8 @@ api.add_middleware(
     allow_headers=["*"],
 )
 
-api.include_router(v1, prefix="/v1")
+
+api.include_router(v2.router)
+api.include_router(v1.router)
 app.mount("/api", api)
 app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
