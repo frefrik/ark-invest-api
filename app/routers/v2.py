@@ -65,8 +65,9 @@ async def etf_profile(
 )
 async def etf_holdings(
     symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = Query(None),
-    date_to: Optional[date] = Query(None),
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    limit: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -95,7 +96,7 @@ async def etf_holdings(
             date_from = date_to
 
         holdings = crud.get_etf_holdings(
-            db, symbol=symbol, date_from=date_from, date_to=date_to
+            db, symbol=symbol, date_from=date_from, date_to=date_to, limit=limit
         )
 
         data["date_from"] = date_from
@@ -114,8 +115,9 @@ async def etf_holdings(
 )
 async def etf_trades(
     symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = Query(None),
-    date_to: Optional[date] = Query(None),
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    limit: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -141,7 +143,7 @@ async def etf_trades(
             date_from = trade_dates.mindate
 
         trades = crud.get_etf_trades(
-            db, symbol=symbol, start_date=date_from, end_date=date_to
+            db, symbol=symbol, start_date=date_from, end_date=date_to, limit=limit
         )
 
         data["date_from"] = date_from
@@ -160,8 +162,9 @@ async def etf_trades(
 )
 async def etf_news(
     symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = Query(None),
-    date_to: Optional[date] = Query(None),
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    limit: Optional[int] = 500,
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -200,7 +203,7 @@ async def etf_news(
             date_to = int(dt_to.replace(tzinfo=timezone.utc).timestamp())
 
         news = crud.get_etf_news(
-            db, symbol=symbol, date_from=date_from, date_to=date_to
+            db, symbol=symbol, date_from=date_from, date_to=date_to, limit=limit
         )
 
         if len(news) == 500:
@@ -283,10 +286,12 @@ async def stock_profile(
 )
 async def stock_fundownership(
     symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = Query(None),
-    date_to: Optional[date] = Query(None),
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    limit: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
+    limit_count = 0
     symbol = symbol.upper()
 
     data = {
@@ -314,6 +319,7 @@ async def stock_fundownership(
     )
 
     for d in distinct_dates:
+        limit_count += 1
         o_date = d[0]
         ownership = crud.get_stock_fundownership(db, symbol=symbol, date=o_date)
 
@@ -330,6 +336,9 @@ async def stock_fundownership(
                 "totals": totals,
             }
         )
+
+        if limit and limit_count == limit:
+            break
 
     data["date_from"] = date_from
     data["date_to"] = date_to
@@ -349,8 +358,9 @@ async def stock_fundownership(
 async def stock_trades(
     symbol: str = Query("", regex=r"^\S+$"),
     direction: Optional[str] = Query(None, regex=r"^buy|sell$"),
-    date_from: Optional[date] = Query(None),
-    date_to: Optional[date] = Query(None),
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    limit: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -368,7 +378,12 @@ async def stock_trades(
             date_to = trade_dates.maxdate
 
         trades = crud.get_stock_trades(
-            db, symbol=symbol, direction=direction, date_from=date_from, date_to=date_to
+            db,
+            symbol=symbol,
+            direction=direction,
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
         )
 
         data["trades"] = trades
