@@ -47,10 +47,7 @@ async def etf_profile(
         "symbol": symbol,
     }
 
-    print(data)
-
     if symbol in FUNDS:
-        print("in funds")
         profile = crud.get_etf_profile(db, symbol=symbol)
         data["profile"] = profile
 
