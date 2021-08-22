@@ -5,7 +5,8 @@ from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
 from ..database import SessionLocal
-from .. import schemas, crud
+from ..crud import crud_v1 as crud
+from ..schemas import schemas_v1 as schemas
 from ..config import (
     FUNDS,
     ETF_PROFILE_EXAMPLE,
@@ -17,7 +18,7 @@ from ..config import (
     STOCK_TRADES_EXAMPLE,
 )
 
-router = APIRouter(prefix="/v1")
+router = APIRouter()
 
 
 def get_db():

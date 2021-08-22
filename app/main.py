@@ -77,7 +77,7 @@ api.add_middleware(
 )
 
 
-api.include_router(v2.router)
-api.include_router(v1.router)
+api.include_router(v2.router, prefix="/v2")
+api.include_router(v1.router, prefix="/v1")
 app.mount("/api", api)
 app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
