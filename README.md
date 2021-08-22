@@ -4,6 +4,24 @@ API for tracking holdings and trades of [ARK Invest funds](https://ark-funds.com
 
 Endpoint Status: https://status.arkfunds.io
 
+<details>
+<summary>
+Click here to see a list of ARK ETFs
+</summary>
+
+**Active ETFs**
+- **ARKK** - ARK Innovation ETF
+- **ARKQ** - Autonomous Technology & Robotics ETF
+- **ARKW** - Next Generation Internet ETF
+- **ARKG** - Genomic Revolution ETF
+- **ARKF** - Fintech Innovation ETF
+- **ARKX** - Space Exploration & Innovation ETF
+
+**Index ETFs**
+- **PRNT** - The 3D Printing ETF
+- **IZRL** - Israel Innovative Technology ETF
+</details>
+
 ## Documentation
 
 Swagger UI: <https://arkfunds.io/api>  
@@ -11,15 +29,390 @@ ReDoc: <https://arkfunds.io/api/docs>
 
 ## Endpoints
 
-- **[<code>GET</code> ETF Profile](#etf-profile)**
-- **[<code>GET</code> ETF Holdings](#etf-holdings)**
-- **[<code>GET</code> ETF Trades](#etf-trades)**
-- **[<code>GET</code> ETF News](#etf-news)**
-- **[<code>GET</code> Stock Profile](#stock-profile)**
-- **[<code>GET</code> Stock Trades](#stock-trades)**
-- **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership)**
+<details open>
+<summary>
+<b>V2</b>
+</summary>
 
-## ETF Profile
+- **[<code>GET</code> ETF Profile](#etf-profile-v2)**
+- **[<code>GET</code> ETF Holdings](#etf-holdings-v2)**
+- **[<code>GET</code> ETF Trades](#etf-trades-v2)**
+- **[<code>GET</code> ETF News](#etf-news-v2)**
+- **[<code>GET</code> Stock Profile](#stock-profile-v2)**
+- **[<code>GET</code> Stock Trades](#stock-trades-v2)**
+- **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership-v2)**
+</details>
+
+<details>
+<summary>
+<b>V1</b>
+</summary>
+
+- **[<code>GET</code> ETF Profile](#etf-profile-v1)**
+- **[<code>GET</code> ETF Holdings](#etf-holdings-v1)**
+- **[<code>GET</code> ETF Trades](#etf-trades-v1)**
+- **[<code>GET</code> ETF News](#etf-news-v1)**
+- **[<code>GET</code> Stock Profile](#stock-profile-v1)**
+- **[<code>GET</code> Stock Trades](#stock-trades-v1)**
+- **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership-v1)**
+</details>
+
+## ETF Profile (v2)
+
+    GET /v2/etf/profile
+
+Returns ARK ETF profile information
+
+### Query Parameters
+
+| Parameter | Required | Description    |
+| --------- | :------: | -------------- |
+| symbol    |   YES    | ARK ETF symbol |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/etf/profile?symbol=ARKK
+
+#### Response
+
+``` json
+{
+    "symbol": "ARKK",
+    "profile": {
+        "symbol": "ARKK",
+        "name": "ARK Innovation ETF",
+        "description": "ARKK is an actively managed ETF that seeks long-term growth of capital by investing under normal circumstances primarily (at least 65% of its assets) in domestic and foreign equity securities of companies that are relevant to the Fund’s investment theme of disruptive innovation.",
+        "fund_type": "Active Equity ETF",
+        "inception_date": "2014-10-31",
+        "cusip": "00214Q104",
+        "isin": "US00214Q1040",
+        "website": "https://ark-funds.com/arkk"
+    }
+}
+```
+
+## ETF Holdings (v2)
+
+    GET /v2/etf/holdings
+
+Returns ARK ETF holdings
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| --------- | :------: | --------------------------- |
+| symbol    |   YES    | ARK ETF symbol              |
+| date_from |    NO    | From date (ISO 8601 format) |
+| date_to   |    NO    | To date   (ISO 8601 format) |
+| limit     |    NO    | Limit number of results     |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/etf/holdings?symbol=ARKK&limit=3
+
+#### Response
+
+``` json
+{
+    "symbol": "ARKK",
+    "date_from": "2021-08-20",
+    "date_to": "2021-08-20",
+    "holdings": [{
+        "date": "2021-08-20",
+        "ticker": "TSLA",
+        "company": "TESLA INC",
+        "cusip": "88160R101",
+        "shares": 3256252,
+        "market_value": 2192988034.44,
+        "weight": 10.56,
+        "weight_rank": 1
+    }, {
+        "date": "2021-08-20",
+        "ticker": "TDOC",
+        "company": "TELADOC HEALTH INC",
+        "cusip": "87918A105",
+        "shares": 8555254,
+        "market_value": 1160092442.4,
+        "weight": 5.59,
+        "weight_rank": 2
+    }, {
+        "date": "2021-08-20",
+        "ticker": "ROKU",
+        "company": "ROKU INC",
+        "cusip": "77543R102",
+        "shares": 3269279,
+        "market_value": 1122506944.65,
+        "weight": 5.4,
+        "weight_rank": 3
+    }]
+}
+```
+
+## ETF Trades (v2)
+
+    GET /v2/etf/trades
+
+Returns ARK ETF intraday trades
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| --------- | :------: | --------------------------- |
+| symbol    |   YES    | ARK ETF symbol              |
+| date_from |    NO    | From date (ISO 8601 format) |
+| date_to   |    NO    | To date   (ISO 8601 format) |
+| limit     |    NO    | Limit number of results     |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/etf/trades?symbol=ARKK&limit=3
+
+#### Response
+
+``` json
+{
+    "symbol": "ARKK",
+    "date_from": "2021-08-20",
+    "date_to": "2021-08-20",
+    "trades": [{
+        "date": "2021-08-20",
+        "ticker": "BEAM",
+        "company": "BEAM THERAPEUTICS INC",
+        "direction": "Buy",
+        "cusip": "07373V105",
+        "shares": 5190,
+        "etf_percent": 0.0025
+    }, {
+        "date": "2021-08-20",
+        "ticker": "FATE",
+        "company": "FATE THERAPEUTICS INC",
+        "direction": "Buy",
+        "cusip": "31189P102",
+        "shares": 292854,
+        "etf_percent": 0.0982
+    }, {
+        "date": "2021-08-20",
+        "ticker": "SGFY",
+        "company": "SIGNIFY HEALTH INC",
+        "direction": "Buy",
+        "cusip": "82671G100",
+        "shares": 18900,
+        "etf_percent": 0.0023
+    }]
+}
+```
+
+## ETF News (v2)
+
+    GET /v2/etf/news
+
+Returns ARK ETF news
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| --------- | :------: | --------------------------- |
+| symbol    |   YES    | ARK ETF symbol              |
+| date_from |    NO    | From date (ISO 8601 format) |
+| date_to   |    NO    | To date   (ISO 8601 format) |
+| limit     |    NO    | Limit number of results     |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/etf/news?symbol=ARKG&date_from=2021-04-02&date_to=2021-04-05
+
+#### Response
+
+``` json
+{
+    "symbol": "ARKG",
+    "date_from": "2021-04-02",
+    "date_to": "2021-04-05",
+    "news": [{
+        "id": 41,
+        "datetime": "2021-04-05T12:03:00+00:00",
+        "related": "ARKG",
+        "source": "MarketWatch",
+        "headline": "Tesla is on fire, but these EV-related stocks could end up just as hot",
+        "summary": "There are many ways to play the electric-vehicle industry as it grows exponentially.",
+        "url": "https://www.marketwatch.com/story/tesla-is-on-fire-but-these-ev-related-stocks-could-end-up-just-as-hot-11617638639",
+        "image": "https://images.mktw.net/im-320482/social"
+    }, {
+        "id": 42,
+        "datetime": "2021-04-02T07:27:32+00:00",
+        "related": "ARKG",
+        "source": "seekingalpha.com",
+        "headline": "ARK Genomic Revolution Multi-Sector ETF: Poised For Continued Underperformance",
+        "summary": "I am neutral on the ETF. For short-term gains, investors may wish to look elsewhere.",
+        "url": "https://seekingalpha.com/article/4417325-ark-genomic-revolution-multi-sector-etf-underperformance",
+        "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/842211270/medium_image_842211270.jpg"
+    }]
+}
+```
+
+## Stock Profile (v2)
+
+    GET /v2/stock/profile
+
+Returns Stock profile information
+
+### Query Parameters
+
+| Parameter | Required | Description  |
+| --------- | :------: | ------------ |
+| symbol    |   YES    | Stock symbol |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/stock/profile?symbol=TSLA
+
+#### Response
+
+``` json
+{
+    "symbol": "TSLA",
+    "profile": {
+        "ticker": "TSLA",
+        "name": "Tesla, Inc.",
+        "country": "United States",
+        "industry": "Auto Manufacturers",
+        "sector": "Consumer Cyclical",
+        "fullTimeEmployees": 70757,
+        "summary": "Tesla, Inc. designs, develops, manufactures, leases, and sells electric vehicles, and energy generation and storage systems in the United States, China, and internationally. The company operates in two segments, Automotive, and Energy Generation and Storage. The Automotive segment offers electric vehicles, as well as sells automotive regulatory credits. It provides sedans and sport utility vehicles through direct and used vehicle sales, a network of Tesla Superchargers, and in-app upgrades; and purchase financing and leasing services. This segment is also involved in the provision of non-warranty after-sales vehicle services, sale of used vehicles, retail merchandise, and vehicle insurance, as well as sale of products through its subsidiaries to third party customers; services for electric vehicles through its company-owned service locations, and Tesla mobile service technicians; and vehicle limited warranties and extended service plans. The Energy Generation and Storage segment engages in the design, manufacture, installation, sale, and leasing of solar energy generation and energy storage products, and related services to residential, commercial, and industrial customers and utilities through its website, stores, and galleries, as well as through a network of channel partners. This segment also offers service and repairs to its energy product customers, including under warranty; and various financing options to its solar customers. The company was formerly known as Tesla Motors, Inc. and changed its name to Tesla, Inc. in February 2017. Tesla, Inc. was founded in 2003 and is headquartered in Palo Alto, California.",
+        "website": "http://www.tesla.com",
+        "market": "us_market",
+        "exchange": "NasdaqGS",
+        "currency": "USD",
+        "marketCap": 673467596800.0,
+        "sharesOutstanding": 990014976
+    }
+}
+```
+
+## Stock Trades (v2)
+
+    GET /v2/stock/trades
+
+Returns Stock Trades
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| --------- | :------: | --------------------------- |
+| symbol    |   YES    | Stock symbol                |
+| direction |    NO    | Filter on buy/sell          |
+| date_from |    NO    | From date (ISO 8601 format) |
+| date_to   |    NO    | To date   (ISO 8601 format) |
+| limit     |    NO    | Limit number of results     |
+
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/stock/trades?symbol=TSLA&date_from=2021-08-01&direction=sell
+
+#### Response
+
+``` json
+{
+    "symbol": "TSLA",
+    "date_from": "2021-08-01",
+    "date_to": "2021-08-05",
+    "trades": [{
+        "date": "2021-08-05",
+        "fund": "ARKK",
+        "direction": "Sell",
+        "shares": 144200,
+        "etf_percent": 0.4478
+    }, {
+        "date": "2021-08-05",
+        "fund": "ARKW",
+        "direction": "Sell",
+        "shares": 19558,
+        "etf_percent": 0.2365
+    }, {
+        "date": "2021-08-04",
+        "fund": "ARKW",
+        "direction": "Sell",
+        "shares": 8100,
+        "etf_percent": 0.0989
+    }]
+}
+```
+
+## Stock Fund Ownership (v2)
+
+    GET /v2/stock/fund-ownership
+
+Returns Stock Fund Ownership
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| --------- | :------: | --------------------------- |
+| symbol    |   YES    | Stock symbol                |
+| date_from |    NO    | From date (ISO 8601 format) |
+| date_to   |    NO    | To date   (ISO 8601 format) |
+| limit     |    NO    | Limit number of results     |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/stock/fund-ownership?symbol=TSLA
+
+#### Response
+
+``` json
+{
+    "symbol": "TSLA",
+    "date_from": "2021-08-20",
+    "date_to": "2021-08-20",
+    "data": [{
+        "date": "2021-08-20",
+        "ownership": [{
+            "date": "2021-08-20",
+            "fund": "ARKK",
+            "weight": 10.56,
+            "weight_rank": 1,
+            "shares": 3256252,
+            "market_value": 2192988034.44
+        }, {
+            "date": "2021-08-20",
+            "fund": "ARKQ",
+            "weight": 11.93,
+            "weight_rank": 1,
+            "shares": 458874,
+            "market_value": 309037872.78
+        }, {
+            "date": "2021-08-20",
+            "fund": "ARKW",
+            "weight": 10.38,
+            "weight_rank": 1,
+            "shares": 843781,
+            "market_value": 568261190.07
+        }],
+        "totals": {
+            "funds": 3,
+            "shares": 4558907,
+            "market_value": 3070287097.2900004
+        }
+    }]
+}
+```
+
+## ETF Profile (v1)
 
     GET /v1/etf/profile
 
@@ -54,7 +447,7 @@ Returns ARK ETF profile information
 }
 ```
 
-## ETF Holdings
+## ETF Holdings (v1)
 
     GET /v1/etf/holdings
 
@@ -123,7 +516,7 @@ Returns ARK ETF holdings
 }
 ```
 
-## ETF Trades
+## ETF Trades (v1)
 
     GET /v1/etf/trades
 
@@ -189,7 +582,7 @@ Returns ARK ETF intraday trades
 }
 ```
 
-## ETF News
+## ETF News (v1)
 
     GET /v1/etf/news
 
@@ -261,7 +654,7 @@ Returns ARK ETF news
 }
 ```
 
-## Stock Profile
+## Stock Profile (v1)
 
     GET /v1/stock/profile
 
@@ -299,7 +692,7 @@ Returns Stock profile information
 }
 ```
 
-## Stock Trades
+## Stock Trades (v1)
 
     GET /v1/stock/trades
 
@@ -367,7 +760,7 @@ Returns Stock Trades
 }
 ```
 
-## Stock Fund Ownership
+## Stock Fund Ownership (v1)
 
     GET /v1/stock/fund-ownership
 
