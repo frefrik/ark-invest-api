@@ -1,39 +1,68 @@
-from sqlalchemy import func, and_, desc
+from sqlalchemy import func, desc
 from sqlalchemy.orm import Session
-from ..models import Fund, Holding, News, Trades
+from app.models import Fund, Holding, News, Trades
 
 
 def get_etf_profile(db: Session, symbol: str):
-    if symbol:
-        return db.query(Fund).filter(Fund.symbol == symbol).all()
-    else:
-        return db.query(Fund).order_by(Fund.symbol).all()
+    return db.query(Fund).filter(Fund.symbol == symbol).one()
 
 
-def get_etf_holdings(db: Session, symbol: str, holding_date: str):
-    return (
-        db.query(Holding)
-        .filter(Holding.fund == symbol, Holding.date == holding_date)
-        .all()
+def get_etf_holdings(
+    db: Session, symbol: str, date_from: str, date_to: str, limit: int
+):
+    q = db.query(
+        Holding.date,
+        Holding.ticker,
+        Holding.company,
+        Holding.cusip,
+        Holding.shares,
+        Holding.market_value,
+        Holding.weight,
+        Holding.weight_rank,
+    ).filter(
+        Holding.fund == symbol,
+        Holding.date >= date_from,
+        Holding.date <= date_to,
     )
+
+    if limit:
+        return q.order_by("date", "weight_rank").limit(limit).all()
+    else:
+        return q.all()
 
 
 def get_etf_holdings_maxdate(db: Session, symbol: str):
     return (
-        db.query(func.max(Holding.date).label("date"))
+        db.query(
+            func.min(Holding.date).label("mindate"),
+            func.max(Holding.date).label("maxdate"),
+        )
         .filter(Holding.fund == symbol)
         .one()
     )
 
 
-def get_etf_trades(db: Session, symbol: str, start_date: str, end_date: str):
-    return (
-        db.query(Trades)
-        .filter(
-            Trades.fund == symbol, Trades.date >= start_date, Trades.date <= end_date
-        )
-        .all()
+def get_etf_trades(
+    db: Session, symbol: str, start_date: str, end_date: str, limit: int
+):
+    q = db.query(
+        Trades.date,
+        Trades.ticker,
+        Trades.company,
+        Trades.direction,
+        Trades.cusip,
+        Trades.shares,
+        Trades.etf_percent,
+    ).filter(
+        Trades.fund == symbol,
+        Trades.date >= start_date,
+        Trades.date <= end_date,
     )
+
+    if limit:
+        return q.limit(limit).all()
+    else:
+        return q.all()
 
 
 def get_etf_trades_dates(db: Session, symbol: str):
@@ -55,34 +84,47 @@ def get_etf_trades_maxdate(db: Session):
     )[0]
 
 
-def get_stock_fundownership(db: Session, symbol: str):
-    subq = (
-        db.query(Holding.fund, func.max(Holding.date).label("maxdate"))
-        .group_by(Holding.fund)
-        .subquery("t2")
+def get_stock_fundownership_distinct_dates(
+    db: Session, symbol: str, date_from: str, date_to: str
+):
+    return (
+        db.query(Holding.date)
+        .filter(
+            Holding.ticker == symbol,
+            Holding.date >= date_from,
+            Holding.date <= date_to,
+        )
+        .distinct()
     )
 
+
+def get_stock_fundownership(db: Session, symbol: str, date: str):
     return (
         db.query(Holding)
-        .join(subq, and_(Holding.date == subq.c.maxdate))
-        .filter(Holding.ticker == symbol)
+        .filter(
+            Holding.ticker == symbol,
+            Holding.date == date,
+        )
         .all()
     )
 
 
-def get_stock_fundownership_maxdate(db: Session, symbol: str):
+def get_stock_fundownership_dates(db: Session, symbol: str):
     return (
-        db.query(func.max(Holding.date).label("maxdate"))
+        db.query(
+            func.min(Holding.date).label("mindate"),
+            func.max(Holding.date).label("maxdate"),
+        )
         .filter(Holding.ticker == symbol)
         .first()
-    )[0]
+    )
 
 
 def get_stock_trades(
-    db: Session, symbol: str, direction: str, date_from: str, date_to: str
+    db: Session, symbol: str, direction: str, date_from: str, date_to: str, limit: int
 ):
     if direction:
-        return (
+        q = (
             db.query(Trades)
             .filter(
                 Trades.ticker == symbol,
@@ -91,10 +133,10 @@ def get_stock_trades(
                 Trades.date <= date_to,
             )
             .order_by(Trades.date.desc(), Trades.fund)
-            .all()
         )
+
     else:
-        return (
+        q = (
             db.query(Trades)
             .filter(
                 Trades.ticker == symbol,
@@ -102,8 +144,12 @@ def get_stock_trades(
                 Trades.date <= date_to,
             )
             .order_by(Trades.date.desc(), Trades.fund)
-            .all()
         )
+
+    if limit:
+        return q.limit(limit).all()
+    else:
+        return q.all()
 
 
 def get_stock_trades_dates(db: Session, symbol: str):
@@ -117,7 +163,7 @@ def get_stock_trades_dates(db: Session, symbol: str):
     )
 
 
-def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
+def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str, limit: int):
     if symbol:
         return (
             db.query(News)
@@ -128,7 +174,7 @@ def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
                 News.related == symbol,
             )
             .order_by(desc("datetime"))
-            .limit(500)
+            .limit(limit)
             .all()
         )
     else:
@@ -140,7 +186,7 @@ def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
                 News.datetime <= date_to,
             )
             .order_by(desc("datetime"))
-            .limit(500)
+            .limit(limit)
             .all()
         )
 

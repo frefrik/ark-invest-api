@@ -3,10 +3,10 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
-from ..database import SessionLocal
-from ..crud import crud_v2 as crud
-from ..schemas import schemas_v2 as schemas
-from ..config import (
+from app.database import SessionLocal
+from . import crud
+from . import schemas
+from app.config import (
     FUNDS,
     ETF_PROFILE_EXAMPLE,
     ETF_HOLDINGS_EXAMPLE,
@@ -17,7 +17,7 @@ from ..config import (
     STOCK_TRADES_EXAMPLE,
 )
 
-router = APIRouter()
+v2 = APIRouter()
 
 
 def get_db():
@@ -28,7 +28,7 @@ def get_db():
         db.close()
 
 
-@router.get(
+@v2.get(
     "/etf/profile",
     responses={
         200: {"content": {"application/json": {"example": ETF_PROFILE_EXAMPLE}}}
@@ -54,7 +54,7 @@ async def etf_profile(
     return data
 
 
-@router.get(
+@v2.get(
     "/etf/holdings",
     responses={
         200: {"content": {"application/json": {"example": ETF_HOLDINGS_EXAMPLE}}}
@@ -106,7 +106,7 @@ async def etf_holdings(
     return data
 
 
-@router.get(
+@v2.get(
     "/etf/trades",
     responses={200: {"content": {"application/json": {"example": ETF_TRADES_EXAMPLE}}}},
     response_model=schemas.FundTrades,
@@ -153,7 +153,7 @@ async def etf_trades(
     return data
 
 
-@router.get(
+@v2.get(
     "/etf/news",
     responses={200: {"content": {"application/json": {"example": ETF_NEWS_EXAMPLE}}}},
     response_model=schemas.FundNews,
@@ -221,7 +221,7 @@ async def etf_news(
     return data
 
 
-@router.get(
+@v2.get(
     "/stock/profile",
     responses={
         200: {"content": {"application/json": {"example": STOCK_PROFILE_EXAMPLE}}}
@@ -273,7 +273,7 @@ async def stock_profile(
     return data
 
 
-@router.get(
+@v2.get(
     "/stock/fund-ownership",
     responses={
         200: {
@@ -346,7 +346,7 @@ async def stock_fundownership(
     return data
 
 
-@router.get(
+@v2.get(
     "/stock/trades",
     responses={
         200: {"content": {"application/json": {"example": STOCK_TRADES_EXAMPLE}}}

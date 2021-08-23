@@ -3,10 +3,11 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine
-from .models import Base
-from .routers import v1, v2
-from .config import (
+from app.database import engine
+from app.models import Base
+from app.api.v1.router import v1
+from app.api.v2.router import v2
+from app.config import (
     OPENAPI_API_VERSION,
     OPENAPI_CONTACT,
     OPENAPI_DESCRIPTION,
@@ -53,7 +54,7 @@ def custom_openapi():
 
     openapi_schema["host"] = OPENAPI_HOST
     openapi_schema["servers"] = [
-        {"url": OPENAPI_SERVER_URL, "basePath": OPENAPI_SERVER_BASEPATH}
+        {"url": OPENAPI_SERVER_URL}  # , "basePath": OPENAPI_SERVER_BASEPATH}
     ]
 
     openapi_schema["externalDocs"] = {
@@ -77,7 +78,7 @@ api.add_middleware(
 )
 
 
-api.include_router(v2.router, prefix="/v2")
-api.include_router(v1.router, prefix="/v1")
+api.include_router(v2, prefix="/v2")
+api.include_router(v1, prefix="/v1")
 app.mount("/api", api)
 app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")

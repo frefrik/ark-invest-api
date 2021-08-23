@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Optional
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel
 
 
 class FundProfileData(BaseModel):
@@ -84,12 +84,16 @@ class FundOwnershipData(BaseModel):
         orm_mode = True
 
 
+class FundOwnershipTotals(BaseModel):
+    funds: int
+    shares: int
+    market_value: float
+
+
 class FundOwnershipList(BaseModel):
     date: datetime.date
-    ownership: List[FundOwnershipData] = []
-    totals: create_model(
-        "totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...)
-    )
+    ownership: List[FundOwnershipData]
+    totals: FundOwnershipTotals
 
     class Config:
         orm_mode = True
