@@ -1,5 +1,6 @@
-from sqlalchemy import func, desc
+from sqlalchemy import desc, func
 from sqlalchemy.orm import Session
+
 from app.models import Fund, Holding, News, Trades
 
 

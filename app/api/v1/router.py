@@ -1,22 +1,24 @@
-from datetime import datetime, date, timezone
-from dateutil.relativedelta import relativedelta
+from datetime import date, datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, Query
+
+from dateutil.relativedelta import relativedelta
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
-from app.database import SessionLocal
-from . import crud
-from . import schemas
+
 from app.config import (
-    FUNDS,
-    ETF_PROFILE_EXAMPLE,
     ETF_HOLDINGS_EXAMPLE,
-    ETF_TRADES_EXAMPLE,
     ETF_NEWS_EXAMPLE,
-    STOCK_PROFILE_EXAMPLE,
+    ETF_PROFILE_EXAMPLE,
+    ETF_TRADES_EXAMPLE,
+    FUNDS,
     STOCK_FUND_OWNERSHIP_EXAMPLE,
+    STOCK_PROFILE_EXAMPLE,
     STOCK_TRADES_EXAMPLE,
 )
+from app.database import SessionLocal
+
+from . import crud, schemas
 
 v1 = APIRouter()
 

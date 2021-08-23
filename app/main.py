@@ -1,10 +1,9 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.openapi.utils import get_openapi
-from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine
-from app.models import Base
+
 from app.api.v1.router import v1
 from app.api.v2.router import v2
 from app.config import (
@@ -18,6 +17,8 @@ from app.config import (
     OPENAPI_SERVER_URL,
     OPENAPI_TITLE,
 )
+from app.database import engine
+from app.models import Base
 
 Base.metadata.create_all(bind=engine)
 
