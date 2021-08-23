@@ -357,7 +357,7 @@ async def stock_fundownership(
 )
 async def stock_trades(
     symbol: str = Query("", regex=r"^\S+$"),
-    direction: Optional[str] = Query(None, regex=r"^buy|sell$"),
+    direction: Optional[str] = Query(None, regex=r"(?i)^buy|sell$"),
     date_from: Optional[date] = None,
     date_to: Optional[date] = None,
     limit: Optional[int] = None,
