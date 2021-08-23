@@ -1,6 +1,7 @@
 def test_etf_profile(client):
     response = client.get("/api/v2/etf/profile?symbol=ARKK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "ARKK",
         "profile": {
@@ -19,17 +20,20 @@ def test_etf_profile(client):
 def test_etf_profile_inexistent_item(client):
     response = client.get("/api/v2/etf/profile?symbol=ARK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {"symbol": "ARK", "profile": {}}
 
 
 def test_etf_holdings(client):
     response = client.get("/api/v2/etf/holdings?symbol=ARKK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_etf_holdings_inexistent_item(client):
     response = client.get("/api/v2/etf/holdings?symbol=ARK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "ARK",
         "date_from": None,
@@ -41,11 +45,13 @@ def test_etf_holdings_inexistent_item(client):
 def test_etf_trades(client):
     response = client.get("/api/v2/etf/trades?symbol=ARKK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_etf_trades_inexistent_item(client):
     response = client.get("/api/v2/etf/trades?symbol=ARK")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "ARK",
         "date_from": None,
@@ -57,11 +63,13 @@ def test_etf_trades_inexistent_item(client):
 def test_etf_news(client):
     response = client.get("/api/v2/etf/news")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_etf_news_inexistent_item(client):
     response = client.get("/api/v2/etf/news?symbol=TSLA")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "TSLA",
         "date_from": None,
@@ -73,22 +81,26 @@ def test_etf_news_inexistent_item(client):
 def test_stock_profile(client):
     response = client.get("/api/v2/stock/profile?symbol=TSLA")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_stock_profile_inexistent_item(client):
     response = client.get("/api/v2/stock/profile?symbol=TSLAS")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {"symbol": "TSLAS", "profile": {}}
 
 
 def test_stock_fund_ownership(client):
     response = client.get("/api/v2/stock/fund-ownership?symbol=TSLA")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_stock_fund_ownership_inexistent_item(client):
     response = client.get("/api/v2/stock/fund-ownership?symbol=TSLAS")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "TSLAS",
         "date_from": None,
@@ -100,11 +112,13 @@ def test_stock_fund_ownership_inexistent_item(client):
 def test_stock_trades(client):
     response = client.get("/api/v2/stock/trades?symbol=TSLA")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
 
 
 def test_stock_trades_not_found(client):
     response = client.get("/api/v2/stock/trades?symbol=TSLAS")
     assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
         "symbol": "TSLAS",
         "date_from": None,
