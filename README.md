@@ -1,8 +1,11 @@
 # ARK Invest API
 
-API for tracking holdings and trades of [ARK Invest funds](https://ark-funds.com/).
+![GitHub Release](https://img.shields.io/github/release/frefrik/ark-invest-api.svg)
+![Status](https://badgen.net/uptime-robot/status/m787410980-94ede226965dca1d2909a085)
+![Uptime week](https://badgen.net/uptime-robot/week/m787410980-94ede226965dca1d2909a085)
+![Uptime month](https://badgen.net/uptime-robot/month/m787410980-94ede226965dca1d2909a085)
 
-Endpoint Status: https://status.arkfunds.io
+API for tracking holdings and trades of [ARK Invest funds](https://ark-funds.com/).
 
 <details>
 <summary>
@@ -21,6 +24,8 @@ Click here to see a list of ARK ETFs
 - **PRNT** - The 3D Printing ETF
 - **IZRL** - Israel Innovative Technology ETF
 </details>
+
+Endpoint Status: https://status.arkfunds.io
 
 ## Documentation
 
