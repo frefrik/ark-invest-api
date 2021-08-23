@@ -71,7 +71,7 @@ Returns ARK ETF profile information
 ### Query Parameters
 
 | Parameter | Required | Description    |
-| --------- | :------: | -------------- |
+| :-------- | :------: | :------------- |
 | symbol    |   YES    | ARK ETF symbol |
 
 ### Example
@@ -107,7 +107,7 @@ Returns ARK ETF holdings
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| --------- | :------: | --------------------------- |
+| :-------- | :------: | :-------------------------- |
 | symbol    |   YES    | ARK ETF symbol              |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -166,7 +166,7 @@ Returns ARK ETF intraday trades
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| --------- | :------: | --------------------------- |
+| :-------- | :------: | :-------------------------- |
 | symbol    |   YES    | ARK ETF symbol              |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -222,7 +222,7 @@ Returns ARK ETF news
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| --------- | :------: | --------------------------- |
+| :-------- | :------: | :-------------------------- |
 | symbol    |   YES    | ARK ETF symbol              |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -272,7 +272,7 @@ Returns Stock profile information
 ### Query Parameters
 
 | Parameter | Required | Description  |
-| --------- | :------: | ------------ |
+| :-------- | :------: | :----------- |
 | symbol    |   YES    | Stock symbol |
 
 ### Example
@@ -313,7 +313,7 @@ Returns Stock Trades
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| --------- | :------: | --------------------------- |
+| :-------- | :------: | :-------------------------- |
 | symbol    |   YES    | Stock symbol                |
 | direction |    NO    | Filter on buy/sell          |
 | date_from |    NO    | From date (ISO 8601 format) |
@@ -365,7 +365,7 @@ Returns Stock Fund Ownership
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| --------- | :------: | --------------------------- |
+| :-------- | :------: | :-------------------------- |
 | symbol    |   YES    | Stock symbol                |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -426,7 +426,7 @@ Returns ARK ETF profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values                                   | Default value |
-| --------- | :------: | ---------------------------------------------- | ------------- |
+| :-------- | :------: | :--------------------------------------------- | ------------ |
 | symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
 
 ### Example
@@ -461,7 +461,7 @@ Returns ARK ETF holdings
 ### Query Parameters
 
 | Parameter | Required | Valid values                                   | Default value |
-| --------- | :------: | ---------------------------------------------- | ------------- |
+| -:------- | :------: | :--------------------------------------------- | ------------- |
 | symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
 | date      |    NO    | ISO 8601 Calendar date                         |               |
 
@@ -530,7 +530,7 @@ Returns ARK ETF intraday trades
 ### Query Parameters
 
 | Parameter | Required | Valid values                       | Default value |
-| --------- | :------: | ---------------------------------- | ------------- |
+| :-------- | :------: | :--------------------------------- | ------------- |
 | symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |               |
 | period    |    NO    | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
 
@@ -596,7 +596,7 @@ Returns ARK ETF news
 ### Query Parameters
 
 | Parameter | Required | Valid values                                   | Default value |
-| --------- | :------: | ---------------------------------------------- | ------------- |
+| :-------- | :------: | :--------------------------------------------- | ------------- |
 | symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
 | date      |    NO    | ISO 8601 Calendar date                         |               |
 | date_to   |    NO    | ISO 8601 Calendar date                         |               |
@@ -668,7 +668,7 @@ Returns Stock profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-| --------- | :------: | ------------ | ------------- |
+| :-------- | :------: | :----------- | ------------- |
 | symbol    |   YES    |              |               |
 
 ### Example
@@ -706,7 +706,7 @@ Returns Stock Trades
 ### Query Parameters
 
 | Parameter | Required | Valid values           | Default value |
-| --------- | :------: | ---------------------- | ------------- |
+| :-------- | :------: | :--------------------- | ------------- |
 | symbol    |   YES    |                        |               |
 | direction |    NO    | buy, sell              |               |
 | date_from |    NO    | ISO 8601 Calendar date |               |
@@ -774,7 +774,7 @@ Returns Stock Fund Ownership
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-| --------- | :------: | ------------ | ------------- |
+| :-------- | :------: | :----------- | ------------- |
 | symbol    |   YES    |              |               |
 
 ### Example
