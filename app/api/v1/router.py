@@ -11,7 +11,7 @@ from app.database import SessionLocal
 
 from . import crud, schemas
 
-v1 = APIRouter()
+v1 = APIRouter(tags=["v1"])
 
 
 def get_db():
@@ -31,7 +31,6 @@ def get_db():
     },
     response_model=schemas.FundProfile,
     summary="ETF Profile",
-    tags=["v1"],
 )
 async def etf_profile(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -61,7 +60,6 @@ async def etf_profile(
     },
     response_model=schemas.FundHolding,
     summary="ETF Holdings",
-    tags=["v1"],
 )
 async def etf_holdings(
     symbol: str = Query(..., regex=r"^\S+$"),
@@ -99,7 +97,6 @@ async def etf_holdings(
         }
     },
     response_model=schemas.FundTrades,
-    tags=["v1"],
     summary="ETF Trades",
 )
 async def etf_trades(
@@ -160,7 +157,6 @@ async def etf_trades(
     },
     response_model=schemas.FundNews,
     summary="ETF News",
-    tags=["v1"],
 )
 async def etf_news(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -229,7 +225,6 @@ async def etf_news(
     },
     response_model=schemas.StockProfile,
     summary="Stock Profile",
-    tags=["v1"],
 )
 async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     symbol = symbol.upper()
@@ -277,7 +272,6 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     },
     response_model=schemas.FundOwnership,
     summary="Stock Fund Ownership",
-    tags=["v1"],
 )
 async def stock_fundownership(
     symbol: str = Query(..., regex=r"^\S+$"), db: Session = Depends(get_db)
@@ -314,7 +308,6 @@ async def stock_fundownership(
     },
     response_model=schemas.StockTrades,
     summary="Stock Trades",
-    tags=["v1"],
 )
 async def stock_trades(
     symbol: str = Query(..., regex=r"^\S+$"),
