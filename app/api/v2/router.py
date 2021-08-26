@@ -28,7 +28,7 @@ def get_db():
             "content": {"application/json": {"example": RESPONSES["v2"]["etf_profile"]}}
         }
     },
-    response_model=schemas.FundProfile,
+    response_model=schemas.V2_FundProfile,
     summary="ETF Profile",
     tags=["v2"],
 )
@@ -58,7 +58,7 @@ async def etf_profile(
             }
         }
     },
-    response_model=schemas.FundHolding,
+    response_model=schemas.V2_FundHolding,
     summary="ETF Holdings",
     tags=["v2"],
 )
@@ -112,7 +112,7 @@ async def etf_holdings(
             "content": {"application/json": {"example": RESPONSES["v2"]["etf_trades"]}}
         }
     },
-    response_model=schemas.FundTrades,
+    response_model=schemas.V2_FundTrades,
     tags=["v2"],
     summary="ETF Trades",
 )
@@ -161,7 +161,7 @@ async def etf_trades(
     responses={
         200: {"content": {"application/json": {"example": RESPONSES["v2"]["etf_news"]}}}
     },
-    response_model=schemas.FundNews,
+    response_model=schemas.V2_FundNews,
     summary="ETF News",
     tags=["v2"],
 )
@@ -235,7 +235,7 @@ async def etf_news(
             }
         }
     },
-    response_model=schemas.StockProfile,
+    response_model=schemas.V2_StockProfile,
     summary="Stock Profile",
     tags=["v2"],
 )
@@ -291,7 +291,7 @@ async def stock_profile(
             }
         }
     },
-    response_model=schemas.FundOwnership,
+    response_model=schemas.V2_FundOwnership,
     summary="Stock Fund Ownership",
     tags=["v2"],
 )
@@ -366,7 +366,7 @@ async def stock_fundownership(
             }
         }
     },
-    response_model=schemas.StockTrades,
+    response_model=schemas.V2_StockTrades,
     summary="Stock Trades",
     tags=["v2"],
 )

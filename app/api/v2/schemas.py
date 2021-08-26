@@ -4,7 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
-class FundProfileData(BaseModel):
+class V2_FundProfileData(BaseModel):
     symbol: str
     name: str
     description: str
@@ -18,15 +18,15 @@ class FundProfileData(BaseModel):
         orm_mode = True
 
 
-class FundProfile(BaseModel):
+class V2_FundProfile(BaseModel):
     symbol: str
-    profile: Optional[FundProfileData] = {}
+    profile: Optional[V2_FundProfileData] = {}
 
     class Config:
         orm_mode = True
 
 
-class FundHoldingData(BaseModel):
+class V2_FundHoldingData(BaseModel):
     date: datetime.date
     ticker: Optional[str]
     company: str
@@ -40,17 +40,17 @@ class FundHoldingData(BaseModel):
         orm_mode = True
 
 
-class FundHolding(BaseModel):
+class V2_FundHolding(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    holdings: List[FundHoldingData] = []
+    holdings: List[V2_FundHoldingData] = []
 
     class Config:
         orm_mode = True
 
 
-class FundTradeData(BaseModel):
+class V2_FundTradeData(BaseModel):
     date: datetime.date
     ticker: Optional[str]
     company: str
@@ -63,17 +63,17 @@ class FundTradeData(BaseModel):
         orm_mode = True
 
 
-class FundTrades(BaseModel):
+class V2_FundTrades(BaseModel):
     symbol: str
     date_from: datetime.date = None
     date_to: datetime.date = None
-    trades: List[FundTradeData] = []
+    trades: List[V2_FundTradeData] = []
 
     class Config:
         orm_mode = True
 
 
-class FundOwnershipData(BaseModel):
+class V2_FundOwnershipData(BaseModel):
     date: datetime.date
     fund: str
     weight: float
@@ -85,32 +85,32 @@ class FundOwnershipData(BaseModel):
         orm_mode = True
 
 
-class FundOwnershipTotals(BaseModel):
+class V2_FundOwnershipTotals(BaseModel):
     funds: int
     shares: int
     market_value: float
 
 
-class FundOwnershipList(BaseModel):
+class V2_FundOwnershipList(BaseModel):
     date: datetime.date
-    ownership: List[FundOwnershipData]
-    totals: FundOwnershipTotals
+    ownership: List[V2_FundOwnershipData]
+    totals: V2_FundOwnershipTotals
 
     class Config:
         orm_mode = True
 
 
-class FundOwnership(BaseModel):
+class V2_FundOwnership(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    data: List[FundOwnershipList] = []
+    data: List[V2_FundOwnershipList] = []
 
     class Config:
         orm_mode = True
 
 
-class FundNewsData(BaseModel):
+class V2_FundNewsData(BaseModel):
     id: int
     datetime: datetime.datetime
     related: str
@@ -124,17 +124,17 @@ class FundNewsData(BaseModel):
         orm_mode = True
 
 
-class FundNews(BaseModel):
+class V2_FundNews(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    news: List[FundNewsData] = []
+    news: List[V2_FundNewsData] = []
 
     class Config:
         orm_mode = True
 
 
-class StockProfileData(BaseModel):
+class V2_StockProfileData(BaseModel):
     ticker: str
     name: Optional[str]
     country: Optional[str]
@@ -153,15 +153,15 @@ class StockProfileData(BaseModel):
         orm_mode = True
 
 
-class StockProfile(BaseModel):
+class V2_StockProfile(BaseModel):
     symbol: str
-    profile: Optional[StockProfileData] = {}
+    profile: Optional[V2_StockProfileData] = {}
 
     class Config:
         orm_mode = True
 
 
-class StockTradeData(BaseModel):
+class V2_StockTradeData(BaseModel):
     date: datetime.date
     fund: str
     direction: str
@@ -172,11 +172,11 @@ class StockTradeData(BaseModel):
         orm_mode = True
 
 
-class StockTrades(BaseModel):
+class V2_StockTrades(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    trades: List[StockTradeData] = []
+    trades: List[V2_StockTradeData] = []
 
     class Config:
         orm_mode = True
