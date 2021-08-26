@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse
+from fastapi.routing import APIRoute
 from fastapi.staticfiles import StaticFiles
 
 from app.api.v1.router import v1
@@ -40,6 +41,13 @@ api = FastAPI(
 )
 
 
+def update_operation_ids(app: FastAPI):
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            route_path = str(route.path)
+            route.operation_id = "_".join(route_path.rsplit("/", 2)).replace("/", "")
+
+
 def custom_openapi():
     if api.openapi_schema:
         return api.openapi_schema
@@ -55,7 +63,7 @@ def custom_openapi():
 
     openapi_schema["host"] = OPENAPI_HOST
     openapi_schema["servers"] = [
-        {"url": OPENAPI_SERVER_URL}  # , "basePath": OPENAPI_SERVER_BASEPATH}
+        {"url": OPENAPI_SERVER_URL, "basePath": OPENAPI_SERVER_BASEPATH}
     ]
 
     openapi_schema["externalDocs"] = {
@@ -81,5 +89,8 @@ api.add_middleware(
 
 api.include_router(v2, prefix="/v2")
 api.include_router(v1, prefix="/v1")
+
+update_operation_ids(api)
+
 app.mount("/api", api)
 app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
