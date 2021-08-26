@@ -5,16 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
 
-from app.config import (
-    ETF_HOLDINGS_EXAMPLE,
-    ETF_NEWS_EXAMPLE,
-    ETF_PROFILE_EXAMPLE,
-    ETF_TRADES_EXAMPLE,
-    FUNDS,
-    STOCK_FUND_OWNERSHIP_EXAMPLE,
-    STOCK_PROFILE_EXAMPLE,
-    STOCK_TRADES_EXAMPLE,
-)
+from app.config import FUNDS, RESPONSES
 from app.database import SessionLocal
 
 from . import crud, schemas
@@ -33,7 +24,9 @@ def get_db():
 @v2.get(
     "/etf/profile",
     responses={
-        200: {"content": {"application/json": {"example": ETF_PROFILE_EXAMPLE}}}
+        200: {
+            "content": {"application/json": {"example": RESPONSES["v2"]["etf_profile"]}}
+        }
     },
     response_model=schemas.FundProfile,
     summary="ETF Profile",
@@ -59,7 +52,11 @@ async def etf_profile(
 @v2.get(
     "/etf/holdings",
     responses={
-        200: {"content": {"application/json": {"example": ETF_HOLDINGS_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v2"]["etf_holdings"]}
+            }
+        }
     },
     response_model=schemas.FundHolding,
     summary="ETF Holdings",
@@ -110,7 +107,11 @@ async def etf_holdings(
 
 @v2.get(
     "/etf/trades",
-    responses={200: {"content": {"application/json": {"example": ETF_TRADES_EXAMPLE}}}},
+    responses={
+        200: {
+            "content": {"application/json": {"example": RESPONSES["v2"]["etf_trades"]}}
+        }
+    },
     response_model=schemas.FundTrades,
     tags=["v2"],
     summary="ETF Trades",
@@ -157,7 +158,9 @@ async def etf_trades(
 
 @v2.get(
     "/etf/news",
-    responses={200: {"content": {"application/json": {"example": ETF_NEWS_EXAMPLE}}}},
+    responses={
+        200: {"content": {"application/json": {"example": RESPONSES["v2"]["etf_news"]}}}
+    },
     response_model=schemas.FundNews,
     summary="ETF News",
     tags=["v2"],
@@ -226,7 +229,11 @@ async def etf_news(
 @v2.get(
     "/stock/profile",
     responses={
-        200: {"content": {"application/json": {"example": STOCK_PROFILE_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v2"]["stock_profile"]}
+            }
+        }
     },
     response_model=schemas.StockProfile,
     summary="Stock Profile",
@@ -279,7 +286,9 @@ async def stock_profile(
     "/stock/fund-ownership",
     responses={
         200: {
-            "content": {"application/json": {"example": STOCK_FUND_OWNERSHIP_EXAMPLE}}
+            "content": {
+                "application/json": {"example": RESPONSES["v2"]["stock_fund_ownership"]}
+            }
         }
     },
     response_model=schemas.FundOwnership,
@@ -351,7 +360,11 @@ async def stock_fundownership(
 @v2.get(
     "/stock/trades",
     responses={
-        200: {"content": {"application/json": {"example": STOCK_TRADES_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v2"]["stock_trades"]}
+            }
+        }
     },
     response_model=schemas.StockTrades,
     summary="Stock Trades",
