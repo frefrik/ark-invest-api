@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Date, Float
-from .database import Base
+from sqlalchemy import Column, Date, Float, Integer, String
+
+from app.database import Base
 
 
 class Fund(Base):

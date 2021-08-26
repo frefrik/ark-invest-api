@@ -1,23 +1,17 @@
-from datetime import datetime, date, timezone
-from dateutil.relativedelta import relativedelta
+from datetime import date, datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, Query
+
+from dateutil.relativedelta import relativedelta
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from yahooquery import Ticker
-from ..database import SessionLocal
-from .. import schemas, crud
-from ..config import (
-    FUNDS,
-    ETF_PROFILE_EXAMPLE,
-    ETF_HOLDINGS_EXAMPLE,
-    ETF_TRADES_EXAMPLE,
-    ETF_NEWS_EXAMPLE,
-    STOCK_PROFILE_EXAMPLE,
-    STOCK_FUND_OWNERSHIP_EXAMPLE,
-    STOCK_TRADES_EXAMPLE,
-)
 
-v1 = APIRouter()
+from app.config import FUNDS, RESPONSES
+from app.database import SessionLocal
+
+from . import crud, schemas
+
+v1 = APIRouter(tags=["v1"])
 
 
 def get_db():
@@ -31,11 +25,12 @@ def get_db():
 @v1.get(
     "/etf/profile",
     responses={
-        200: {"content": {"application/json": {"example": ETF_PROFILE_EXAMPLE}}}
+        200: {
+            "content": {"application/json": {"example": RESPONSES["v1"]["etf_profile"]}}
+        }
     },
     response_model=schemas.FundProfile,
     summary="ETF Profile",
-    tags=["ARK ETFs"],
 )
 async def etf_profile(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -57,11 +52,14 @@ async def etf_profile(
 @v1.get(
     "/etf/holdings",
     responses={
-        200: {"content": {"application/json": {"example": ETF_HOLDINGS_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v1"]["etf_holdings"]}
+            }
+        }
     },
     response_model=schemas.FundHolding,
     summary="ETF Holdings",
-    tags=["ARK ETFs"],
 )
 async def etf_holdings(
     symbol: str = Query(..., regex=r"^\S+$"),
@@ -93,9 +91,12 @@ async def etf_holdings(
 
 @v1.get(
     "/etf/trades",
-    responses={200: {"content": {"application/json": {"example": ETF_TRADES_EXAMPLE}}}},
+    responses={
+        200: {
+            "content": {"application/json": {"example": RESPONSES["v1"]["etf_trades"]}}
+        }
+    },
     response_model=schemas.FundTrades,
-    tags=["ARK ETFs"],
     summary="ETF Trades",
 )
 async def etf_trades(
@@ -151,10 +152,11 @@ async def etf_trades(
 
 @v1.get(
     "/etf/news",
-    responses={200: {"content": {"application/json": {"example": ETF_NEWS_EXAMPLE}}}},
+    responses={
+        200: {"content": {"application/json": {"example": RESPONSES["v1"]["etf_news"]}}}
+    },
     response_model=schemas.FundNews,
     summary="ETF News",
-    tags=["ARK ETFs"],
 )
 async def etf_news(
     symbol: Optional[str] = Query(None, regex=r"^\S+$"),
@@ -215,11 +217,14 @@ async def etf_news(
 @v1.get(
     "/stock/profile",
     responses={
-        200: {"content": {"application/json": {"example": STOCK_PROFILE_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v1"]["stock_profile"]}
+            }
+        }
     },
     response_model=schemas.StockProfile,
     summary="Stock Profile",
-    tags=["Stock"],
 )
 async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     symbol = symbol.upper()
@@ -260,12 +265,13 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     "/stock/fund-ownership",
     responses={
         200: {
-            "content": {"application/json": {"example": STOCK_FUND_OWNERSHIP_EXAMPLE}}
+            "content": {
+                "application/json": {"example": RESPONSES["v1"]["stock_fund_ownership"]}
+            }
         }
     },
     response_model=schemas.FundOwnership,
     summary="Stock Fund Ownership",
-    tags=["Stock"],
 )
 async def stock_fundownership(
     symbol: str = Query(..., regex=r"^\S+$"), db: Session = Depends(get_db)
@@ -294,11 +300,14 @@ async def stock_fundownership(
 @v1.get(
     "/stock/trades",
     responses={
-        200: {"content": {"application/json": {"example": STOCK_TRADES_EXAMPLE}}}
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v1"]["stock_trades"]}
+            }
+        }
     },
     response_model=schemas.StockTrades,
     summary="Stock Trades",
-    tags=["Stock"],
 )
 async def stock_trades(
     symbol: str = Query(..., regex=r"^\S+$"),

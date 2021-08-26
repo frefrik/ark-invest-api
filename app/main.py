@@ -1,12 +1,13 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine
-from .models import Base
-from .routers import v1
-from .config import (
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import HTMLResponse
+from fastapi.routing import APIRoute
+from fastapi.staticfiles import StaticFiles
+
+from app.api.v1.router import v1
+from app.api.v2.router import v2
+from app.config import (
     OPENAPI_API_VERSION,
     OPENAPI_CONTACT,
     OPENAPI_DESCRIPTION,
@@ -17,6 +18,8 @@ from .config import (
     OPENAPI_SERVER_URL,
     OPENAPI_TITLE,
 )
+from app.database import engine
+from app.models import Base
 
 Base.metadata.create_all(bind=engine)
 
@@ -36,6 +39,13 @@ api = FastAPI(
     redoc_url="/docs",
     openapi_url="/openapi.json",
 )
+
+
+def update_operation_ids(app: FastAPI):
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            route_path = str(route.path)
+            route.operation_id = "_".join(route_path.rsplit("/", 2)).replace("/", "")
 
 
 def custom_openapi():
@@ -76,6 +86,11 @@ api.add_middleware(
     allow_headers=["*"],
 )
 
+
+api.include_router(v2, prefix="/v2")
 api.include_router(v1, prefix="/v1")
+
+update_operation_ids(api)
+
 app.mount("/api", api)
 app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")

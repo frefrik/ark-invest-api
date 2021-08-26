@@ -1,6 +1,5 @@
 def test_etf_profile(client):
     response = client.get("/api/v1/etf/profile?symbol=ARKK")
-
     assert response.status_code == 200
     assert response.json() == {
         "profile": [
