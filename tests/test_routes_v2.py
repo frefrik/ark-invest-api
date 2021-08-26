@@ -61,7 +61,7 @@ def test_etf_trades_inexistent_item(client):
 
 
 def test_etf_news(client):
-    response = client.get("/api/v2/etf/news")
+    response = client.get("/api/v2/etf/news?symbol=ARKK")
     assert response.status_code == 200
     assert response.headers["Content-Type"] == "application/json"
 
