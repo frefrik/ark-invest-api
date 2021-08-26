@@ -32,7 +32,7 @@ def get_db():
     summary="ETF Profile",
 )
 async def etf_profile(
-    symbol: str = Query("", regex=r"^\S+$"),
+    symbol: str = Query(..., description="ARK ETF symbol"),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -61,10 +61,10 @@ async def etf_profile(
     summary="ETF Holdings",
 )
 async def etf_holdings(
-    symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = None,
-    date_to: Optional[date] = None,
-    limit: Optional[int] = None,
+    symbol: str = Query(..., description="ARK ETF symbol"),
+    date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
+    date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
+    limit: Optional[int] = Query(None, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -114,10 +114,10 @@ async def etf_holdings(
     summary="ETF Trades",
 )
 async def etf_trades(
-    symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = None,
-    date_to: Optional[date] = None,
-    limit: Optional[int] = None,
+    symbol: str = Query(..., description="ARK ETF symbol"),
+    date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
+    date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
+    limit: Optional[int] = Query(None, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -162,10 +162,10 @@ async def etf_trades(
     summary="ETF News",
 )
 async def etf_news(
-    symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = None,
-    date_to: Optional[date] = None,
-    limit: Optional[int] = 500,
+    symbol: str = Query(..., description="ARK ETF symbol"),
+    date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
+    date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
+    limit: Optional[int] = Query(500, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
@@ -235,7 +235,7 @@ async def etf_news(
     summary="Stock Profile",
 )
 async def stock_profile(
-    symbol: str = Query("", regex=r"^\S+$"),
+    symbol: str = Query(..., description="Stock symbol"),
 ):
     symbol = symbol.upper()
 
@@ -290,10 +290,10 @@ async def stock_profile(
     summary="Stock Fund Ownership",
 )
 async def stock_fundownership(
-    symbol: str = Query("", regex=r"^\S+$"),
-    date_from: Optional[date] = None,
-    date_to: Optional[date] = None,
-    limit: Optional[int] = None,
+    symbol: str = Query(..., description="Stock symbol"),
+    date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
+    date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
+    limit: Optional[int] = Query(None, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
     limit_count = 0
@@ -364,11 +364,13 @@ async def stock_fundownership(
     summary="Stock Trades",
 )
 async def stock_trades(
-    symbol: str = Query("", regex=r"^\S+$"),
-    direction: Optional[str] = Query(None, regex=r"(?i)^buy|sell$"),
-    date_from: Optional[date] = None,
-    date_to: Optional[date] = None,
-    limit: Optional[int] = None,
+    symbol: str = Query(..., description="Stock symbol"),
+    date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
+    date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
+    limit: Optional[int] = Query(None, description="Limit number of results"),
+    direction: Optional[str] = Query(
+        None, description="Filter on buy/sell", regex=r"(?i)^buy|sell$"
+    ),
     db: Session = Depends(get_db),
 ):
     symbol = symbol.upper()
