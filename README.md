@@ -7,25 +7,33 @@
 
 API for tracking holdings and trades of [ARK Invest funds](https://ark-funds.com/).
 
+Endpoint Status: https://status.arkfunds.io
+
 <details>
 <summary>
 Click here to see a list of ARK ETFs
 </summary>
 
-**Active ETFs**
-- **ARKK** - ARK Innovation ETF
-- **ARKQ** - Autonomous Technology & Robotics ETF
-- **ARKW** - Next Generation Internet ETF
-- **ARKG** - Genomic Revolution ETF
-- **ARKF** - Fintech Innovation ETF
-- **ARKX** - Space Exploration & Innovation ETF
+- Actively Managed
+  - **ARKK** - ARK Innovation ETF
+  - **ARKQ** - Autonomous Technology & Robotics ETF
+  - **ARKW** - Next Generation Internet ETF
+  - **ARKG** - Genomic Revolution ETF
+  - **ARKF** - Fintech Innovation ETF
+  - **ARKX** - Space Exploration & Innovation ETF
 
-**Index ETFs**
-- **PRNT** - The 3D Printing ETF
-- **IZRL** - Israel Innovative Technology ETF
+- Indexed
+  - **PRNT** - The 3D Printing ETF
+  - **IZRL** - Israel Innovative Technology ETF
 </details>
 
-Endpoint Status: https://status.arkfunds.io
+---
+The API contains data for trades, holdings and news from the following dates:
+
+- **Trades**: `2020-09-09` (ARKX from `2021-04-07`)
+- **Holdings**: `2020-11-24` (ARKX from `2021-03-26`)
+- **News**: `2020-04-07`
+---
 
 ## Documentation
 
