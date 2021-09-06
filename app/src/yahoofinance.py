@@ -45,10 +45,10 @@ class YahooFinance:
                 data["website"] = profile_data.get("website")
 
         if quote:
-            quotejson = quote.json()["quoteResponse"]["result"]
+            quote_json = quote.json()["quoteResponse"]["result"]
 
-            if len(quotejson) > 0:
-                quote_data = quotejson[0]
+            if len(quote_json) > 0:
+                quote_data = quote_json[0]
 
                 data["name"] = quote_data.get("longName")
                 data["currency"] = quote_data.get("currency")
