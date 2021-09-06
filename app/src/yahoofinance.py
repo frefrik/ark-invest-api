@@ -32,24 +32,30 @@ class YahooFinance:
         quote = self._get_data(self.QUOTE_URL.format(self.symbol))
 
         if profile:
-            profile_data = profile.json()["quoteSummary"]["result"][0]["assetProfile"]
+            profile_json = profile.json()["quoteSummary"]["result"]
 
-            data["country"] = profile_data.get("country")
-            data["industry"] = profile_data.get("industry")
-            data["sector"] = profile_data.get("sector")
-            data["fullTimeEmployees"] = profile_data.get("fullTimeEmployees")
-            data["summary"] = profile_data.get("longBusinessSummary")
-            data["website"] = profile_data.get("website")
+            if len(profile_json) > 0:
+                profile_data = profile_json[0]["assetProfile"]
+
+                data["country"] = profile_data.get("country")
+                data["industry"] = profile_data.get("industry")
+                data["sector"] = profile_data.get("sector")
+                data["fullTimeEmployees"] = profile_data.get("fullTimeEmployees")
+                data["summary"] = profile_data.get("longBusinessSummary")
+                data["website"] = profile_data.get("website")
 
         if quote:
-            quote_data = quote.json()["quoteResponse"]["result"][0]
+            quotejson = quote.json()["quoteResponse"]["result"]
 
-            data["name"] = quote_data.get("longName")
-            data["currency"] = quote_data.get("currency")
-            data["market"] = quote_data.get("market")
-            data["exchange"] = quote_data.get("fullExchangeName")
-            data["currency"] = quote_data.get("currency")
-            data["marketCap"] = quote_data.get("marketCap")
-            data["sharesOutstanding"] = quote_data.get("sharesOutstanding")
+            if len(quotejson) > 0:
+                quote_data = quotejson[0]
+
+                data["name"] = quote_data.get("longName")
+                data["currency"] = quote_data.get("currency")
+                data["market"] = quote_data.get("market")
+                data["exchange"] = quote_data.get("fullExchangeName")
+                data["currency"] = quote_data.get("currency")
+                data["marketCap"] = quote_data.get("marketCap")
+                data["sharesOutstanding"] = quote_data.get("sharesOutstanding")
 
         return data
