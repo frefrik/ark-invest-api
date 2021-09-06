@@ -4,10 +4,10 @@ from typing import Optional
 from dateutil.relativedelta import relativedelta
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from yahooquery import Ticker
 
 from app.config import FUNDS, RESPONSES
 from app.database import SessionLocal
+from app.src.yahoofinance import YahooFinance
 
 from . import crud, schemas
 
@@ -229,33 +229,25 @@ async def etf_news(
 async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     symbol = symbol.upper()
 
-    yf = Ticker(symbol)
-    quotes = yf.quotes
-    asset_profile = yf.asset_profile
+    yf = YahooFinance(symbol).quote
 
-    if (
-        "No fundamentals data found" in asset_profile[symbol]
-        or "Quote not found" in asset_profile[symbol]
-    ):
+    if not yf:
         raise HTTPException(status_code=404, detail=f"symbol {symbol} not found.")
-
-    quotes = quotes[symbol]
-    asset_profile = asset_profile[symbol]
 
     data = {
         "ticker": symbol,
-        "name": quotes.get("longName"),
-        "country": asset_profile.get("country"),
-        "industry": asset_profile.get("industry"),
-        "sector": asset_profile.get("sector"),
-        "fullTimeEmployees": asset_profile.get("fullTimeEmployees"),
-        "summary": asset_profile.get("longBusinessSummary"),
-        "website": asset_profile.get("website"),
-        "market": quotes.get("market"),
-        "exchange": quotes.get("fullExchangeName"),
-        "currency": quotes.get("currency"),
-        "marketCap": quotes.get("marketCap"),
-        "sharesOutstanding": quotes.get("sharesOutstanding"),
+        "name": yf.get("name"),
+        "country": yf.get("country"),
+        "industry": yf.get("industry"),
+        "sector": yf.get("sector"),
+        "fullTimeEmployees": yf.get("fullTimeEmployees"),
+        "summary": yf.get("summary"),
+        "website": yf.get("website"),
+        "market": yf.get("market"),
+        "exchange": yf.get("exchange"),
+        "currency": yf.get("currency"),
+        "marketCap": yf.get("marketCap"),
+        "sharesOutstanding": yf.get("sharesOutstanding"),
     }
 
     return data
