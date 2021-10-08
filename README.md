@@ -132,36 +132,39 @@ Returns ARK ETF holdings
 
 ``` json
 {
-    "symbol": "ARKK",
-    "date_from": "2021-08-20",
-    "date_to": "2021-08-20",
-    "holdings": [{
-        "date": "2021-08-20",
-        "ticker": "TSLA",
-        "company": "TESLA INC",
-        "cusip": "88160R101",
-        "shares": 3256252,
-        "market_value": 2192988034.44,
-        "weight": 10.56,
-        "weight_rank": 1
-    }, {
-        "date": "2021-08-20",
-        "ticker": "TDOC",
-        "company": "TELADOC HEALTH INC",
-        "cusip": "87918A105",
-        "shares": 8555254,
-        "market_value": 1160092442.4,
-        "weight": 5.59,
-        "weight_rank": 2
-    }, {
-        "date": "2021-08-20",
-        "ticker": "ROKU",
-        "company": "ROKU INC",
-        "cusip": "77543R102",
-        "shares": 3269279,
-        "market_value": 1122506944.65,
-        "weight": 5.4,
-        "weight_rank": 3
+  "symbol": "ARKK",
+  "date_from": "2021-10-08",
+  "date_to": "2021-10-08",
+  "holdings": [{
+      "date": "2021-10-08",
+      "ticker": "TSLA",
+      "company": "TESLA INC",
+      "cusip": "88160R101",
+      "shares": 2469443,
+      "market_value": 1959774659.23,
+      "share_price": 793.61,
+      "weight": 9.65,
+      "weight_rank": 1
+    },{
+      "date": "2021-10-08",
+      "ticker": "TDOC",
+      "company": "TELADOC HEALTH INC",
+      "cusip": "87918A105",
+      "shares": 9124177,
+      "market_value": 1193442351.6,
+      "share_price": 130.8,
+      "weight": 5.88,
+      "weight_rank": 2
+    },{
+      "date": "2021-10-08",
+      "ticker": "ROKU",
+      "company": "ROKU INC",
+      "cusip": "77543R102",
+      "shares": 3561738,
+      "market_value": 1155677128.86,
+      "share_price": 324.47,
+      "weight": 5.69,
+      "weight_rank": 3
     }]
 }
 ```

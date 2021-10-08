@@ -30,6 +30,7 @@ class Holding(Base):
     market_value = Column(Float)
     weight = Column(Float)
     weight_rank = Column(Integer)
+    share_price = Column(Float)
 
 
 class Trades(Base):

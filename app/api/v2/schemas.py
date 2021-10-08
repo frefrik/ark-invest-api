@@ -33,6 +33,7 @@ class V2_FundHoldingData(BaseModel):
     cusip: str
     shares: int
     market_value: float
+    share_price: float
     weight: float
     weight_rank: int
 

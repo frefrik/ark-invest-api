@@ -18,6 +18,7 @@ def get_etf_holdings(
         Holding.cusip,
         Holding.shares,
         Holding.market_value,
+        Holding.share_price,
         Holding.weight,
         Holding.weight_rank,
     ).filter(
