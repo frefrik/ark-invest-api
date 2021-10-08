@@ -394,3 +394,32 @@ async def stock_trades(
     data["date_to"] = date_to
 
     return data
+
+
+@v2.get(
+    "/stock/price",
+    responses={
+        200: {
+            "content": {"application/json": {"example": RESPONSES["v2"]["stock_price"]}}
+        }
+    },
+    response_model=schemas.V2_StockPrice,
+    summary="Stock Price",
+)
+async def stock_price(
+    symbol: str = Query(..., description="Stock symbol"),
+):
+    symbol = symbol.upper()
+
+    data = {
+        "symbol": symbol,
+    }
+
+    price = YahooFinance(symbol).price
+
+    if not price:
+        return data
+
+    data.update(price)
+
+    return data

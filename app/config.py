@@ -450,5 +450,14 @@ RESPONSES = {
                 }
             ],
         },
+        "stock_price": {
+            "symbol": "TSLA",
+            "exchange": "NasdaqGS",
+            "currency": "USD",
+            "price": 793.61,
+            "change": 10.859985,
+            "changep": 1.3874142,
+            "last_trade": "2021-10-07T20:00:02",
+        },
     },
 }

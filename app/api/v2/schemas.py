@@ -180,3 +180,16 @@ class V2_StockTrades(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class V2_StockPrice(BaseModel):
+    symbol: str
+    exchange: Optional[str]
+    currency: Optional[str]
+    price: Optional[float]
+    change: Optional[float]
+    changep: Optional[float]
+    last_trade: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True

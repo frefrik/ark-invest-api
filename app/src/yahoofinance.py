@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 
 
@@ -15,47 +16,78 @@ class YahooFinance:
             }
         )
 
-    def _get_data(self, url, params=None):
+    def _get(self, url, params=None):
         res = self.session.get(url, params=params, timeout=self.timeout)
 
         if res.status_code == 404:
+            return None
+        elif res.status_code == 400:
             return None
 
         res.raise_for_status()
 
         return res
 
+    def _get_quote(self):
+        res = self._get(self.QUOTE_URL.format(self.symbol))
+
+        if res:
+            _json = res.json()["quoteResponse"]["result"]
+
+            if len(_json) > 0:
+                return _json[0]
+            else:
+                return None
+
+    def _get_asset_profile(self):
+        res = self._get(self.PROFILE_URL.format(self.symbol))
+
+        if res:
+            _json = res.json()["quoteSummary"]["result"]
+
+            if len(_json) > 0:
+                return _json[0]["assetProfile"]
+            else:
+                return None
+
     @property
     def quote(self):
         data = {}
-        profile = self._get_data(self.PROFILE_URL.format(self.symbol))
-        quote = self._get_data(self.QUOTE_URL.format(self.symbol))
+        profile = self._get_asset_profile()
+        quote = self._get_quote()
 
         if profile:
-            profile_json = profile.json()["quoteSummary"]["result"]
-
-            if len(profile_json) > 0:
-                profile_data = profile_json[0]["assetProfile"]
-
-                data["country"] = profile_data.get("country")
-                data["industry"] = profile_data.get("industry")
-                data["sector"] = profile_data.get("sector")
-                data["fullTimeEmployees"] = profile_data.get("fullTimeEmployees")
-                data["summary"] = profile_data.get("longBusinessSummary")
-                data["website"] = profile_data.get("website")
+            data["country"] = profile.get("country")
+            data["industry"] = profile.get("industry")
+            data["sector"] = profile.get("sector")
+            data["fullTimeEmployees"] = profile.get("fullTimeEmployees")
+            data["summary"] = profile.get("longBusinessSummary")
+            data["website"] = profile.get("website")
 
         if quote:
-            quote_json = quote.json()["quoteResponse"]["result"]
+            data["name"] = quote.get("longName")
+            data["currency"] = quote.get("currency")
+            data["market"] = quote.get("market")
+            data["exchange"] = quote.get("fullExchangeName")
+            data["currency"] = quote.get("currency")
+            data["marketCap"] = quote.get("marketCap")
+            data["sharesOutstanding"] = quote.get("sharesOutstanding")
 
-            if len(quote_json) > 0:
-                quote_data = quote_json[0]
+        return data
 
-                data["name"] = quote_data.get("longName")
-                data["currency"] = quote_data.get("currency")
-                data["market"] = quote_data.get("market")
-                data["exchange"] = quote_data.get("fullExchangeName")
-                data["currency"] = quote_data.get("currency")
-                data["marketCap"] = quote_data.get("marketCap")
-                data["sharesOutstanding"] = quote_data.get("sharesOutstanding")
+    @property
+    def price(self):
+        data = {}
+        quote = self._get_quote()
+
+        if quote:
+            data["exchange"] = quote.get("fullExchangeName")
+            data["currency"] = quote.get("currency")
+            data["price"] = quote.get("regularMarketPrice")
+            data["change"] = quote.get("regularMarketChange")
+            data["changep"] = quote.get("regularMarketChangePercent")
+            data["last_trade"] = datetime.utcfromtimestamp(
+                quote.get("regularMarketTime")
+            )
 
         return data

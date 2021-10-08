@@ -54,6 +54,7 @@ ReDoc: <https://arkfunds.io/api/docs>
 - **[<code>GET</code> Stock Profile](#stock-profile-v2)**
 - **[<code>GET</code> Stock Trades](#stock-trades-v2)**
 - **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership-v2)**
+- **[<code>GET</code> Stock Price](#stock-price-v2)**
 </details>
 
 <details>
@@ -422,6 +423,38 @@ Returns Stock Fund Ownership
             "market_value": 3070287097.2900004
         }
     }]
+}
+```
+
+## Stock Price (v2)
+
+    GET /v2/stock/price
+
+Returns Stock Price
+
+### Query Parameters
+
+| Parameter | Required | Description                 |
+| :-------- | :------: | :-------------------------- |
+| symbol    |   YES    | Stock symbol                |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/stock/price?symbol=TSLA
+
+#### Response
+
+``` json
+{
+    "symbol": "TSLA",
+    "exchange": "NasdaqGS",
+    "currency": "USD",
+    "price": 793.61,
+    "change": 10.859985,
+    "changep": 1.3874142,
+    "last_trade": "2021-10-07T20:00:02",
 }
 ```
 
