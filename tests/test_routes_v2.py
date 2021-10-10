@@ -12,7 +12,7 @@ def test_etf_profile(client):
             "inception_date": "2014-10-31",
             "cusip": "00214Q104",
             "isin": "US00214Q1040",
-            "website": "https://ark-funds.com/arkk",
+            "website": "https://ark-funds.com/funds/arkk/",
         },
     }
 
@@ -35,7 +35,7 @@ def test_etf_holdings_inexistent_item(client):
     assert response.status_code == 200
     assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
-        "symbol": "ARK",
+        "symbol": "",
         "date_from": None,
         "date_to": None,
         "holdings": [],
@@ -53,7 +53,7 @@ def test_etf_trades_inexistent_item(client):
     assert response.status_code == 200
     assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
-        "symbol": "ARK",
+        "symbol": "",
         "date_from": None,
         "date_to": None,
         "trades": [],
@@ -71,7 +71,7 @@ def test_etf_news_inexistent_item(client):
     assert response.status_code == 200
     assert response.headers["Content-Type"] == "application/json"
     assert response.json() == {
-        "symbol": "TSLA",
+        "symbol": "",
         "date_from": None,
         "date_to": None,
         "news": [],

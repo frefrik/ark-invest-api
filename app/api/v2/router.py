@@ -245,7 +245,7 @@ async def etf_news(
         }
     },
     response_model=schemas.V2_StockProfile,
-    response_model_exclude_unset=True,
+    response_model_exclude_none=True,
     summary="Stock Profile",
 )
 async def stock_profile(
