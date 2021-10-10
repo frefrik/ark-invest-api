@@ -137,7 +137,9 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
   "symbol": "ARKK",
   "date_from": "2021-10-08",
   "date_to": "2021-10-08",
-  "holdings": [{
+  "holdings": [
+    {
+      "fund": "ARKK",
       "date": "2021-10-08",
       "ticker": "TSLA",
       "company": "TESLA INC",
@@ -147,7 +149,9 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
       "share_price": 793.61,
       "weight": 9.65,
       "weight_rank": 1
-    },{
+    },
+    {
+      "fund": "ARKK",
       "date": "2021-10-08",
       "ticker": "TDOC",
       "company": "TELADOC HEALTH INC",
@@ -157,7 +161,9 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
       "share_price": 130.8,
       "weight": 5.88,
       "weight_rank": 2
-    },{
+    },
+    {
+      "fund": "ARKK",
       "date": "2021-10-08",
       "ticker": "ROKU",
       "company": "ROKU INC",
@@ -167,7 +173,8 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
       "share_price": 324.47,
       "weight": 5.69,
       "weight_rank": 3
-    }]
+    }
+  ]
 }
 ```
 
