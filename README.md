@@ -16,15 +16,15 @@ Click here to see a list of ARK ETFs
 
 - Actively Managed
   - **ARKK** - ARK Innovation ETF
-  - **ARKQ** - Autonomous Technology & Robotics ETF
-  - **ARKW** - Next Generation Internet ETF
-  - **ARKG** - Genomic Revolution ETF
-  - **ARKF** - Fintech Innovation ETF
-  - **ARKX** - Space Exploration & Innovation ETF
+  - **ARKQ** - ARK Autonomous Tech. & Robotics ETF
+  - **ARKW** - ARK Next Generation Internet ETF
+  - **ARKG** - ARK Genomic Revolution ETF
+  - **ARKF** - ARK Fintech Innovation ETF
+  - **ARKX** - ARK Space Exploration & Innovation ETF
 
 - Indexed
   - **PRNT** - The 3D Printing ETF
-  - **IZRL** - Israel Innovative Technology ETF
+  - **IZRL** - ARK Israel Innovative Technology ETF
 </details>
 
 ---
