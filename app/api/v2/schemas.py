@@ -149,6 +149,10 @@ class V2_StockProfileData(BaseModel):
     currency: Optional[str]
     marketCap: Optional[float]
     sharesOutstanding: Optional[int]
+    price: Optional[float]
+    change: Optional[float]
+    changep: Optional[float]
+    last_trade: Optional[datetime.datetime]
 
     class Config:
         orm_mode = True

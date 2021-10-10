@@ -283,36 +283,41 @@ Returns Stock profile information
 
 ### Query Parameters
 
-| Parameter | Required | Description  |
-| :-------- | :------: | :----------- |
-| symbol    |   YES    | Stock symbol |
+| Parameter | Required | Description                               |
+| :-------- | :------: | :---------------------------------------- |
+| symbol    |   YES    | Stock symbol                              |
+| price     |   NO     | Show current share price (default: false) |
 
 ### Example
 
 #### Request
 
-    GET https://arkfunds.io/api/v2/stock/profile?symbol=TSLA
+    GET https://arkfunds.io/api/v2/stock/profile?symbol=TSLA&price=true
 
 #### Response
 
 ``` json
 {
-    "symbol": "TSLA",
-    "profile": {
-        "ticker": "TSLA",
-        "name": "Tesla, Inc.",
-        "country": "United States",
-        "industry": "Auto Manufacturers",
-        "sector": "Consumer Cyclical",
-        "fullTimeEmployees": 70757,
-        "summary": "Tesla, Inc. designs, develops, manufactures, leases, and sells electric vehicles, and energy generation and storage systems in the United States, China, and internationally. The company operates in two segments, Automotive, and Energy Generation and Storage. The Automotive segment offers electric vehicles, as well as sells automotive regulatory credits. It provides sedans and sport utility vehicles through direct and used vehicle sales, a network of Tesla Superchargers, and in-app upgrades; and purchase financing and leasing services. This segment is also involved in the provision of non-warranty after-sales vehicle services, sale of used vehicles, retail merchandise, and vehicle insurance, as well as sale of products through its subsidiaries to third party customers; services for electric vehicles through its company-owned service locations, and Tesla mobile service technicians; and vehicle limited warranties and extended service plans. The Energy Generation and Storage segment engages in the design, manufacture, installation, sale, and leasing of solar energy generation and energy storage products, and related services to residential, commercial, and industrial customers and utilities through its website, stores, and galleries, as well as through a network of channel partners. This segment also offers service and repairs to its energy product customers, including under warranty; and various financing options to its solar customers. The company was formerly known as Tesla Motors, Inc. and changed its name to Tesla, Inc. in February 2017. Tesla, Inc. was founded in 2003 and is headquartered in Palo Alto, California.",
-        "website": "http://www.tesla.com",
-        "market": "us_market",
-        "exchange": "NasdaqGS",
-        "currency": "USD",
-        "marketCap": 673467596800.0,
-        "sharesOutstanding": 990014976
-    }
+  "symbol": "TSLA",
+  "profile": {
+    "ticker": "TSLA",
+    "name": "Tesla, Inc.",
+    "country": "United States",
+    "industry": "Auto Manufacturers",
+    "sector": "Consumer Cyclical",
+    "fullTimeEmployees": 70757,
+    "summary": "Tesla, Inc. designs, develops, manufactures, leases, and sells electric vehicles, and energy generation and storage systems in the United States, China, and internationally. The company operates in two segments, Automotive, and Energy Generation and Storage. The Automotive segment offers electric vehicles, as well as sells automotive regulatory credits. It provides sedans and sport utility vehicles through direct and used vehicle sales, a network of Tesla Superchargers, and in-app upgrades; and purchase financing and leasing services. This segment is also involved in the provision of non-warranty after-sales vehicle services, sale of used vehicles, retail merchandise, and vehicle insurance, as well as sale of products through its subsidiaries to third party customers; services for electric vehicles through its company-owned service locations, and Tesla mobile service technicians; and vehicle limited warranties and extended service plans. The Energy Generation and Storage segment engages in the design, manufacture, installation, sale, and leasing of solar energy generation and energy storage products, and related services to residential, commercial, and industrial customers and utilities through its website, stores, and galleries, as well as through a network of channel partners. This segment also offers service and repairs to its energy product customers, including under warranty; and various financing options to its solar customers. The company was formerly known as Tesla Motors, Inc. and changed its name to Tesla, Inc. in February 2017. Tesla, Inc. was founded in 2003 and is headquartered in Palo Alto, California.",
+    "website": "http://www.tesla.com",
+    "market": "us_market",
+    "exchange": "NasdaqGS",
+    "currency": "USD",
+    "marketCap": 786880266240,
+    "sharesOutstanding": 1001769984,
+    "price": 785.49,
+    "change": -8.119995,
+    "changep": -1.023172,
+    "last_trade": "2021-10-08T20:00:03"
+  }
 }
 ```
 

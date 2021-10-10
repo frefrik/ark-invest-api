@@ -232,10 +232,12 @@ async def etf_news(
         }
     },
     response_model=schemas.V2_StockProfile,
+    response_model_exclude_unset=True,
     summary="Stock Profile",
 )
 async def stock_profile(
     symbol: str = Query(..., description="Stock symbol"),
+    price: bool = Query(False, description="Show current share price"),
 ):
     symbol = symbol.upper()
 
@@ -243,28 +245,36 @@ async def stock_profile(
         "symbol": symbol,
     }
 
-    yf = YahooFinance(symbol).quote
+    yf = YahooFinance(symbol)
+    yf_quote = yf.quote
 
-    if not yf:
+    if not yf_quote:
         return data
 
     profile = {
         "ticker": symbol,
-        "name": yf.get("name"),
-        "country": yf.get("country"),
-        "industry": yf.get("industry"),
-        "sector": yf.get("sector"),
-        "fullTimeEmployees": yf.get("fullTimeEmployees"),
-        "summary": yf.get("summary"),
-        "website": yf.get("website"),
-        "market": yf.get("market"),
-        "exchange": yf.get("exchange"),
-        "currency": yf.get("currency"),
-        "marketCap": yf.get("marketCap"),
-        "sharesOutstanding": yf.get("sharesOutstanding"),
+        "name": yf_quote.get("name"),
+        "country": yf_quote.get("country"),
+        "industry": yf_quote.get("industry"),
+        "sector": yf_quote.get("sector"),
+        "fullTimeEmployees": yf_quote.get("fullTimeEmployees"),
+        "summary": yf_quote.get("summary"),
+        "website": yf_quote.get("website"),
+        "market": yf_quote.get("market"),
+        "exchange": yf_quote.get("exchange"),
+        "currency": yf_quote.get("currency"),
+        "marketCap": yf_quote.get("marketCap"),
+        "sharesOutstanding": yf_quote.get("sharesOutstanding"),
     }
 
     data["profile"] = profile
+
+    if price:
+        yf_price = yf.price
+        profile["price"] = yf_price.get("price")
+        profile["change"] = yf_price.get("change")
+        profile["changep"] = yf_price.get("changep")
+        profile["last_trade"] = yf_price.get("last_trade")
 
     return data
 
