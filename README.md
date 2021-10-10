@@ -113,11 +113,13 @@ Returns ARK ETF profile information
 
 Returns ARK ETF holdings
 
+Multiple ETF symbols can be passed in same query (comma separated) to retrieve data for multiple funds. I.e. `?symbol=ARKK,ARKF,ARKW`
+
 ### Query Parameters
 
 | Parameter | Required | Description                 |
 | :-------- | :------: | :-------------------------- |
-| symbol    |   YES    | ARK ETF symbol              |
+| symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
 | limit     |    NO    | Limit number of results     |
@@ -175,11 +177,13 @@ Returns ARK ETF holdings
 
 Returns ARK ETF intraday trades
 
+Multiple ETF symbols can be passed in same query (comma separated) to retrieve data for multiple funds. I.e. `?symbol=ARKK,ARKF,ARKW`
+
 ### Query Parameters
 
 | Parameter | Required | Description                 |
 | :-------- | :------: | :-------------------------- |
-| symbol    |   YES    | ARK ETF symbol              |
+| symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
 | limit     |    NO    | Limit number of results     |
@@ -194,34 +198,41 @@ Returns ARK ETF intraday trades
 
 ``` json
 {
-    "symbol": "ARKK",
-    "date_from": "2021-08-20",
-    "date_to": "2021-08-20",
-    "trades": [{
-        "date": "2021-08-20",
-        "ticker": "BEAM",
-        "company": "BEAM THERAPEUTICS INC",
-        "direction": "Buy",
-        "cusip": "07373V105",
-        "shares": 5190,
-        "etf_percent": 0.0025
-    }, {
-        "date": "2021-08-20",
-        "ticker": "FATE",
-        "company": "FATE THERAPEUTICS INC",
-        "direction": "Buy",
-        "cusip": "31189P102",
-        "shares": 292854,
-        "etf_percent": 0.0982
-    }, {
-        "date": "2021-08-20",
-        "ticker": "SGFY",
-        "company": "SIGNIFY HEALTH INC",
-        "direction": "Buy",
-        "cusip": "82671G100",
-        "shares": 18900,
-        "etf_percent": 0.0023
-    }]
+  "symbol": "ARKK",
+  "date_from": "2021-10-08",
+  "date_to": "2021-10-08",
+  "trades": [
+    {
+      "fund": "ARKK",
+      "date": "2021-10-08",
+      "ticker": "NTLA",
+      "company": "INTELLIA THERAPEUTICS INC",
+      "direction": "Buy",
+      "cusip": "45826J105",
+      "shares": 269179,
+      "etf_percent": 0.1608
+    },
+    {
+      "fund": "ARKK",
+      "date": "2021-10-08",
+      "ticker": "CRSP",
+      "company": "CRISPR THERAPEUTICS AG",
+      "direction": "Buy",
+      "cusip": "H17182108",
+      "shares": 268472,
+      "etf_percent": 0.1293
+    },
+    {
+      "fund": "ARKK",
+      "date": "2021-10-08",
+      "ticker": "DOCU",
+      "company": "DOCUSIGN INC",
+      "direction": "Sell",
+      "cusip": "256163106",
+      "shares": 78867,
+      "etf_percent": 0.103
+    }
+  ]
 }
 ```
 
@@ -231,11 +242,13 @@ Returns ARK ETF intraday trades
 
 Returns ARK ETF news
 
+Multiple ETF symbols can be passed in same query (comma separated) to retrieve data for multiple funds. I.e. `?symbol=ARKK,ARKF,ARKW`
+
 ### Query Parameters
 
 | Parameter | Required | Description                 |
 | :-------- | :------: | :-------------------------- |
-| symbol    |   YES    | ARK ETF symbol              |
+| symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
 | limit     |    NO    | Limit number of results     |

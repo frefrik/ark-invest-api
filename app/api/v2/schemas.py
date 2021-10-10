@@ -27,6 +27,7 @@ class V2_FundProfile(BaseModel):
 
 
 class V2_FundHoldingData(BaseModel):
+    fund: str
     date: datetime.date
     ticker: Optional[str]
     company: str
@@ -52,6 +53,7 @@ class V2_FundHolding(BaseModel):
 
 
 class V2_FundTradeData(BaseModel):
+    fund: str
     date: datetime.date
     ticker: Optional[str]
     company: str

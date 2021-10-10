@@ -1,3 +1,4 @@
+import re
 from datetime import date, datetime, timezone
 from typing import Optional
 
@@ -19,6 +20,18 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def validate_symbols(symbols):
+    symbols = re.findall(r"[\w\-.=^&]+", symbols.upper())
+
+    valid_symbols = []
+
+    for symbol in symbols:
+        if symbol in FUNDS:
+            valid_symbols.append(symbol)
+
+    return valid_symbols
 
 
 @v2.get(
@@ -61,23 +74,23 @@ async def etf_profile(
     summary="ETF Holdings",
 )
 async def etf_holdings(
-    symbol: str = Query(..., description="ARK ETF symbol"),
+    symbol: str = Query(..., description="ARK ETF symbols"),
     date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
     date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
     limit: Optional[int] = Query(None, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
-    symbol = symbol.upper()
+    symbols = validate_symbols(symbol)
 
     data = {
-        "symbol": symbol,
+        "symbol": ",".join(map(str, symbols)),
         "date_from": date_from,
         "date_to": date_to,
         "holdings": [],
     }
 
-    if symbol in FUNDS:
-        holding_dates = crud.get_etf_holdings_maxdate(db, symbol=symbol)
+    if symbols:
+        holding_dates = crud.get_etf_holdings_maxdate(db, symbols=symbols)
 
         if not date_from and not date_to:
             date_from = holding_dates.maxdate
@@ -93,7 +106,7 @@ async def etf_holdings(
             date_from = date_to
 
         holdings = crud.get_etf_holdings(
-            db, symbol=symbol, date_from=date_from, date_to=date_to, limit=limit
+            db, symbols=symbols, date_from=date_from, date_to=date_to, limit=limit
         )
 
         data["date_from"] = date_from
@@ -114,23 +127,23 @@ async def etf_holdings(
     summary="ETF Trades",
 )
 async def etf_trades(
-    symbol: str = Query(..., description="ARK ETF symbol"),
+    symbol: str = Query(..., description="ARK ETF symbols"),
     date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
     date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
     limit: Optional[int] = Query(None, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
-    symbol = symbol.upper()
+    symbols = validate_symbols(symbol)
 
     data = {
-        "symbol": symbol,
+        "symbol": ",".join(map(str, symbols)),
         "date_from": date_from,
         "date_to": date_to,
         "trades": [],
     }
 
-    if symbol in FUNDS:
-        trade_dates = crud.get_etf_trades_dates(db, symbol=symbol)
+    if symbols:
+        trade_dates = crud.get_etf_trades_dates(db, symbols=symbols)
 
         if not date_from and not date_to:
             date_from = trade_dates.maxdate
@@ -143,7 +156,7 @@ async def etf_trades(
             date_from = trade_dates.mindate
 
         trades = crud.get_etf_trades(
-            db, symbol=symbol, start_date=date_from, end_date=date_to, limit=limit
+            db, symbols=symbols, start_date=date_from, end_date=date_to, limit=limit
         )
 
         data["date_from"] = date_from
@@ -162,22 +175,22 @@ async def etf_trades(
     summary="ETF News",
 )
 async def etf_news(
-    symbol: str = Query(..., description="ARK ETF symbol"),
+    symbol: str = Query(..., description="ARK ETF symbols"),
     date_from: Optional[date] = Query(None, description="From date (ISO 8601 format)"),
     date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
     limit: Optional[int] = Query(500, description="Limit number of results"),
     db: Session = Depends(get_db),
 ):
-    symbol = symbol.upper()
+    symbols = validate_symbols(symbol)
 
     data = {
-        "symbol": symbol,
+        "symbol": ",".join(map(str, symbols)),
         "date_from": date_from,
         "date_to": date_to,
     }
 
-    if symbol in FUNDS:
-        min_date = crud.get_etf_news_min_date(db, symbol)
+    if symbols:
+        min_date = crud.get_etf_news_min_date(db, symbols)
 
         if not date_from:
             date_from = min_date
@@ -204,7 +217,7 @@ async def etf_news(
             date_to = int(dt_to.replace(tzinfo=timezone.utc).timestamp())
 
         news = crud.get_etf_news(
-            db, symbol=symbol, date_from=date_from, date_to=date_to, limit=limit
+            db, symbols=symbols, date_from=date_from, date_to=date_to, limit=limit
         )
 
         if len(news) == 500:
