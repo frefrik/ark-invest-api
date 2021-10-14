@@ -90,24 +90,30 @@ async def etf_holdings(
     }
 
     if symbols:
-        holding_dates = crud.get_etf_holdings_maxdate(db, symbols=symbols)
+        holdings = None
+        holding_dates = crud.get_etf_holdings_dates(db, symbols=symbols)
+        min_date = min(holding_dates)[0]
+        max_date = max(holding_dates)[0]
 
         if not date_from and not date_to:
-            date_from = holding_dates.maxdate
-            date_to = holding_dates.maxdate
+            date_from = min_date
+            date_to = max_date
+
+            holdings = crud.get_etf_current_holdings(db, symbols=symbols, limit=limit)
 
         elif not date_to:
-            date_to = holding_dates.maxdate
+            date_to = max_date
 
         elif not date_from:
-            date_from = holding_dates.mindate
+            date_from = min_date
 
         if date_from > date_to:
             date_from = date_to
 
-        holdings = crud.get_etf_holdings(
-            db, symbols=symbols, date_from=date_from, date_to=date_to, limit=limit
-        )
+        if not holdings:
+            holdings = crud.get_etf_holdings(
+                db, symbols=symbols, date_from=date_from, date_to=date_to, limit=limit
+            )
 
         data["date_from"] = date_from
         data["date_to"] = date_to

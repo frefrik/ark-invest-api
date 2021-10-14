@@ -1,11 +1,58 @@
 from sqlalchemy import desc, func
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import and_
 
 from app.models import Fund, Holding, News, Trades
 
 
 def get_etf_profile(db: Session, symbol: str):
     return db.query(Fund).filter(Fund.symbol == symbol).one()
+
+
+def get_etf_current_holdings(db: Session, symbols: str, limit: int):
+    subq = (
+        db.query(
+            Holding.fund,
+            func.max(Holding.date).label("maxdate"),
+        )
+        .filter(
+            Holding.fund.in_([s for s in symbols]),
+        )
+        .group_by(Holding.fund)
+        .subquery()
+    )
+
+    q = (
+        db.query(
+            Holding.fund,
+            Holding.date,
+            Holding.ticker,
+            Holding.company,
+            Holding.cusip,
+            Holding.shares,
+            Holding.market_value,
+            Holding.share_price,
+            Holding.weight,
+            Holding.weight_rank,
+        )
+        .join(
+            subq,
+            and_(
+                Holding.fund == subq.c.fund,
+                Holding.date == subq.c.maxdate,
+            ),
+        )
+        .order_by(
+            Holding.date,
+            Holding.fund,
+            Holding.weight_rank,
+        )
+    )
+
+    if limit:
+        return q.order_by("date", "weight_rank").limit(limit).all()
+    else:
+        return q.all()
 
 
 def get_etf_holdings(
@@ -42,14 +89,14 @@ def get_etf_holdings(
         return q.all()
 
 
-def get_etf_holdings_maxdate(db: Session, symbols: str):
+def get_etf_holdings_dates(db: Session, symbols: str):
     return (
         db.query(
-            func.min(Holding.date).label("mindate"),
             func.max(Holding.date).label("maxdate"),
         )
         .filter(Holding.fund.in_([s for s in symbols]))
-        .one()
+        .group_by(Holding.fund)
+        .all()
     )
 
 
