@@ -1,6 +1,6 @@
 # OpenAPI settings
 OPENAPI_TITLE = "ARK Invest API"
-OPENAPI_API_VERSION = "2.2.1"
+OPENAPI_API_VERSION = "2.3.0"
 OPENAPI_DESCRIPTION = "API for tracking ARK Invest fund holdings and trades. This site is not affiliated with Ark Invest."
 OPENAPI_CONTACT = "api (at) arkfunds.io"
 OPENAPI_HOST = "arkfunds.io"
@@ -10,7 +10,17 @@ OPENAPI_EXTERNALDOCS_DESC = "Find out more about this project"
 OPENAPI_EXTERNALDOCS_URL = "https://github.com/frefrik/ark-invest-api"
 
 # ARK settings
-FUNDS = ["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "IZRL"]
+FUNDS = [
+    "ARKK",
+    "ARKQ",
+    "ARKW",
+    "ARKG",
+    "ARKF",
+    "ARKX",
+    "PRNT",
+    "IZRL",
+    "CTRU",
+]
 
 # Example responses
 RESPONSES = {

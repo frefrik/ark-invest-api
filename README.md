@@ -25,6 +25,7 @@ Click here to see a list of ARK ETFs
 - Indexed
   - **PRNT** - The 3D Printing ETF
   - **IZRL** - ARK Israel Innovative Technology ETF
+  - **CTRU** - ARK Transparency ETF
 </details>
 
 ---
@@ -494,9 +495,9 @@ Returns ARK ETF profile information
 
 ### Query Parameters
 
-| Parameter | Required | Valid values                                   | Default value |
-| :-------- | :------: | :--------------------------------------------- | ------------ |
-| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
+| Parameter | Required | Valid values                                         | Default value |
+| :-------- | :------: | :--------------------------------------------------- | ------------- |
+| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
 
 ### Example
 
@@ -529,10 +530,10 @@ Returns ARK ETF holdings
 
 ### Query Parameters
 
-| Parameter | Required | Valid values                                   | Default value |
-| -:------- | :------: | :--------------------------------------------- | ------------- |
-| symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
-| date      |    NO    | ISO 8601 Calendar date                         |               |
+| Parameter | Required | Valid values                                         | Default value |
+| :-------- | :------: | :--------------------------------------------------- | ------------- |
+| symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
+| date      |    NO    | ISO 8601 Calendar date                               |               |
 
 ### Example
 
@@ -664,11 +665,11 @@ Returns ARK ETF news
 
 ### Query Parameters
 
-| Parameter | Required | Valid values                                   | Default value |
-| :-------- | :------: | :--------------------------------------------- | ------------- |
-| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL |               |
-| date      |    NO    | ISO 8601 Calendar date                         |               |
-| date_to   |    NO    | ISO 8601 Calendar date                         |               |
+| Parameter | Required | Valid values                                         | Default value |
+| :-------- | :------: | :--------------------------------------------------- | ------------- |
+| symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
+| date      |    NO    | ISO 8601 Calendar date                               |               |
+| date_to   |    NO    | ISO 8601 Calendar date                               |               |
 
 ### Example
 
