@@ -1,5 +1,5 @@
 aiofiles==0.8.0
-fastapi==0.70.0
+fastapi==0.73.0
 psycopg2-binary==2.9.2
 python-dateutil==2.8.2
 python-dotenv==0.19.2
