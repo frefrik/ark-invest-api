@@ -5,29 +5,46 @@ services:
     build: .
     container_name: ark-invest-api
     restart: always
-    expose:
-      - 80
+    ports:
+      - "8000:8000"
     environment:
       - WORKERS_PER_CORE=3
       - MAX_WORKERS=6
     env_file:
-      - .env
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.fastapi.rule=Host(`arkfunds.io`)"
-      - "traefik.http.routers.fastapi.tls=true"
-      - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
-  traefik:
-    image: traefik:2.5
-    container_name: traefik
+      - fastapi.env
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
+    env_file:
+      - nginx.env
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.toml:/etc/traefik/traefik.toml"
-      - "./traefik-public-certificates:/certificates"
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
+      - nginx-certs:/etc/nginx/certs
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: acme-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    env_file:
+      - nginx.env
+    volumes:
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
+      - nginx-certs:/etc/nginx/certs
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
-  traefik-public-certificates:
+  nginx-vhost:
+  nginx-html:
+  nginx-certs:
+  acme:
