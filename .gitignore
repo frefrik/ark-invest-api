@@ -142,4 +142,4 @@ cython_debug/
 tmp
 run*.sh
 .devcontainer
-traefik-*
+*.env
