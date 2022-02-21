@@ -31,8 +31,11 @@ Click here to see a list of ARK ETFs
 ---
 The API contains data for trades, holdings and news from the following dates:
 
-- **Trades**: `2020-09-09` (ARKX from `2021-04-07`)
-- **Holdings**: `2020-11-24` (ARKX from `2021-03-26`)
+- **Trades**: `2020-09-09`
+  - ARKX from `2021-04-07`
+- **Holdings**: `2020-11-24`
+  - ARKX from `2021-03-26`
+  - CTRU from `2021-12-09`
 - **News**: `2020-04-07`
 ---
 
@@ -307,7 +310,7 @@ Returns Stock profile information
 | Parameter | Required | Description                               |
 | :-------- | :------: | :---------------------------------------- |
 | symbol    |   YES    | Stock symbol                              |
-| price     |   NO     | Show current share price (default: false) |
+| price     |    NO    | Show current share price (default: false) |
 
 ### Example
 
@@ -463,9 +466,9 @@ Returns Stock Price
 
 ### Query Parameters
 
-| Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
-| symbol    |   YES    | Stock symbol                |
+| Parameter | Required | Description  |
+| :-------- | :------: | :----------- |
+| symbol    |   YES    | Stock symbol |
 
 ### Example
 
