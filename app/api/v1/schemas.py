@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, create_model
 
@@ -19,7 +19,7 @@ class FundList(BaseModel):
 
 
 class FundProfile(BaseModel):
-    profile: List[FundList] = []
+    profile: list[FundList] = []
 
 
 class HoldingList(BaseModel):
@@ -38,7 +38,7 @@ class HoldingList(BaseModel):
 class FundHolding(BaseModel):
     symbol: str
     date: datetime.date
-    holdings: List[HoldingList] = []
+    holdings: list[HoldingList] = []
 
 
 class TradeList(BaseModel):
@@ -58,7 +58,7 @@ class FundTrades(BaseModel):
     symbol: str
     date_from: datetime.date
     date_to: datetime.date
-    trades: List[TradeList] = []
+    trades: list[TradeList] = []
 
 
 class StockProfile(BaseModel):
@@ -91,7 +91,7 @@ class FundOwnershipList(BaseModel):
 class FundOwnership(BaseModel):
     symbol: str
     date: Optional[datetime.date]
-    ownership: List[FundOwnershipList] = []
+    ownership: list[FundOwnershipList] = []
     totals: create_model(
         "totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...)
     )
@@ -115,7 +115,7 @@ class StockTrades(BaseModel):
     symbol: str
     date_from: datetime.date
     date_to: datetime.date
-    trades: List[StockTradesList]
+    trades: list[StockTradesList]
 
 
 class FundNewsList(BaseModel):
@@ -136,4 +136,4 @@ class FundNews(BaseModel):
     symbol: Optional[str]
     date_from: datetime.date
     date_to: datetime.date
-    news: List[FundNewsList] = []
+    news: list[FundNewsList] = []

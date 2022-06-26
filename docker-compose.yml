@@ -8,7 +8,6 @@ services:
     ports:
       - "80:80"
     environment:
-      - WORKERS_PER_CORE=3
-      - MAX_WORKERS=6
+      - WEB_CONCURRENCY=6
     env_file:
       - fastapi.env

@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -40,10 +40,7 @@ class V2_FundHolding(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    holdings: List[V2_FundHoldingData] = []
-
-    class Config:
-        orm_mode = True
+    holdings: list[V2_FundHoldingData] = []
 
 
 class V2_FundTradeData(BaseModel):
@@ -59,12 +56,9 @@ class V2_FundTradeData(BaseModel):
 
 class V2_FundTrades(BaseModel):
     symbol: str
-    date_from: datetime.date = None
-    date_to: datetime.date = None
-    trades: List[V2_FundTradeData] = []
-
-    class Config:
-        orm_mode = True
+    date_from: datetime.date | None = None
+    date_to: datetime.date | None = None
+    trades: list[V2_FundTradeData] = []
 
 
 class V2_FundOwnershipData(BaseModel):
@@ -87,7 +81,7 @@ class V2_FundOwnershipTotals(BaseModel):
 
 class V2_FundOwnershipList(BaseModel):
     date: datetime.date
-    ownership: List[V2_FundOwnershipData]
+    ownership: list[V2_FundOwnershipData]
     totals: V2_FundOwnershipTotals
 
 
@@ -95,10 +89,7 @@ class V2_FundOwnership(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    data: List[V2_FundOwnershipList] = []
-
-    class Config:
-        orm_mode = True
+    data: list[V2_FundOwnershipList] = []
 
 
 class V2_FundNewsData(BaseModel):
@@ -119,10 +110,7 @@ class V2_FundNews(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    news: List[V2_FundNewsData] = []
-
-    class Config:
-        orm_mode = True
+    news: list[V2_FundNewsData] = []
 
 
 class V2_StockProfileData(BaseModel):
@@ -165,10 +153,7 @@ class V2_StockTrades(BaseModel):
     symbol: str
     date_from: Optional[datetime.date]
     date_to: Optional[datetime.date]
-    trades: List[V2_StockTradeData] = []
-
-    class Config:
-        orm_mode = True
+    trades: list[V2_StockTradeData] = []
 
 
 class V2_StockPrice(BaseModel):
