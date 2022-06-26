@@ -55,6 +55,7 @@ ReDoc: <https://arkfunds.io/api/docs>
 - **[<code>GET</code> ETF Holdings](#etf-holdings-v2)**
 - **[<code>GET</code> ETF Trades](#etf-trades-v2)**
 - **[<code>GET</code> ETF News](#etf-news-v2)**
+- **[<code>GET</code> ETF Performance](#etf-performance-v2)**
 - **[<code>GET</code> Stock Profile](#stock-profile-v2)**
 - **[<code>GET</code> Stock Trades](#stock-trades-v2)**
 - **[<code>GET</code> Stock Fund Ownership](#stock-fund-ownership-v2)**
@@ -295,6 +296,88 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
         "summary": "I am neutral on the ETF. For short-term gains, investors may wish to look elsewhere.",
         "url": "https://seekingalpha.com/article/4417325-ark-genomic-revolution-multi-sector-etf-underperformance",
         "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/842211270/medium_image_842211270.jpg"
+    }]
+}
+```
+
+## ETF Performance (v2)
+
+    GET /v2/etf/performance
+
+Returns ARK ETF Performance
+
+Multiple ETF symbols can be passed in same query (comma separated) to retrieve data for multiple funds. I.e. `?symbol=ARKK,ARKF,ARKW`
+
+### Query Parameters
+
+| Parameter | Required | Description                    |
+| :-------- | :------: | :----------------------------- |
+| symbol    |   YES    | ARK ETF symbols                |
+| formatted |    NO    | Format values (default: false) |
+
+### Example
+
+#### Request
+
+    GET https://arkfunds.io/api/v2/etf/performance?symbol=ARKK&formatted=true
+
+#### Response
+
+``` json
+{
+  "symbol": "ARKK",
+  "performance": [
+    {
+      "fund": "ARKK",
+      "overview": {
+        "asOfDate": "2022-06-24",
+        "ytdReturn": "-53.52%",
+        "oneYearReturn": "-64.10%",
+        "threeYearReturn": "-0.03%"
+      },
+      "trailingReturns": {
+        "asOfDate": "2022-06-16",
+        "ytd": "-60.84%",
+        "oneMonth": "-9.81%",
+        "threeMonth": "-38.15%",
+        "oneYear": "-67.38%",
+        "threeYear": "-3.90%",
+        "fiveYear": "12.68%",
+        "tenYear": "0.00%"
+      },
+      "annualReturns": [
+        {
+          "year": "2022",
+          "value": null
+        },
+        {
+          "year": "2021",
+          "value": "-23.35%"
+        },
+        {
+          "year": "2020",
+          "value": "156.61%"
+        },
+        {
+          "year": "2019",
+          "value": "35.73%"
+        },
+        {
+          "year": "2018",
+          "value": "3.58%"
+        },
+        {
+          "year": "2017",
+          "value": "87.38%"
+        },
+        {
+          "year": "2016",
+          "value": "-1.96%"
+        },
+        {
+          "year": "2015",
+          "value": "3.76%"
+        }]
     }]
 }
 ```

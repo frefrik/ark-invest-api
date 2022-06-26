@@ -78,6 +78,22 @@ def test_etf_news_inexistent_item(client):
     }
 
 
+def test_etf_performance(client):
+    response = client.get("/api/v2/etf/performance?symbol=ARKK")
+    assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
+
+
+def test_etf_performance_inexistent_item(client):
+    response = client.get("/api/v2/etf/performance?symbol=TSLA")
+    assert response.status_code == 200
+    assert response.headers["Content-Type"] == "application/json"
+    assert response.json() == {
+        "symbol": "",
+        "performance": [],
+    }
+
+
 def test_stock_profile(client):
     response = client.get("/api/v2/stock/profile?symbol=TSLA")
     assert response.status_code == 200

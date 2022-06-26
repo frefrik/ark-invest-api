@@ -1,60 +1,77 @@
+import json
 from datetime import datetime
 
 import requests
 
 
 class YahooFinance:
-    QUOTE_URL = "https://query1.finance.yahoo.com/v7/finance/quote?symbols={0}"
-    PROFILE_URL = "https://query2.finance.yahoo.com/v10/finance/quoteSummary/{0}?modules=assetProfile"
+    API_URL = "https://query1.finance.yahoo.com"
+    DEFAULT_TIMEOUT = 10
 
     def __init__(self, symbol):
         self.symbol = symbol
-        self.timeout = 2
-        self.session = requests.Session()
-        self.session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0"
-            }
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0"
+        }
+
+    def _request(self, method, path, **kwargs):
+        uri = "{}/{}".format(self.API_URL, path)
+        params = self._format_params(kwargs.get("params", {}))
+
+        response = getattr(requests, method)(
+            uri,
+            headers=self.headers,
+            params=params,
+            timeout=self.DEFAULT_TIMEOUT,
         )
 
-    def _get(self, url, params=None):
-        res = self.session.get(url, params=params, timeout=self.timeout)
-
-        if res.status_code == 404:
-            return None
-        elif res.status_code == 400:
+        if response.status_code != 200:
             return None
 
-        res.raise_for_status()
+        return response.json()
 
-        return res
+    @staticmethod
+    def _format_params(params):
+        return {
+            k: json.dumps(v) if isinstance(v, bool) else v for k, v in params.items()
+        }
+
+    def _get(self, path, **kwargs):
+        return self._request("get", path, **kwargs)
 
     def _get_quote(self):
-        res = self._get(self.QUOTE_URL.format(self.symbol))
+        res = self._get("/v7/finance/quote", params={"symbols": self.symbol})
 
         if res:
-            _json = res.json()["quoteResponse"]["result"]
+            _json = res["quoteResponse"]["result"]
 
             if len(_json) > 0:
                 return _json[0]
             else:
                 return None
 
-    def _get_asset_profile(self):
-        res = self._get(self.PROFILE_URL.format(self.symbol))
+    def _get_quoteSummary(self, module):
+        res = self._get(
+            f"/v10/finance/quoteSummary/{self.symbol}",
+            params={"modules": module},
+        )
 
         if res:
-            _json = res.json()["quoteSummary"]["result"]
+            _json = res["quoteSummary"]["result"]
 
             if len(_json) > 0:
-                return _json[0]["assetProfile"]
+                return _json[0][module]
             else:
                 return None
 
     @property
+    def fund_performance(self):
+        return self._get_quoteSummary("fundPerformance")
+
+    @property
     def quote(self):
         data = {}
-        profile = self._get_asset_profile()
+        profile = self._get_quoteSummary("assetProfile")
         quote = self._get_quote()
 
         if profile:

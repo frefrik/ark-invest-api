@@ -382,6 +382,64 @@ RESPONSES = {
                 },
             ],
         },
+        "etf_performance": {
+            "symbol": "ARKK",
+            "performance": [
+                {
+                    "fund": "ARKK",
+                    "overview": {
+                        "asOfDate": "2022-06-24",
+                        "ytdReturn": "-53.52%",
+                        "oneYearReturn": "-64.10%",
+                        "threeYearReturn": "-0.03%",
+                    },
+                    "trailingReturns": {
+                        "asOfDate": "2022-06-16",
+                        "ytd": "-60.84%",
+                        "oneMonth": "-9.81%",
+                        "threeMonth": "-38.15%",
+                        "oneYear": "-67.38%",
+                        "threeYear": "-3.90%",
+                        "fiveYear": "12.68%",
+                        "tenYear": "0.00%",
+                    },
+                    "annualReturns": [
+                        {
+                            "year": "2022",
+                            "value": "",
+                        },
+                        {
+                            "year": "2021",
+                            "value": "-23.35%",
+                        },
+                        {
+                            "year": "2020",
+                            "value": "156.61%",
+                        },
+                        {
+                            "year": "2019",
+                            "value": "35.73%",
+                        },
+                        {
+                            "year": "2018",
+                            "value": "3.58%",
+                        },
+                        {
+                            "year": "2017",
+                            "value": "87.38%",
+                        },
+                        {
+                            "year": "2016",
+                            "value": "-1.96%",
+                        },
+                        {
+                            "year": "2015",
+                            "value": "3.76%",
+                        },
+                    ],
+                }
+            ],
+        },
         "stock_profile": {
             "symbol": "TSLA",
             "profile": {

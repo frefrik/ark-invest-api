@@ -242,6 +242,77 @@ async def etf_news(
 
 
 @v2.get(
+    "/etf/performance",
+    responses={
+        200: {
+            "content": {
+                "application/json": {"example": RESPONSES["v2"]["etf_performance"]}
+            }
+        }
+    },
+    response_model=schemas.V2_FundPerformance,
+    summary="ETF Performance",
+)
+async def etf_performance(
+    symbol: str = Query(..., description="ARK ETF symbol"),
+    formatted: bool = Query(False, description="Return formatted values"),
+):
+    symbol = symbol.upper()
+    symbols = validate_symbols(symbol)
+
+    data = {
+        "symbol": ",".join(map(str, symbols)),
+        "performance": [],
+    }
+
+    for s in symbols:
+        yf = YahooFinance(s)
+        yf_perf = yf.fund_performance
+
+        if not yf_perf:
+            return data
+
+        value = "fmt" if formatted else "raw"
+        overview = yf_perf["performanceOverview"]
+        trailing = yf_perf["trailingReturns"]
+        annual = yf_perf["annualTotalReturns"]["returns"]
+
+        annual_returns = []
+        for i in annual:
+            annual_returns.append(
+                {
+                    "year": i["year"],
+                    "value": i.get("annualValue", {}).get(value),
+                }
+            )
+
+        performance = {
+            "fund": s,
+            "overview": {
+                "asOfDate": overview.get("asOfDate", {}).get("fmt"),
+                "ytdReturn": overview.get("ytdReturnPct", {}).get(value),
+                "oneYearReturn": overview.get("oneYearTotalReturn", {}).get(value),
+                "threeYearReturn": overview.get("threeYearTotalReturn", {}).get(value),
+            },
+            "trailingReturns": {
+                "asOfDate": trailing.get("asOfDate", {}).get("fmt"),
+                "ytd": trailing.get("ytd", {}).get(value),
+                "oneMonth": trailing.get("oneMonth", {}).get(value),
+                "threeMonth": trailing.get("threeMonth", {}).get(value),
+                "oneYear": trailing.get("oneYear", {}).get(value),
+                "threeYear": trailing.get("threeYear", {}).get(value),
+                "fiveYear": trailing.get("fiveYear", {}).get(value),
+                "tenYear": trailing.get("tenYear", {}).get(value),
+            },
+            "annualReturns": annual_returns,
+        }
+
+        data["performance"].append(performance)
+
+    return data
+
+
+@v2.get(
     "/stock/profile",
     responses={
         200: {

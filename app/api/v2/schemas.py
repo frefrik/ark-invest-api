@@ -43,6 +43,41 @@ class V2_FundHolding(BaseModel):
     holdings: list[V2_FundHoldingData] = []
 
 
+class V2_FundPerformanceOverview(BaseModel):
+    asOfDate: datetime.date | int
+    ytdReturn: float | str | None = None
+    oneYearReturn: float | str | None = None
+    threeYearReturn: float | str | None = None
+
+
+class V2_FundTrailingReturns(BaseModel):
+    asOfDate: datetime.date | int
+    ytd: float | str | None = None
+    oneMonth: float | str | None = None
+    threeMonth: float | str | None = None
+    oneYear: float | str | None = None
+    threeYear: float | str | None = None
+    fiveYear: float | str | None = None
+    tenYear: float | str | None = None
+
+
+class V2_FundAnnualReturns(BaseModel):
+    year: str
+    value: float | str | None = 0
+
+
+class V2_FundPerformanceData(BaseModel):
+    fund: str
+    overview: V2_FundPerformanceOverview
+    trailingReturns: V2_FundTrailingReturns
+    annualReturns: list[V2_FundAnnualReturns]
+
+
+class V2_FundPerformance(BaseModel):
+    symbol: str
+    performance: list[V2_FundPerformanceData] = []
+
+
 class V2_FundTradeData(BaseModel):
     fund: str
     date: datetime.date
