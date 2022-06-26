@@ -22,9 +22,6 @@ class V2_FundProfile(BaseModel):
     symbol: str
     profile: Optional[V2_FundProfileData] = {}
 
-    class Config:
-        orm_mode = True
-
 
 class V2_FundHoldingData(BaseModel):
     fund: str
@@ -37,9 +34,6 @@ class V2_FundHoldingData(BaseModel):
     share_price: float
     weight: float
     weight_rank: int
-
-    class Config:
-        orm_mode = True
 
 
 class V2_FundHolding(BaseModel):
@@ -61,9 +55,6 @@ class V2_FundTradeData(BaseModel):
     cusip: str
     shares: int
     etf_percent: float
-
-    class Config:
-        orm_mode = True
 
 
 class V2_FundTrades(BaseModel):
@@ -98,9 +89,6 @@ class V2_FundOwnershipList(BaseModel):
     date: datetime.date
     ownership: List[V2_FundOwnershipData]
     totals: V2_FundOwnershipTotals
-
-    class Config:
-        orm_mode = True
 
 
 class V2_FundOwnership(BaseModel):
@@ -156,16 +144,10 @@ class V2_StockProfileData(BaseModel):
     changep: Optional[float]
     last_trade: Optional[datetime.datetime]
 
-    class Config:
-        orm_mode = True
-
 
 class V2_StockProfile(BaseModel):
     symbol: str
     profile: Optional[V2_StockProfileData] = {}
-
-    class Config:
-        orm_mode = True
 
 
 class V2_StockTradeData(BaseModel):
@@ -197,6 +179,3 @@ class V2_StockPrice(BaseModel):
     change: Optional[float]
     changep: Optional[float]
     last_trade: Optional[datetime.datetime]
-
-    class Config:
-        orm_mode = True

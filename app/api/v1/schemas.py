@@ -21,9 +21,6 @@ class FundList(BaseModel):
 class FundProfile(BaseModel):
     profile: List[FundList] = []
 
-    class Config:
-        orm_mode = True
-
 
 class HoldingList(BaseModel):
     company: str
@@ -42,9 +39,6 @@ class FundHolding(BaseModel):
     symbol: str
     date: datetime.date
     holdings: List[HoldingList] = []
-
-    class Config:
-        orm_mode = True
 
 
 class TradeList(BaseModel):
@@ -66,9 +60,6 @@ class FundTrades(BaseModel):
     date_to: datetime.date
     trades: List[TradeList] = []
 
-    class Config:
-        orm_mode = True
-
 
 class StockProfile(BaseModel):
     ticker: str
@@ -84,9 +75,6 @@ class StockProfile(BaseModel):
     currency: Optional[str]
     marketCap: Optional[float]
     sharesOutstanding: Optional[int]
-
-    class Config:
-        orm_mode = True
 
 
 class FundOwnershipList(BaseModel):
@@ -107,9 +95,6 @@ class FundOwnership(BaseModel):
     totals: create_model(
         "totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...)
     )
-
-    class Config:
-        orm_mode = True
 
 
 class StockTradesList(BaseModel):
@@ -132,9 +117,6 @@ class StockTrades(BaseModel):
     date_to: datetime.date
     trades: List[StockTradesList]
 
-    class Config:
-        orm_mode = True
-
 
 class FundNewsList(BaseModel):
     id: int
@@ -155,6 +137,3 @@ class FundNews(BaseModel):
     date_from: datetime.date
     date_to: datetime.date
     news: List[FundNewsList] = []
-
-    class Config:
-        orm_mode = True
