@@ -1,21 +1,21 @@
 [tool.poetry]
 name = "ark-invest-api"
-version = "2.4.0"
+version = "2.4.1"
 description = "API for tracking holdings and trades of ARK Invest funds."
 authors = ["Fredrik Haarstad <codemonkey@zomg.no>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.78.0"
-requests = "^2.28.0"
+fastapi = "^0.80.0"
+requests = "^2.28.1"
 psycopg2-binary = "^2.9.3"
 python-dateutil = "^2.8.2"
-SQLAlchemy = "^1.4.39"
-uvicorn = "^0.18.1"
+SQLAlchemy = "^1.4.40"
+uvicorn = "^0.18.3"
 
 [tool.poetry.dev-dependencies]
-black = "^22.3.0"
+black = "^22.6.0"
 isort = "^5.10.1"
 pytest = "^7.1.2"
 
