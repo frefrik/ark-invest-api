@@ -25,18 +25,24 @@ Click here to see a list of ARK ETFs
 - Indexed
   - **PRNT** - The 3D Printing ETF
   - **IZRL** - ARK Israel Innovative Technology ETF
-  - **CTRU** - ARK Transparency ETF
+  - ~~**CTRU** - ARK Transparency ETF~~
 </details>
 
 ---
 The API contains data for trades, holdings and news from the following dates:
 
-- **Trades**: `2020-09-09`
-  - ARKX from `2021-04-07`
-- **Holdings**: `2020-11-24`
-  - ARKX from `2021-03-26`
-  - CTRU from `2021-12-09`
-- **News**: `2020-04-07`
+|          |   Trades   |  Holdings  |    News    |
+| :------: | :--------: | :--------: | :--------: |
+|   ARKF   | 2020-09-09 | 2020-11-24 | 2020-05-07 |
+|   ARKG   | 2020-09-09 | 2020-11-24 | 2020-04-18 |
+|   ARKK   | 2020-09-09 | 2020-11-24 | 2020-04-07 |
+|   ARKQ   | 2020-09-11 | 2020-11-24 | 2020-04-18 |
+|   ARKW   | 2020-09-09 | 2020-11-24 | 2020-04-19 |
+|   ARKX   | 2021-04-07 | 2021-03-26 | 2021-02-07 |
+|   IZRL   |            | 2020-11-24 | 2020-04-24 |
+|   PRNT   |            | 2020-11-24 | 2020-08-20 |
+| CTRU[^1] |            | 2021-12-09 | 2021-12-09 |
+
 ---
 
 ## Documentation
@@ -971,3 +977,6 @@ Returns Stock Fund Ownership
     }
 }
 ```
+
+[^1]: [ARK Investment Management LLC Announces It Will Close the ARK Transparency ETF](https://ark-funds.com/wp-content/uploads/2022/07/ARK-Invest_PressRelease_CTRU_Final.pdf)  
+  As of July 26 2022, CTRU data is no longer updated.
