@@ -35,6 +35,9 @@ class V2_FundHoldingData(BaseModel):
     weight: float
     weight_rank: int
 
+    class Config:
+        orm_mode = True
+
 
 class V2_FundHolding(BaseModel):
     symbol: str
@@ -87,6 +90,9 @@ class V2_FundTradeData(BaseModel):
     cusip: str
     shares: int
     etf_percent: float
+
+    class Config:
+        orm_mode = True
 
 
 class V2_FundTrades(BaseModel):
