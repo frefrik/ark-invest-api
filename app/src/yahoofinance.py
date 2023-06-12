@@ -11,7 +11,7 @@ class YahooFinance:
     def __init__(self, symbol):
         self.symbol = symbol
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0"
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0"
         }
 
     def _request(self, method, path, **kwargs):
@@ -32,23 +32,16 @@ class YahooFinance:
 
     @staticmethod
     def _format_params(params):
-        return {
-            k: json.dumps(v) if isinstance(v, bool) else v for k, v in params.items()
-        }
+        return {k: json.dumps(v) if isinstance(v, bool) else v for k, v in params.items()}
 
     def _get(self, path, **kwargs):
         return self._request("get", path, **kwargs)
 
-    def _get_quote(self):
-        res = self._get("/v7/finance/quote", params={"symbols": self.symbol})
+    def _get_price(self):
+        return self._get_quoteSummary("price")
 
-        if res:
-            _json = res["quoteResponse"]["result"]
-
-            if len(_json) > 0:
-                return _json[0]
-            else:
-                return None
+    def _get_key_stats(self):
+        return self._get_quoteSummary("defaultKeyStatistics")
 
     def _get_quoteSummary(self, module):
         res = self._get(
@@ -72,7 +65,8 @@ class YahooFinance:
     def quote(self):
         data = {}
         profile = self._get_quoteSummary("assetProfile")
-        quote = self._get_quote()
+        price = self._get_price()
+        key_stats = self._get_key_stats()
 
         if profile:
             data["country"] = profile.get("country")
@@ -82,30 +76,29 @@ class YahooFinance:
             data["summary"] = profile.get("longBusinessSummary")
             data["website"] = profile.get("website")
 
-        if quote:
-            data["name"] = quote.get("longName")
-            data["currency"] = quote.get("currency")
-            data["market"] = quote.get("market")
-            data["exchange"] = quote.get("fullExchangeName")
-            data["currency"] = quote.get("currency")
-            data["marketCap"] = quote.get("marketCap")
-            data["sharesOutstanding"] = quote.get("sharesOutstanding")
+        if price:
+            data["name"] = price.get("longName")
+            data["currency"] = price.get("currency")
+            data["exchange"] = price.get("exchangeName")
+            data["currency"] = price.get("currency")
+            data["marketCap"] = price.get("marketCap", {}).get("raw")
+
+        if key_stats:
+            data["sharesOutstanding"] = key_stats.get("sharesOutstanding", {}).get("raw")
 
         return data
 
     @property
     def price(self):
         data = {}
-        quote = self._get_quote()
+        quote = self._get_price()
 
         if quote:
-            data["exchange"] = quote.get("fullExchangeName")
+            data["exchange"] = quote.get("exchangeName")
             data["currency"] = quote.get("currency")
-            data["price"] = quote.get("regularMarketPrice")
-            data["change"] = quote.get("regularMarketChange")
-            data["changep"] = quote.get("regularMarketChangePercent")
-            data["last_trade"] = datetime.utcfromtimestamp(
-                quote.get("regularMarketTime")
-            )
+            data["price"] = quote.get("regularMarketPrice", {}).get("raw")
+            data["change"] = quote.get("regularMarketChange", {}).get("raw")
+            data["changep"] = quote.get("regularMarketChangePercent", {}).get("raw")
+            data["last_trade"] = datetime.utcfromtimestamp(quote.get("regularMarketTime"))
 
         return data
