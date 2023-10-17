@@ -11,7 +11,7 @@ fastapi = "^0.97.0"
 requests = "^2.31.0"
 psycopg2-binary = "^2.9.6"
 python-dateutil = "^2.8.2"
-SQLAlchemy = "^2.0.16"
+SQLAlchemy = "^2.0.22"
 uvicorn = "^0.22.0"
 
 [tool.poetry.dev-dependencies]
