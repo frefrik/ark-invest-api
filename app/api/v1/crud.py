@@ -1,3 +1,5 @@
+from datetime import date, datetime, timezone
+
 from sqlalchemy import and_, desc, func
 from sqlalchemy.orm import Session
 
@@ -118,14 +120,23 @@ def get_stock_trades_dates(db: Session, symbol: str):
     )
 
 
-def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
+def get_etf_news(db: Session, symbol: str, date_from: date, date_to: date):
+    epoch_date_from = int(
+        datetime(date_from.year, date_from.month, date_from.day, tzinfo=timezone.utc).timestamp()
+    )
+    epoch_date_to = int(
+        datetime(
+            date_to.year, date_to.month, date_to.day, 23, 59, 59, tzinfo=timezone.utc
+        ).timestamp()
+    )
+
     if symbol:
         return (
             db.query(News)
             .filter(
                 News.category == "etf",
-                News.datetime >= date_from,
-                News.datetime <= date_to,
+                News.datetime >= epoch_date_from,
+                News.datetime <= epoch_date_to,
                 News.related == symbol,
             )
             .order_by(desc("datetime"))
@@ -137,8 +148,8 @@ def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
             db.query(News)
             .filter(
                 News.category == "etf",
-                News.datetime >= date_from,
-                News.datetime <= date_to,
+                News.datetime >= epoch_date_from,
+                News.datetime <= epoch_date_to,
             )
             .order_by(desc("datetime"))
             .limit(500)
@@ -148,7 +159,7 @@ def get_etf_news(db: Session, symbol: str, date_from: str, date_to: str):
 
 def get_etf_news_min_date(db: Session, symbol: str):
     if symbol:
-        return (
+        epoch_min_date = (
             db.query(
                 func.min(News.datetime).label("mindate"),
             )
@@ -156,10 +167,12 @@ def get_etf_news_min_date(db: Session, symbol: str):
             .one()
         )[0]
     else:
-        return (
+        epoch_min_date = (
             db.query(
                 func.min(News.datetime).label("mindate"),
             )
             .filter(News.category == "etf")
             .one()
         )[0]
+
+    return datetime.fromtimestamp(epoch_min_date).date()

@@ -1,3 +1,5 @@
+from datetime import date, datetime, timezone
+
 from sqlalchemy import desc, func
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import and_
@@ -230,13 +232,16 @@ def get_stock_trades_dates(db: Session, symbol: str):
     )
 
 
-def get_etf_news(db: Session, symbols: str, date_from: str, date_to: str, limit: int):
+def get_etf_news(db: Session, symbols: str, date_from: date, date_to: date, limit: int):
+    epoch_date_from = int(datetime(date_from.year, date_from.month, date_from.day, tzinfo=timezone.utc).timestamp())
+    epoch_date_to = int(datetime(date_to.year, date_to.month, date_to.day, 23, 59, 59, tzinfo=timezone.utc).timestamp())
+
     return (
         db.query(News)
         .filter(
             News.category == "etf",
-            News.datetime >= date_from,
-            News.datetime <= date_to,
+            News.datetime >= epoch_date_from,
+            News.datetime <= epoch_date_to,
             News.related.in_([s for s in symbols]),
         )
         .order_by(desc("datetime"))
@@ -246,7 +251,7 @@ def get_etf_news(db: Session, symbols: str, date_from: str, date_to: str, limit:
 
 
 def get_etf_news_min_date(db: Session, symbols: str):
-    return (
+    epoch_min_date = (
         db.query(
             func.min(News.datetime).label("mindate"),
         )
@@ -256,3 +261,5 @@ def get_etf_news_min_date(db: Session, symbols: str):
         )
         .one()
     )[0]
+
+    return datetime.fromtimestamp(epoch_min_date).date()

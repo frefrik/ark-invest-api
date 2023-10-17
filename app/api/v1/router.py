@@ -33,7 +33,7 @@ def get_db():
     summary="ETF Profile",
 )
 async def etf_profile(
-    symbol: Optional[str] = Query(None, regex=r"^\S+$"),
+    symbol: Optional[str] = Query(None, pattern=r"^\S+$"),
     db: Session = Depends(get_db),
 ):
     if symbol:
@@ -62,7 +62,7 @@ async def etf_profile(
     summary="ETF Holdings",
 )
 async def etf_holdings(
-    symbol: str = Query(..., regex=r"^\S+$"),
+    symbol: str = Query(..., pattern=r"^\S+$"),
     holding_date: Optional[date] = Query(
         None,
         description="Fund holding date in ISO 8601 format",
@@ -100,10 +100,9 @@ async def etf_holdings(
     summary="ETF Trades",
 )
 async def etf_trades(
-    symbol: str = Query(..., regex=r"^\S+$"),
+    symbol: str = Query(..., pattern=r"^\S+$"),
     period: str = Query(
         "1d",
-        regex=r"(?:[\s]|^)(1d|7d|1m|3m|1y|ytd)(?=[\s]|$)",
         description="Valid periods: 1d, 7d, 1m, 3m, 1y, ytd",
     ),
     db: Session = Depends(get_db),
@@ -159,7 +158,7 @@ async def etf_trades(
     summary="ETF News",
 )
 async def etf_news(
-    symbol: Optional[str] = Query(None, regex=r"^\S+$"),
+    symbol: Optional[str] = Query(None, pattern=r"^\S+$"),
     date_from: Optional[date] = Query(None),
     date_to: Optional[date] = Query(None),
     db: Session = Depends(get_db),
@@ -177,22 +176,20 @@ async def etf_news(
     if not date_from:
         date_from = min_date
     else:
-        dt_from = datetime(
+        date_from = date(
             year=date_from.year,
             month=date_from.month,
             day=date_from.day,
-            hour=0,
-            second=0,
         )
-        date_from = int(dt_from.replace(tzinfo=timezone.utc).timestamp())
 
     if not date_to:
-        date_to = int(datetime.now().replace(tzinfo=timezone.utc).timestamp())
+        date_to = datetime.utcnow().date()
     else:
-        dt_to = datetime(
-            year=date_to.year, month=date_to.month, day=date_to.day, hour=23, second=59
+        date_to = date(
+            year=date_to.year,
+            month=date_to.month,
+            day=date_to.day,
         )
-        date_to = int(dt_to.replace(tzinfo=timezone.utc).timestamp())
 
     news = crud.get_etf_news(db, symbol=symbol, date_from=date_from, date_to=date_to)
 
@@ -200,7 +197,7 @@ async def etf_news(
         res_dates = []
 
         for n in news:
-            res_dates.append(n.datetime)
+            res_dates.append(datetime.fromtimestamp(n.datetime).date())
 
         date_from = min(res_dates)
 
@@ -226,7 +223,7 @@ async def etf_news(
     response_model=schemas.StockProfile,
     summary="Stock Profile",
 )
-async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
+async def stock_profile(symbol: str = Query(..., pattern=r"^\S+$")):
     symbol = symbol.upper()
 
     yf = YahooFinance(symbol).quote
@@ -266,7 +263,7 @@ async def stock_profile(symbol: str = Query(..., regex=r"^\S+$")):
     summary="Stock Fund Ownership",
 )
 async def stock_fundownership(
-    symbol: str = Query(..., regex=r"^\S+$"), db: Session = Depends(get_db)
+    symbol: str = Query(..., pattern=r"^\S+$"), db: Session = Depends(get_db)
 ):
     symbol = symbol.upper()
 
@@ -302,8 +299,8 @@ async def stock_fundownership(
     summary="Stock Trades",
 )
 async def stock_trades(
-    symbol: str = Query(..., regex=r"^\S+$"),
-    direction: Optional[str] = Query(None, regex=r"^buy|sell$"),
+    symbol: str = Query(..., pattern=r"^\S+$"),
+    direction: Optional[str] = Query(None, pattern=r"^buy|sell$"),
     date_from: Optional[date] = Query(None),
     date_to: Optional[date] = Query(None),
     db: Session = Depends(get_db),

@@ -201,26 +201,20 @@ async def etf_news(
         if not date_from:
             date_from = min_date
         else:
-            dt_from = datetime(
+            date_from = date(
                 year=date_from.year,
                 month=date_from.month,
                 day=date_from.day,
-                hour=0,
-                second=0,
             )
-            date_from = int(dt_from.replace(tzinfo=timezone.utc).timestamp())
 
         if not date_to:
-            date_to = int(datetime.now().replace(tzinfo=timezone.utc).timestamp())
+            date_to = datetime.utcnow().date()
         else:
-            dt_to = datetime(
+            date_to = date(
                 year=date_to.year,
                 month=date_to.month,
                 day=date_to.day,
-                hour=23,
-                second=59,
             )
-            date_to = int(dt_to.replace(tzinfo=timezone.utc).timestamp())
 
         news = crud.get_etf_news(
             db, symbols=symbols, date_from=date_from, date_to=date_to, limit=limit
@@ -230,7 +224,7 @@ async def etf_news(
             res_dates = []
 
             for n in news:
-                res_dates.append(n.datetime)
+                res_dates.append(datetime.fromtimestamp(n.datetime).date())
 
             date_from = min(res_dates)
 
@@ -335,8 +329,7 @@ async def stock_profile(
         "symbol": symbol,
     }
 
-    yf = YahooFinance(symbol)
-    yf_quote = yf.quote
+    yf_quote = YahooFinance(symbol).quote
 
     if not yf_quote:
         return data
@@ -355,12 +348,16 @@ async def stock_profile(
         "currency": yf_quote.get("currency"),
         "marketCap": yf_quote.get("marketCap"),
         "sharesOutstanding": yf_quote.get("sharesOutstanding"),
+        "price": None,
+        "change": None,
+        "changep": None,
+        "last_trade": None,
     }
 
     data["profile"] = profile
 
     if price:
-        yf_price = yf.price
+        yf_price = YahooFinance(symbol).price
         profile["price"] = yf_price.get("price")
         profile["change"] = yf_price.get("change")
         profile["changep"] = yf_price.get("changep")
@@ -461,7 +458,7 @@ async def stock_trades(
     date_to: Optional[date] = Query(None, description="To date (ISO 8601 format)"),
     limit: Optional[int] = Query(None, description="Limit number of results"),
     direction: Optional[str] = Query(
-        None, description="Filter on buy/sell", regex=r"(?i)^buy|sell$"
+        None, description="Filter on buy/sell", pattern=r"(?i)^buy|sell$"
     ),
     db: Session = Depends(get_db),
 ):

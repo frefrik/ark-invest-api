@@ -15,7 +15,7 @@ class V2_FundProfileData(BaseModel):
     website: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_FundProfile(BaseModel):
@@ -36,7 +36,7 @@ class V2_FundHoldingData(BaseModel):
     weight_rank: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_FundHolding(BaseModel):
@@ -92,7 +92,7 @@ class V2_FundTradeData(BaseModel):
     etf_percent: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_FundTrades(BaseModel):
@@ -111,7 +111,7 @@ class V2_FundOwnershipData(BaseModel):
     market_value: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_FundOwnershipTotals(BaseModel):
@@ -128,8 +128,8 @@ class V2_FundOwnershipList(BaseModel):
 
 class V2_FundOwnership(BaseModel):
     symbol: str
-    date_from: Optional[datetime.date]
-    date_to: Optional[datetime.date]
+    date_from: Optional[datetime.date] = None
+    date_to: Optional[datetime.date] = None
     data: list[V2_FundOwnershipList] = []
 
 
@@ -144,7 +144,7 @@ class V2_FundNewsData(BaseModel):
     image: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_FundNews(BaseModel):
@@ -187,7 +187,7 @@ class V2_StockTradeData(BaseModel):
     etf_percent: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class V2_StockTrades(BaseModel):

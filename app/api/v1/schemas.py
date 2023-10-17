@@ -15,7 +15,7 @@ class FundList(BaseModel):
     website: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FundProfile(BaseModel):
@@ -32,7 +32,7 @@ class HoldingList(BaseModel):
     weight_rank: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FundHolding(BaseModel):
@@ -51,7 +51,7 @@ class TradeList(BaseModel):
     etf_percent: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FundTrades(BaseModel):
@@ -85,7 +85,7 @@ class FundOwnershipList(BaseModel):
     market_value: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FundOwnership(BaseModel):
@@ -108,7 +108,7 @@ class StockTradesList(BaseModel):
     etf_percent: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class StockTrades(BaseModel):
@@ -129,7 +129,7 @@ class FundNewsList(BaseModel):
     image: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FundNews(BaseModel):
