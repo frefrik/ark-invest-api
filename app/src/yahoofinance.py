@@ -45,7 +45,7 @@ class YahooFinance:
 
     def _get_quoteSummary(self, module):
         res = self._get(
-            f"/v10/finance/quoteSummary/{self.symbol}",
+            f"/v6/finance/quoteSummary/{self.symbol}",
             params={"modules": module},
         )
 
