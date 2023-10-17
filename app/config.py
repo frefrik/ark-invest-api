@@ -1,6 +1,6 @@
 # OpenAPI settings
 OPENAPI_TITLE = "ARK Invest API"
-OPENAPI_API_VERSION = "2.4.1"
+OPENAPI_API_VERSION = "2.4.2"
 OPENAPI_DESCRIPTION = "API for tracking ARK Invest fund holdings and trades. This site is not affiliated with Ark Invest."
 OPENAPI_CONTACT = "api (at) arkfunds.io"
 OPENAPI_HOST = "arkfunds.io"
