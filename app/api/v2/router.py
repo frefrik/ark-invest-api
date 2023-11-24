@@ -260,7 +260,7 @@ async def etf_performance(
     }
 
     for s in symbols:
-        yf = YahooFinance(s)
+        yf = YahooFinance(s, formatted=True)
         yf_perf = yf.fund_performance
 
         if not yf_perf:
