@@ -28,12 +28,12 @@ class V2_FundHoldingData(BaseModel):
     date: datetime.date
     ticker: str | None = None
     company: str
-    cusip: str
-    shares: int
-    market_value: float
-    share_price: float
+    cusip: str | None = None
+    shares: int | None = None
+    market_value: float | None = None
+    share_price: float | None = None
     weight: float
-    weight_rank: int
+    weight_rank: int | None = None
 
     class Config:
         from_attributes = True
