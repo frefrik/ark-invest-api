@@ -73,6 +73,7 @@ def get_stock_fundownership(db: Session, symbol: str):
         .join(subq, and_(Holding.fund == subq.c.fund, Holding.date == subq.c.maxdate))
         .filter(Holding.ticker == symbol)
         .filter(Holding.fund.in_(funds))
+        .filter(Holding.shares.isnot(None))
         .all()
     )
 
