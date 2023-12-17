@@ -13,8 +13,6 @@ from app.config import (
     OPENAPI_DESCRIPTION,
     OPENAPI_EXTERNALDOCS_DESC,
     OPENAPI_EXTERNALDOCS_URL,
-    OPENAPI_HOST,
-    OPENAPI_SERVER_BASEPATH,
     OPENAPI_SERVER_URL,
     OPENAPI_TITLE,
 )
@@ -60,11 +58,7 @@ def custom_openapi():
     )
 
     openapi_schema["info"]["contact"] = {"email": OPENAPI_CONTACT}
-
-    openapi_schema["host"] = OPENAPI_HOST
-    openapi_schema["servers"] = [
-        {"url": OPENAPI_SERVER_URL, "basePath": OPENAPI_SERVER_BASEPATH}
-    ]
+    openapi_schema["servers"] = [{"url": OPENAPI_SERVER_URL}]
 
     openapi_schema["externalDocs"] = {
         "description": OPENAPI_EXTERNALDOCS_DESC,

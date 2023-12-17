@@ -26,7 +26,7 @@ class V2_FundProfile(BaseModel):
 class V2_FundHoldingData(BaseModel):
     fund: str
     date: datetime.date
-    ticker: Optional[str]
+    ticker: str | None = None
     company: str
     cusip: str
     shares: int
@@ -41,8 +41,8 @@ class V2_FundHoldingData(BaseModel):
 
 class V2_FundHolding(BaseModel):
     symbol: str
-    date_from: Optional[datetime.date]
-    date_to: Optional[datetime.date]
+    date_from: datetime.date | None = None
+    date_to: datetime.date | None = None
     holdings: list[V2_FundHoldingData] = []
 
 
@@ -66,7 +66,7 @@ class V2_FundTrailingReturns(BaseModel):
 
 class V2_FundAnnualReturns(BaseModel):
     year: str
-    value: float | str | None = 0
+    value: float | str | None = None
 
 
 class V2_FundPerformanceData(BaseModel):
@@ -84,7 +84,7 @@ class V2_FundPerformance(BaseModel):
 class V2_FundTradeData(BaseModel):
     fund: str
     date: datetime.date
-    ticker: Optional[str]
+    ticker: str | None = None
     company: str
     direction: str
     cusip: str
@@ -128,8 +128,8 @@ class V2_FundOwnershipList(BaseModel):
 
 class V2_FundOwnership(BaseModel):
     symbol: str
-    date_from: Optional[datetime.date] = None
-    date_to: Optional[datetime.date] = None
+    date_from: datetime.date | None = None
+    date_to: datetime.date | None = None
     data: list[V2_FundOwnershipList] = []
 
 
@@ -149,29 +149,29 @@ class V2_FundNewsData(BaseModel):
 
 class V2_FundNews(BaseModel):
     symbol: str
-    date_from: Optional[datetime.date]
-    date_to: Optional[datetime.date]
+    date_from: datetime.date | None = None
+    date_to: datetime.date | None = None
     news: list[V2_FundNewsData] = []
 
 
 class V2_StockProfileData(BaseModel):
     ticker: str
-    name: Optional[str]
-    country: Optional[str]
-    industry: Optional[str]
-    sector: Optional[str]
-    fullTimeEmployees: Optional[int]
-    summary: Optional[str]
-    website: Optional[str]
-    market: Optional[str]
-    exchange: Optional[str]
-    currency: Optional[str]
-    marketCap: Optional[float]
-    sharesOutstanding: Optional[int]
-    price: Optional[float]
-    change: Optional[float]
-    changep: Optional[float]
-    last_trade: Optional[datetime.datetime]
+    name: str | None = None
+    country: str | None = None
+    industry: str | None = None
+    sector: str | None = None
+    fullTimeEmployees: int | None = None
+    summary: str | None = None
+    website: str | None = None
+    market: str | None = None
+    exchange: str | None = None
+    currency: str | None = None
+    marketCap: float | None = None
+    sharesOutstanding: int | None = None
+    price: float | None = None
+    change: float | None = None
+    changep: float | None = None
+    last_trade: datetime.datetime | None = None
 
 
 class V2_StockProfile(BaseModel):
@@ -192,16 +192,16 @@ class V2_StockTradeData(BaseModel):
 
 class V2_StockTrades(BaseModel):
     symbol: str
-    date_from: Optional[datetime.date]
-    date_to: Optional[datetime.date]
+    date_from: datetime.date | None = None
+    date_to: datetime.date | None = None
     trades: list[V2_StockTradeData] = []
 
 
 class V2_StockPrice(BaseModel):
     symbol: str
-    exchange: Optional[str]
-    currency: Optional[str]
-    price: Optional[float]
-    change: Optional[float]
-    changep: Optional[float]
-    last_trade: Optional[datetime.datetime]
+    exchange: str | None = None
+    currency: str | None = None
+    price: float | None = None
+    change: float | None = None
+    changep: float | None = None
+    last_trade: datetime.datetime | None = None
