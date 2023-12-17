@@ -60,6 +60,8 @@ def get_etf_trades_maxdate(db: Session):
 
 
 def get_stock_fundownership(db: Session, symbol: str):
+    funds = list(filter(lambda item: item != "CTRU", FUNDS))
+
     subq = (
         db.query(Holding.fund, func.max(Holding.date).label("maxdate"))
         .group_by(Holding.fund)
@@ -68,9 +70,9 @@ def get_stock_fundownership(db: Session, symbol: str):
 
     return (
         db.query(Holding)
-        .join(subq, and_(Holding.date == subq.c.maxdate))
+        .join(subq, and_(Holding.fund == subq.c.fund, Holding.date == subq.c.maxdate))
         .filter(Holding.ticker == symbol)
-        .filter(Holding.fund.in_(FUNDS))
+        .filter(Holding.fund.in_(funds))
         .all()
     )
 
