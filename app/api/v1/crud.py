@@ -3,6 +3,7 @@ from datetime import date, datetime, timezone
 from sqlalchemy import and_, desc, func
 from sqlalchemy.orm import Session
 
+from app.config import FUNDS
 from app.models import Fund, Holding, News, Trades
 
 
@@ -69,6 +70,7 @@ def get_stock_fundownership(db: Session, symbol: str):
         db.query(Holding)
         .join(subq, and_(Holding.date == subq.c.maxdate))
         .filter(Holding.ticker == symbol)
+        .filter(Holding.fund.in_(FUNDS))
         .all()
     )
 
@@ -122,7 +124,9 @@ def get_stock_trades_dates(db: Session, symbol: str):
 
 def get_etf_news(db: Session, symbol: str, date_from: date, date_to: date):
     epoch_date_from = int(
-        datetime(date_from.year, date_from.month, date_from.day, tzinfo=timezone.utc).timestamp()
+        datetime(
+            date_from.year, date_from.month, date_from.day, tzinfo=timezone.utc
+        ).timestamp()
     )
     epoch_date_to = int(
         datetime(
