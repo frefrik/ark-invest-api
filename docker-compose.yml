@@ -8,6 +8,6 @@ services:
     ports:
       - "80:80"
     environment:
-      - WEB_CONCURRENCY=6
+      - WEB_CONCURRENCY=2
     env_file:
       - fastapi.env
