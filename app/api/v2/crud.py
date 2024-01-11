@@ -105,6 +105,11 @@ def get_etf_holdings_dates(db: Session, symbols: str):
 def get_etf_trades(
     db: Session, symbols: str, start_date: str, end_date: str, limit: int
 ):
+    if not start_date:
+        start_date = datetime.now().date()
+    if not end_date:
+        end_date = datetime.now().date()
+
     q = (
         db.query(
             Trades.fund,
