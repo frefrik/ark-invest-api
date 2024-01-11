@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ark-invest-api"
-version = "2.4.4"
+version = "2.5.0"
 description = "API for tracking holdings and trades of ARK Invest funds."
 authors = ["Fredrik Haarstad <codemonkey@zomg.no>"]
 license = "MIT"
