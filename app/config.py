@@ -10,6 +10,7 @@ OPENAPI_EXTERNALDOCS_URL = "https://github.com/frefrik/ark-invest-api"
 # ARK settings
 FUNDS = [
     "ARKA",
+    "ARKB",
     "ARKC",
     "ARKD",
     "ARKZ",
