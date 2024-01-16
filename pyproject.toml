@@ -12,7 +12,7 @@ requests = "^2.31.0"
 psycopg2-binary = "^2.9.9"
 python-dateutil = "^2.8.2"
 SQLAlchemy = "^2.0.25"
-uvicorn = "^0.25.0"
+uvicorn = "^0.26.0"
 yahooquery = "^2.3.7"
 
 [tool.poetry.dev-dependencies]
