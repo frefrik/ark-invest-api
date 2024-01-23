@@ -54,7 +54,7 @@ The API contains data for trades, holdings and news from the following dates:
 |   PRNT   | Index ETF         |     -      | 2020-11-24 | 2020-08-20 |
 | CTRU[^1] | Index ETF         |     -      | 2021-12-09 | 2021-12-09 |
 |   ARKA   | Digital Asset ETF |     -      | 2023-11-24 | 2022-09-26 |
-|   ARKB   | Digital Asset ETF |     -      | 2024-01-11 |            |
+|   ARKB   | Digital Asset ETF |     -      | 2024-01-11 | 2024-01-13 |
 |   ARKC   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-13 |
 |   ARKD   | Digital Asset ETF |     -      | 2023-11-28 | 2023-12-05 |
 |   ARKY   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
