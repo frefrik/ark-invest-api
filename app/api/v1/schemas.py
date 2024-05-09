@@ -25,9 +25,9 @@ class FundProfile(BaseModel):
 class HoldingList(BaseModel):
     company: str
     ticker: Optional[str]
-    cusip: str
-    shares: int
-    market_value: float
+    cusip: Optional[str]
+    shares: Optional[int]
+    market_value: Optional[float]
     weight: float
     weight_rank: int
 
@@ -92,9 +92,7 @@ class FundOwnership(BaseModel):
     symbol: str
     date: Optional[datetime.date]
     ownership: list[FundOwnershipList] = []
-    totals: create_model(
-        "totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...)
-    )
+    totals: create_model("totals", funds=(int, ...), shares=(int, ...), market_value=(float, ...))
 
 
 class StockTradesList(BaseModel):
