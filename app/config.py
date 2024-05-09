@@ -25,6 +25,13 @@ FUNDS = [
     "PRNT",
     "IZRL",
     "CTRU",
+    "CYBR",
+    "CYCL",
+    "FOOD",
+    "LIFE",
+    "LUSA",
+    "NFRA",
+    "PMNT",
 ]
 
 # Example responses
