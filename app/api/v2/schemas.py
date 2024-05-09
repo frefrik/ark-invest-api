@@ -10,8 +10,8 @@ class V2_FundProfileData(BaseModel):
     description: str
     fund_type: str
     inception_date: datetime.date
-    cusip: str
-    isin: str
+    cusip: str | None
+    isin: str | None
     website: str
 
     class Config:

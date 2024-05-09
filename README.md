@@ -35,6 +35,15 @@ Click here to see a list of ARK ETFs
   - **IZRL** - ARK Israel Innovative Technology ETF
   - ~~**CTRU** - ARK Transparency ETF~~
 
+- Rize Index ETFs
+  - **CYBR** - Rize Cybersecurity and Data Privacy ETF
+  - **CYCL** - Rize Circular Economy Enablers UCITS ETF
+  - **FOOD** - Rize Sustainable Future of Food UCITS ETF
+  - **LIFE** - Rize Environmental Impact 100 UCITS ETF
+  - **LUSA** - Rize USA Environmental Impact UCITS ETF
+  - **NFRA** - Rize Global Sustainable Infrastructure UCITS ETF
+  - **PMNT** - Rize Digital Payments Economy UCITS ETF
+
 - Other Funds
   - **ARKVX** - ARK Venture Fund
 </details>
@@ -60,6 +69,13 @@ The API contains data for trades, holdings and news from the following dates:
 |   ARKY   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
 |   ARKZ   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-16 |
 |   ARKVX  | Venture Fund      |     -      | 2023-10-31 |     -      |
+|   CYBR   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   CYCL   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   FOOD   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   LIFE   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   LUSA   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   NFRA   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|   PMNT   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
 
 ---
 
