@@ -43,10 +43,17 @@ class YahooFinance:
 
     @property
     def price(self):
-        data = {}
+        data = {
+            "exchange": None,
+            "currency": None,
+            "price": None,
+            "change": None,
+            "changep": None,
+            "last_trade": None,
+        }
         price = self.ticker.price[self.symbol]
 
-        if price:
+        if isinstance(price, dict):
             data["exchange"] = price.get("exchangeName")
             data["currency"] = price.get("currency")
             data["price"] = price.get("regularMarketPrice")
