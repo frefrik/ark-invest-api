@@ -68,7 +68,7 @@ The API contains data for trades, holdings and news from the following dates:
 |   ARKD   | Digital Asset ETF |     -      | 2023-11-28 | 2023-12-05 |
 |   ARKY   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
 |   ARKZ   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-16 |
-|   ARKVX  | Venture Fund      |     -      | 2023-10-31 |     -      |
+|   ARKVX  | Venture Fund      |     -      | 2022-09-30 |     -      |
 |   CYBR   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
 |   CYCL   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
 |   FOOD   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
