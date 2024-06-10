@@ -1,5 +1,5 @@
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, UTC
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Query
@@ -208,7 +208,7 @@ async def etf_news(
             )
 
         if not date_to:
-            date_to = datetime.utcnow().date()
+            date_to = datetime.now(UTC).date()
         else:
             date_to = date(
                 year=date_to.year,
