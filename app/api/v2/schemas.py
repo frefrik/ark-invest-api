@@ -1,5 +1,4 @@
 import datetime
-from typing import Optional
 
 from pydantic import BaseModel
 
@@ -20,7 +19,7 @@ class V2_FundProfileData(BaseModel):
 
 class V2_FundProfile(BaseModel):
     symbol: str
-    profile: Optional[V2_FundProfileData] = {}
+    profile: V2_FundProfileData | dict = {}
 
 
 class V2_FundHoldingData(BaseModel):
@@ -176,7 +175,7 @@ class V2_StockProfileData(BaseModel):
 
 class V2_StockProfile(BaseModel):
     symbol: str
-    profile: Optional[V2_StockProfileData] = {}
+    profile: V2_StockProfileData | dict = {}
 
 
 class V2_StockTradeData(BaseModel):
