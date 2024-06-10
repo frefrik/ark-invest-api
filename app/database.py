@@ -1,9 +1,11 @@
 import os
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+load_dotenv()
 
 PG_USERNAME = os.getenv("PG_USERNAME")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
