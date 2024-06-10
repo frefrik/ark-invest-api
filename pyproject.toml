@@ -16,13 +16,10 @@ uvicorn = "^0.29.0"
 yahooquery = "^2.3.7"
 python-dotenv = "^1.0.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
 isort = "^5.13.2"
 pytest = "^8.2.0"
-
-[tool.poetry.group.dev.dependencies]
-httpx = "^0.26.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
