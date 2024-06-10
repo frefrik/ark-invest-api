@@ -1936,4 +1936,4 @@ premium = ["selenium (>=4.10.0,<5.0.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a9f00976241852dd6f1e171b6ccf4e77d25268277abb911a940c452e32e0baa6"
+content-hash = "3c8fda9b1630d1368d801a1547350decc58f6c89630db6bfbd6bac780bb30295"
