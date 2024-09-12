@@ -1,10 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel, ConfigDict, create_model
 
 
 class FundList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     symbol: str
     name: str
     description: str
@@ -14,15 +16,14 @@ class FundList(BaseModel):
     isin: str
     website: str
 
-    class Config:
-        from_attributes = True
-
 
 class FundProfile(BaseModel):
     profile: list[FundList] = []
 
 
 class HoldingList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     company: str
     ticker: Optional[str]
     cusip: Optional[str]
@@ -30,9 +31,6 @@ class HoldingList(BaseModel):
     market_value: Optional[float]
     weight: float
     weight_rank: int
-
-    class Config:
-        from_attributes = True
 
 
 class FundHolding(BaseModel):
@@ -42,6 +40,8 @@ class FundHolding(BaseModel):
 
 
 class TradeList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     date: datetime.date
     direction: str
     ticker: Optional[str]
@@ -49,9 +49,6 @@ class TradeList(BaseModel):
     cusip: str
     shares: int
     etf_percent: float
-
-    class Config:
-        from_attributes = True
 
 
 class FundTrades(BaseModel):
@@ -78,14 +75,13 @@ class StockProfile(BaseModel):
 
 
 class FundOwnershipList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     fund: str
     weight: float
     weight_rank: int
     shares: int
     market_value: float
-
-    class Config:
-        from_attributes = True
 
 
 class FundOwnership(BaseModel):
@@ -96,6 +92,8 @@ class FundOwnership(BaseModel):
 
 
 class StockTradesList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     date: datetime.date
     fund: str
     direction: str
@@ -104,9 +102,6 @@ class StockTradesList(BaseModel):
     cusip: str
     shares: int
     etf_percent: float
-
-    class Config:
-        from_attributes = True
 
 
 class StockTrades(BaseModel):
@@ -117,6 +112,8 @@ class StockTrades(BaseModel):
 
 
 class FundNewsList(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     datetime: datetime.datetime
     related: str
@@ -125,9 +122,6 @@ class FundNewsList(BaseModel):
     summary: str
     url: str
     image: str
-
-    class Config:
-        from_attributes = True
 
 
 class FundNews(BaseModel):

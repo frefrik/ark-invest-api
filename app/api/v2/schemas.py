@@ -1,10 +1,11 @@
 import datetime
-from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class V2_FundProfileData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     symbol: str
     name: str
     description: str
@@ -14,16 +15,15 @@ class V2_FundProfileData(BaseModel):
     isin: str | None
     website: str
 
-    class Config:
-        from_attributes = True
-
 
 class V2_FundProfile(BaseModel):
     symbol: str
-    profile: Optional[V2_FundProfileData] = {}
+    profile: V2_FundProfileData | dict = {}
 
 
 class V2_FundHoldingData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     fund: str
     date: datetime.date
     ticker: str | None = None
@@ -34,9 +34,6 @@ class V2_FundHoldingData(BaseModel):
     share_price: float | None = None
     weight: float
     weight_rank: int | None = None
-
-    class Config:
-        from_attributes = True
 
 
 class V2_FundHolding(BaseModel):
@@ -82,6 +79,8 @@ class V2_FundPerformance(BaseModel):
 
 
 class V2_FundTradeData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     fund: str
     date: datetime.date
     ticker: str | None = None
@@ -90,9 +89,6 @@ class V2_FundTradeData(BaseModel):
     cusip: str
     shares: int
     etf_percent: float
-
-    class Config:
-        from_attributes = True
 
 
 class V2_FundTrades(BaseModel):
@@ -103,15 +99,14 @@ class V2_FundTrades(BaseModel):
 
 
 class V2_FundOwnershipData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     date: datetime.date
     fund: str
     weight: float
     weight_rank: int
     shares: int
     market_value: float
-
-    class Config:
-        from_attributes = True
 
 
 class V2_FundOwnershipTotals(BaseModel):
@@ -134,6 +129,8 @@ class V2_FundOwnership(BaseModel):
 
 
 class V2_FundNewsData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     datetime: datetime.datetime
     related: str
@@ -142,9 +139,6 @@ class V2_FundNewsData(BaseModel):
     summary: str
     url: str
     image: str
-
-    class Config:
-        from_attributes = True
 
 
 class V2_FundNews(BaseModel):
@@ -176,18 +170,17 @@ class V2_StockProfileData(BaseModel):
 
 class V2_StockProfile(BaseModel):
     symbol: str
-    profile: Optional[V2_StockProfileData] = {}
+    profile: V2_StockProfileData | dict = {}
 
 
 class V2_StockTradeData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     date: datetime.date
     fund: str
     direction: str
     shares: int
     etf_percent: float
-
-    class Config:
-        from_attributes = True
 
 
 class V2_StockTrades(BaseModel):
