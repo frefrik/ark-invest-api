@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ark-invest-api"
-version = "2.6.0"
+version = "2.6.1"
 description = "API for tracking holdings and trades of ARK Invest funds."
 authors = ["Fredrik Haarstad <codemonkey@zomg.no>"]
 license = "MIT"
@@ -8,19 +8,20 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.111.0"
-requests = "^2.32.2"
+fastapi = "^0.114.1"
+requests = "^2.32.3"
 psycopg2-binary = "^2.9.9"
 python-dateutil = "^2.9.0.post0"
-SQLAlchemy = "^2.0.30"
-uvicorn = "^0.29.0"
+SQLAlchemy = "^2.0.34"
+uvicorn = "^0.30.6"
 yahooquery = "^2.3.7"
 python-dotenv = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
+black = "^24.8.0"
 isort = "^5.13.2"
-pytest = "^8.2.0"
+pytest = "^8.3.3"
+httpx = "^0.27.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
