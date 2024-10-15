@@ -13,7 +13,7 @@ requests = "^2.32.3"
 psycopg2-binary = "^2.9.9"
 python-dateutil = "^2.9.0.post0"
 SQLAlchemy = "^2.0.34"
-uvicorn = "^0.30.6"
+uvicorn = "^0.32.0"
 yahooquery = "^2.3.7"
 python-dotenv = "^1.0.1"
 
