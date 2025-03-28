@@ -25,9 +25,9 @@ Click here to see a list of ARK ETFs
 - Digital Asset ETFs
   - **ARKA** - ARK 21Shares Active Bitcoin Futures Strategy ETF
   - **ARKB** - ARK 21Shares Bitcoin ETF
-  - **ARKC** - ARK 21Shares Active On-Chain Bitcoin Futures Strategy ETF
+  - ~~**ARKC** - ARK 21Shares Active On-Chain Bitcoin Futures Strategy ETF~~
   - **ARKD** - ARK 21Shares Blockchain and Digital Economy Innovation ETF
-  - **ARKY** - ARK 21Shares Active Bitcoin Ethereum Futures Strategy ETF
+  - ~~**ARKY** - ARK 21Shares Active Bitcoin Ethereum Futures Strategy ETF~~
   - **ARKZ** - ARK 21Shares Active Ethereum Futures Strategy ETF
 
 - Index ETFs
@@ -64,9 +64,9 @@ The API contains data for trades, holdings and news from the following dates:
 | CTRU[^1] | Index ETF         |     -      | 2021-12-09 | 2021-12-09 |
 |   ARKA   | Digital Asset ETF |     -      | 2023-11-24 | 2022-09-26 |
 |   ARKB   | Digital Asset ETF |     -      | 2024-01-11 | 2024-01-13 |
-|   ARKC   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-13 |
+| ARKC[^2] | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-13 |
 |   ARKD   | Digital Asset ETF |     -      | 2023-11-28 | 2023-12-05 |
-|   ARKY   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
+| ARKY[^2] | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
 |   ARKZ   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-16 |
 |   ARKVX  | Venture Fund      |     -      | 2022-09-30 |     -      |
 |   CYBR   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
@@ -1014,3 +1014,6 @@ Returns Stock Fund Ownership
 
 [^1]: [ARK Investment Management LLC Announces It Will Close the ARK Transparency ETF](https://ark-funds.com/wp-content/uploads/2022/07/ARK-Invest_PressRelease_CTRU_Final.pdf)  
   As of July 26 2022, CTRU data is no longer updated.
+
+[^2]: [ARKC and ARKY are closing](https://github.com/frefrik/ark-invest-api/issues/305)  
+  **ARKC** (ARK 21Shares Active On Chain Bitcoin Strategy ETF) and **ARKY** (ARK 21Shares Active Bitcoin Ethereum Strategy ETF) were liquidated and dissolved on March 28, 2025.
