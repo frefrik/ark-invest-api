@@ -1,4 +1,4 @@
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, UTC
 
 from sqlalchemy import desc, func
 from sqlalchemy.orm import Session
@@ -266,5 +266,8 @@ def get_etf_news_min_date(db: Session, symbols: str):
         )
         .one()
     )[0]
+
+    if not epoch_min_date:
+        return datetime.now(UTC).date()
 
     return datetime.fromtimestamp(epoch_min_date).date()
