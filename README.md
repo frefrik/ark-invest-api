@@ -14,7 +14,7 @@ Endpoint Status: https://status.arkfunds.io
 Click here to see a list of ARK ETFs
 </summary>
 
-- Active ETFs
+- Actively Managed ETFs
   - **ARKK** - ARK Innovation ETF
   - **ARKQ** - ARK Autonomous Tech. & Robotics ETF
   - **ARKW** - ARK Next Generation Internet ETF
@@ -22,18 +22,21 @@ Click here to see a list of ARK ETFs
   - **ARKF** - ARK Fintech Innovation ETF
   - **ARKX** - ARK Space Exploration & Innovation ETF
 
-- Digital Asset ETFs
+- Indexed ETFs
+  - **PRNT** - The 3D Printing ETF
+  - **IZRL** - ARK Israel Innovative Technology ETF
+  - ~~**CTRU** - ARK Transparency ETF~~
+
+- Options-Overlay ETFs
+  - **ARKT** - ARK DIET Q4 Buffer ETF
+
+- Sub-Advised ETFs
   - ~~**ARKA** - ARK 21Shares Active Bitcoin Futures Strategy ETF~~
   - **ARKB** - ARK 21Shares Bitcoin ETF
   - ~~**ARKC** - ARK 21Shares Active On-Chain Bitcoin Futures Strategy ETF~~
   - ~~**ARKD** - ARK 21Shares Blockchain and Digital Economy Innovation ETF~~
   - ~~**ARKY** - ARK 21Shares Active Bitcoin Ethereum Futures Strategy ETF~~
   - ~~**ARKZ** - ARK 21Shares Active Ethereum Futures Strategy ETF~~
-
-- Index ETFs
-  - **PRNT** - The 3D Printing ETF
-  - **IZRL** - ARK Israel Innovative Technology ETF
-  - ~~**CTRU** - ARK Transparency ETF~~
 
 - Rize Index ETFs
   - **CYBR** - Rize Cybersecurity and Data Privacy ETF
@@ -51,31 +54,32 @@ Click here to see a list of ARK ETFs
 ---
 The API contains data for trades, holdings and news from the following dates:
 
-|          | Type              |   Trades   |  Holdings  |    News    |
-| :------: | :---------------- | :--------: | :--------: | :--------: |
-|   ARKF   | Active ETF        | 2020-09-09 | 2020-11-24 | 2020-05-07 |
-|   ARKG   | Active ETF        | 2020-09-09 | 2020-11-24 | 2020-04-18 |
-|   ARKK   | Active ETF        | 2020-09-09 | 2020-11-24 | 2020-04-07 |
-|   ARKQ   | Active ETF        | 2020-09-11 | 2020-11-24 | 2020-04-18 |
-|   ARKW   | Active ETF        | 2020-09-09 | 2020-11-24 | 2020-04-19 |
-|   ARKX   | Active ETF        | 2021-04-07 | 2021-03-26 | 2021-02-07 |
-|   IZRL   | Index ETF         |     -      | 2020-11-24 | 2020-04-24 |
-|   PRNT   | Index ETF         |     -      | 2020-11-24 | 2020-08-20 |
-| CTRU[^1] | Index ETF         |     -      | 2021-12-09 | 2021-12-09 |
-|   ARKA[^3]   | Digital Asset ETF |     -      | 2023-11-24 | 2022-09-26 |
-|   ARKB   | Digital Asset ETF |     -      | 2024-01-11 | 2024-01-13 |
-| ARKC[^2] | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-13 |
-|   ARKD[^3]   | Digital Asset ETF |     -      | 2023-11-28 | 2023-12-05 |
-| ARKY[^2] | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-17 |
-|   ARKZ[^3]   | Digital Asset ETF |     -      | 2023-11-29 | 2023-11-16 |
-|   ARKVX  | Venture Fund      |     -      | 2022-09-30 |     -      |
-|   CYBR   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   CYCL   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   FOOD   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   LIFE   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   LUSA   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   NFRA   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
-|   PMNT   | Rize Index ETF    |     -      | 2024-04-27 |     -      |
+|          | Type                       |   Trades   |  Holdings  |    News    | Status    |
+|:--------:|:---------------------------|:----------:|:----------:|:----------:|:----------|
+|   ARKF   | Active Equity ETF          | 2020-09-09 | 2020-11-24 | 2020-05-07 | 🟢 Active |
+|   ARKG   | Active Equity ETF          | 2020-09-09 | 2020-11-24 | 2020-04-18 | 🟢 Active |
+|   ARKK   | Active Equity ETF          | 2020-09-09 | 2020-11-24 | 2020-04-07 | 🟢 Active |
+|   ARKQ   | Active Equity ETF          | 2020-09-11 | 2020-11-24 | 2020-04-18 | 🟢 Active |
+|   ARKW   | Active Equity ETF          | 2020-09-09 | 2020-11-24 | 2020-04-19 | 🟢 Active |
+|   ARKX   | Active Equity ETF          | 2021-04-07 | 2021-03-26 | 2021-02-07 | 🟢 Active |
+|   ARKT   | Active Options-Overlay ETF |     -      | 2025-10-31 |     -      | 🟢 Active |
+|   IZRL   | Indexed Equity ETF         |     -      | 2020-11-24 | 2020-04-24 | 🟢 Active |
+|   PRNT   | Indexed Equity ETF         |     -      | 2020-11-24 | 2020-08-20 | 🟢 Active |
+| CTRU[^1] | Indexed Equity ETF         |     -      | 2021-12-09 | 2021-12-09 | 🔴 Closed |
+| ARKA[^3] | Digital Asset ETF          |     -      | 2023-11-24 | 2022-09-26 | 🔴 Closed |
+|   ARKB   | Digital Asset ETF          |     -      | 2024-01-11 | 2024-01-13 | 🟢 Active |
+| ARKC[^2] | Digital Asset ETF          |     -      | 2023-11-29 | 2023-11-13 | 🔴 Closed |
+| ARKD[^3] | Digital Asset ETF          |     -      | 2023-11-28 | 2023-12-05 | 🔴 Closed |
+| ARKY[^2] | Digital Asset ETF          |     -      | 2023-11-29 | 2023-11-17 | 🔴 Closed |
+| ARKZ[^3] | Digital Asset ETF          |     -      | 2023-11-29 | 2023-11-16 | 🔴 Closed |
+|  ARKVX   | Venture Fund               |     -      | 2022-09-30 |     -      | 🟢 Active |
+|   CYBR   | Rize Index ETF             |     -      | 2024-04-27 | 2025-03-21 | 🟢 Active |
+|   CYCL   | Rize Index ETF             |     -      | 2024-04-27 |     -      | 🟢 Active |
+|   FOOD   | Rize Index ETF             |     -      | 2024-04-27 |     -      | 🟢 Active |
+|   LIFE   | Rize Index ETF             |     -      | 2024-04-27 | 2025-09-30 | 🟢 Active |
+|   LUSA   | Rize Index ETF             |     -      | 2024-04-27 |     -      | 🟢 Active |
+|   NFRA   | Rize Index ETF             |     -      | 2024-04-27 | 2024-11-05 | 🟢 Active |
+|   PMNT   | Rize Index ETF             |     -      | 2024-04-27 | 2024-11-13 | 🟢 Active |
 
 ---
 
@@ -125,7 +129,7 @@ Returns ARK ETF profile information
 ### Query Parameters
 
 | Parameter | Required | Description    |
-| :-------- | :------: | :------------- |
+|:----------|:--------:|:---------------|
 | symbol    |   YES    | ARK ETF symbol |
 
 ### Example
@@ -163,7 +167,7 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
+|:----------|:--------:|:----------------------------|
 | symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -234,7 +238,7 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
+|:----------|:--------:|:----------------------------|
 | symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -299,7 +303,7 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
+|:----------|:--------:|:----------------------------|
 | symbol    |   YES    | ARK ETF symbols             |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -351,7 +355,7 @@ Multiple ETF symbols can be passed in same query (comma separated) to retrieve d
 ### Query Parameters
 
 | Parameter | Required | Description                    |
-| :-------- | :------: | :----------------------------- |
+|:----------|:--------:|:-------------------------------|
 | symbol    |   YES    | ARK ETF symbols                |
 | formatted |    NO    | Format values (default: false) |
 
@@ -431,7 +435,7 @@ Returns Stock profile information
 ### Query Parameters
 
 | Parameter | Required | Description                               |
-| :-------- | :------: | :---------------------------------------- |
+|:----------|:--------:|:------------------------------------------|
 | symbol    |   YES    | Stock symbol                              |
 | price     |    NO    | Show current share price (default: false) |
 
@@ -477,7 +481,7 @@ Returns Stock Trades
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
+|:----------|:--------:|:----------------------------|
 | symbol    |   YES    | Stock symbol                |
 | direction |    NO    | Filter on buy/sell          |
 | date_from |    NO    | From date (ISO 8601 format) |
@@ -529,7 +533,7 @@ Returns Stock Fund Ownership
 ### Query Parameters
 
 | Parameter | Required | Description                 |
-| :-------- | :------: | :-------------------------- |
+|:----------|:--------:|:----------------------------|
 | symbol    |   YES    | Stock symbol                |
 | date_from |    NO    | From date (ISO 8601 format) |
 | date_to   |    NO    | To date   (ISO 8601 format) |
@@ -590,7 +594,7 @@ Returns Stock Price
 ### Query Parameters
 
 | Parameter | Required | Description  |
-| :-------- | :------: | :----------- |
+|:----------|:--------:|:-------------|
 | symbol    |   YES    | Stock symbol |
 
 ### Example
@@ -622,7 +626,7 @@ Returns ARK ETF profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values                                         | Default value |
-| :-------- | :------: | :--------------------------------------------------- | ------------- |
+|:----------|:--------:|:-----------------------------------------------------|---------------|
 | symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
 
 ### Example
@@ -657,7 +661,7 @@ Returns ARK ETF holdings
 ### Query Parameters
 
 | Parameter | Required | Valid values                                         | Default value |
-| :-------- | :------: | :--------------------------------------------------- | ------------- |
+|:----------|:--------:|:-----------------------------------------------------|---------------|
 | symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
 | date      |    NO    | ISO 8601 Calendar date                               |               |
 
@@ -726,7 +730,7 @@ Returns ARK ETF intraday trades
 ### Query Parameters
 
 | Parameter | Required | Valid values                       | Default value |
-| :-------- | :------: | :--------------------------------- | ------------- |
+|:----------|:--------:|:-----------------------------------|---------------|
 | symbol    |   YES    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX |               |
 | period    |    NO    | 1d, 7d, 1m, 3m, 1y, ytd            | 1d            |
 
@@ -792,7 +796,7 @@ Returns ARK ETF news
 ### Query Parameters
 
 | Parameter | Required | Valid values                                         | Default value |
-| :-------- | :------: | :--------------------------------------------------- | ------------- |
+|:----------|:--------:|:-----------------------------------------------------|---------------|
 | symbol    |    NO    | ARKK, ARKQ, ARKW, ARKG, ARKF, ARKX, PRNT, IZRL, CTRU |               |
 | date      |    NO    | ISO 8601 Calendar date                               |               |
 | date_to   |    NO    | ISO 8601 Calendar date                               |               |
@@ -864,7 +868,7 @@ Returns Stock profile information
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-| :-------- | :------: | :----------- | ------------- |
+|:----------|:--------:|:-------------|---------------|
 | symbol    |   YES    |              |               |
 
 ### Example
@@ -902,7 +906,7 @@ Returns Stock Trades
 ### Query Parameters
 
 | Parameter | Required | Valid values           | Default value |
-| :-------- | :------: | :--------------------- | ------------- |
+|:----------|:--------:|:-----------------------|---------------|
 | symbol    |   YES    |                        |               |
 | direction |    NO    | buy, sell              |               |
 | date_from |    NO    | ISO 8601 Calendar date |               |
@@ -970,7 +974,7 @@ Returns Stock Fund Ownership
 ### Query Parameters
 
 | Parameter | Required | Valid values | Default value |
-| :-------- | :------: | :----------- | ------------- |
+|:----------|:--------:|:-------------|---------------|
 | symbol    |   YES    |              |               |
 
 ### Example

@@ -22,6 +22,7 @@ FUNDS = [
     "ARKF",
     "ARKX",
     "ARKVX",
+    "ARKT",
     "PRNT",
     "IZRL",
     "CTRU",
