@@ -45,7 +45,7 @@ Click here to see a list of ARK ETFs
   - **LIFE** - Rize Environmental Impact 100 UCITS ETF
   - **LUSA** - Rize USA Environmental Impact UCITS ETF
   - **NFRA** - Rize Global Sustainable Infrastructure UCITS ETF
-  - **PMNT** - Rize Digital Payments Economy UCITS ETF
+  - ~~**PMNT** - Rize Digital Payments Economy UCITS ETF~~
 
 - Other Funds
   - **ARKVX** - ARK Venture Fund
@@ -79,7 +79,7 @@ The API contains data for trades, holdings and news from the following dates:
 |   LIFE   | Rize Index ETF             |     -      | 2024-04-27 | 2025-09-30 | 🟢 Active |
 |   LUSA   | Rize Index ETF             |     -      | 2024-04-27 |     -      | 🟢 Active |
 |   NFRA   | Rize Index ETF             |     -      | 2024-04-27 | 2024-11-05 | 🟢 Active |
-|   PMNT   | Rize Index ETF             |     -      | 2024-04-27 | 2024-11-13 | 🟢 Active |
+| PMNT[^4] | Rize Index ETF             |     -      | 2024-04-27 | 2024-11-13 | 🔴 Closed |
 
 ---
 
@@ -1024,3 +1024,6 @@ Returns Stock Fund Ownership
 
 [^3]: [Empowered Funds to Liquidate ARKA, ARKD, and ARKZ](https://www.prnewswire.com/news-releases/empowered-funds-to-liquidate-certain-etfs-302548185.html)  
   **ARKA** (ARK 21Shares Active Bitcoin Futures Strategy ETF), **ARKD** (ARK 21Shares Blockchain and Digital Economy Innovation ETF), and **ARKZ** (ARK 21Shares Active Ethereum Futures Strategy ETF) were liquidated and dissolved on September 26, 2025.
+
+[^4]: [Rize Digital Payments Economy UCITS ETF Fund Closure Shareholder Notice](https://europe.ark-funds.com/wp-content/uploads/2025/02/Rize-Digital-Payments-Economy-UCITS-ETF-Fund-Closure-Shareholder-Notice.pdf)  
+  **PMNT** (Rize Digital Payments Economy UCITS ETF) was closed as of April 1, 2025.
