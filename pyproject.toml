@@ -8,7 +8,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.120.4"
+fastapi = "^0.124.0"
 requests = "^2.32.5"
 psycopg2-binary = "^2.9.11"
 python-dateutil = "^2.9.0.post0"
