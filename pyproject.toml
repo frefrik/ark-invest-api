@@ -20,7 +20,7 @@ python-dotenv = "^1.2.1"
 [tool.poetry.group.dev.dependencies]
 black = "^25.9.0"
 isort = "^7.0.0"
-pytest = "^8.4.2"
+pytest = "^9.0.2"
 httpx = "^0.28.1"
 
 [build-system]
